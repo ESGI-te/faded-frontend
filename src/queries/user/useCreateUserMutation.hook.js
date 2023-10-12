@@ -3,7 +3,7 @@ import { register } from '@api/api';
 import userKeys from './userKeys';
 
 const mutationFn = async (formData) => {
-    const { data } = await register(formData);
+    const data = await register(formData);
     return data;
 };
 
