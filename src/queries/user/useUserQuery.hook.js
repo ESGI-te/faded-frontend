@@ -3,7 +3,7 @@ import { getUser } from '@/api/api';
 import userKeys from './userKeys';
 
 const queryFn = async () => {
-    const { data } = await getUser();
+    const data = await getUser();
 
     return data;
 };
