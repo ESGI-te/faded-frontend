@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getUser } from '@/api/api';
 import userKeys from './userKeys';
+import { getUser } from '@api/api';
+import { useAuth } from '@hooks/useAuth';
 
 const queryFn = async () => {
     const data = await getUser();
@@ -9,9 +10,11 @@ const queryFn = async () => {
 };
 
 const useUserQuery = () => {
+    const { isAuthenticated } = useAuth();
     return useQuery({
         queryKey: userKeys.detail(),
         queryFn,
+        enabled: isAuthenticated,
     });
 };
 

@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login } from '@api/api';
 import userKeys from '@queries/user/userKeys';
 
-const mutationFn = async (formData) => {
-    const { data } = await login(formData);
+const mutationFn = async (credentials) => {
+    const data = await login(credentials);
     return data;
 };
 
