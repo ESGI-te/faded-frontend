@@ -14,7 +14,7 @@ IconButton.propTypes = {
     isRound: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isLoading: PropTypes.bool,
-    'aria-label': PropTypes.string.isRequired,
+    'aria-label': PropTypes.string,
 };
 
 IconButton.defaultProps = {
