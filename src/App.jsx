@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import routes from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const router = createBrowserRouter(routes);
 
@@ -16,12 +17,13 @@ export const queryClient = new QueryClient({
 
 function App() {
     return (
-        <ThemeProvider theme={mediaQueries}>
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={mediaQueries}>
                 <Theme />
                 <RouterProvider router={router} />
-            </QueryClientProvider>
-        </ThemeProvider>
+            </ThemeProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     );
 }
 
