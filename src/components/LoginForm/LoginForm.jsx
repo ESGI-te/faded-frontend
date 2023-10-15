@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import useLoginMutation from './useLoginMutation.hook';
 import { useNavigate } from 'react-router-dom';
+import { getUser } from '@api/api';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -20,8 +21,10 @@ const LoginForm = () => {
 
     const onSubmit = (data) => {
         login.mutate(data, {
-            onSuccess: ({ accessToken }) => {
-                localStorage.setItem('accessToken', accessToken);
+            onSuccess: async ({ token }) => {
+                localStorage.setItem('token', token);
+                const user = await getUser();
+                localStorage.setItem('user_roles', JSON.stringify(user.roles));
                 navigate('/', { replace: true });
             },
         });
