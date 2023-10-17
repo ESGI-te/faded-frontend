@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import routes from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import IntlProvider from '@contexts/IntlProvider';
 
 const router = createBrowserRouter(routes);
 
@@ -18,11 +19,13 @@ export const queryClient = new QueryClient({
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={mediaQueries}>
-                <Theme />
-                <RouterProvider router={router} />
-            </ThemeProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            <IntlProvider>
+                <ThemeProvider theme={mediaQueries}>
+                    <Theme />
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
+            </IntlProvider>
         </QueryClientProvider>
     );
 }
