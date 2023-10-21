@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Text as AriaText } from 'react-aria-components';
 
 const Text = ({ variant, ...props }) => {
     return (
@@ -26,8 +27,8 @@ const truncatedOnMultipleLinesCss = css`
     -webkit-line-clamp: ${(props) => props.$numberOfLines};
 `;
 
-const TextBase = styled.p`
-    color: var(${(props) => props.color});
+const TextBase = styled(AriaText)`
+    color: var(${(props) => props.color || '--typo'});
     font-size: ${(props) => props.fontSize};
     font-weight: var(${(props) => props.fontWeight});
     line-height: ${(props) => props.lineHeight};

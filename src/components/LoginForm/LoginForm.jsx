@@ -1,13 +1,12 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { loginFormSchema } from './LoginForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
-import useLoginMutation from './useLoginMutation.hook';
-import { useNavigate } from 'react-router-dom';
-import { getUser } from '@api/api';
+import Button from '@components/Button';
+import PropTypes from 'prop-types';
+import { InputTextController } from '@components/InputText';
 
-const LoginForm = () => {
-    const navigate = useNavigate();
+const LoginForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
         mode: 'onChange',
         resolver: yupResolver(loginFormSchema),
@@ -16,45 +15,21 @@ const LoginForm = () => {
             password: '',
         },
     });
-    const { isDirty, isValid } = formState;
-    const login = useLoginMutation();
-
-    const onSubmit = (data) => {
-        login.mutate(data, {
-            onSuccess: async ({ token }) => {
-                localStorage.setItem('token', token);
-                const user = await getUser();
-                localStorage.setItem('user_roles', JSON.stringify(user.roles));
-                navigate('/', { replace: true });
-            },
-        });
-    };
+    const { isDirty } = formState;
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-                control={control}
-                name="email"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Email
-                        <input {...field} type="text" />
-                    </Label>
-                )}
-            />
-            <Controller
+            <InputTextController control={control} name="email" placeholder="Email" label="Email" />
+            <InputTextController
                 control={control}
                 name="password"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Mot de passe
-                        <input {...field} type="password" />
-                    </Label>
-                )}
+                type="password"
+                label="Mot de passe"
+                placeholder="******"
             />
-            <button disabled={!isDirty || !isValid} type="submit">
+            <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
                 Se connecter
-            </button>
+            </SubmitButton>
         </Form>
     );
 };
@@ -62,13 +37,21 @@ const LoginForm = () => {
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    row-gap: 2rem;
+    row-gap: 1rem;
+    width: 100%;
 `;
-const Label = styled.label`
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
-    align-items: flex-start;
+const SubmitButton = styled(Button)`
+    margin-top: 1rem;
 `;
+
+LoginForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+};
+
+LoginForm.defaultProps = {
+    onSubmit: () => {},
+    isLoading: false,
+};
 
 export default LoginForm;
