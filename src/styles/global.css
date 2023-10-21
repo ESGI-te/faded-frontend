@@ -30,4 +30,10 @@ html,
 body {
     overscroll-behavior: none;
     font-family: 'Montserrat', sans-serif;
+    color: var(--typo);
+}
+
+a {
+    text-decoration: none;
+    color: var(--typo);
 }
