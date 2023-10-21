@@ -1,13 +1,12 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { registerFormSchema } from './RegisterForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
-import Cluster from '@components/layout/Cluster';
-import useCreateUserMutation from '@queries/user/useCreateUserMutation.hook';
-import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { InputTextController } from '@components/InputText';
+import Button from '@components/Button';
 
-const RegisterForm = () => {
-    const navigate = useNavigate();
+const RegisterForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
         mode: 'onChange',
         resolver: yupResolver(registerFormSchema),
@@ -15,90 +14,52 @@ const RegisterForm = () => {
             email: '',
             firstName: '',
             lastName: '',
-            username: '',
             password: '',
             password_confirmation: '',
         },
     });
-    const { isDirty, isValid } = formState;
-    const register = useCreateUserMutation();
-
-    const onSubmit = (formData) => {
-        const { password_confirmation, ...data } = formData;
-        register.mutate(data, {
-            onSuccess: () => {
-                navigate('/login', { replace: true });
-            },
-        });
-    };
+    const { isDirty } = formState;
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-                control={control}
-                name="email"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Email
-                        <input {...field} type="text" />
-                    </Label>
-                )}
-            />
-            <Cluster gap="1rem" align="center">
-                <Controller
-                    control={control}
-                    name="lastName"
-                    render={({ field, fieldState: { error } }) => (
-                        <Label>
-                            Nom
-                            <input {...field} type="text" />
-                        </Label>
-                    )}
-                />
-                <Controller
+            <ResponsiveWrapper>
+                <InputTextController
                     control={control}
                     name="firstName"
-                    render={({ field, fieldState: { error } }) => (
-                        <Label>
-                            Prénom
-                            <input {...field} type="text" />
-                        </Label>
-                    )}
+                    placeholder="Prénom"
+                    label="Prénom"
                 />
-            </Cluster>
-            <Controller
+                <InputTextController
+                    control={control}
+                    name="lastName"
+                    placeholder="Nom"
+                    label="Nom"
+                />
+            </ResponsiveWrapper>
+            <InputTextController
                 control={control}
-                name="username"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Pseudo
-                        <input {...field} type="text" />
-                    </Label>
-                )}
+                name="email"
+                placeholder="Email"
+                label="Email"
+                type="email"
             />
-            <Controller
+            <InputTextController
                 control={control}
                 name="password"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Mot de passe
-                        <input {...field} type="password" />
-                    </Label>
-                )}
+                placeholder="******"
+                label="Mot de passe"
+                type="password"
             />
-            <Controller
+            <InputTextController
                 control={control}
                 name="password_confirmation"
-                render={({ field, fieldState: { error } }) => (
-                    <Label>
-                        Confirmer le mot de passe
-                        <input {...field} type="password" />
-                    </Label>
-                )}
+                placeholder="******"
+                label="Mot de passe"
+                type="password"
             />
-            <button disabled={!isDirty || !isValid} type="submit">
+            <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
                 S'inscrire
-            </button>
+            </SubmitButton>
         </Form>
     );
 };
@@ -106,13 +67,36 @@ const RegisterForm = () => {
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    row-gap: 2rem;
+    row-gap: 1rem;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        row-gap: 2rem;
+    }
 `;
-const Label = styled.label`
+const ResponsiveWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
-    align-items: flex-start;
+    row-gap: 1rem;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        flex-direction: row;
+        column-gap: 1rem;
+    }
 `;
+const SubmitButton = styled(Button)`
+    margin-top: 1rem;
+    align-self: stretch;
+    background-color: var(--black);
+`;
+
+RegisterForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+};
+
+RegisterForm.defaultProps = {
+    onSubmit: () => {},
+    isLoading: false,
+};
 
 export default RegisterForm;

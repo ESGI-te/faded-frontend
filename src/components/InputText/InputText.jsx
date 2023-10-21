@@ -20,6 +20,7 @@ const InputWrapper = styled(TextField)`
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
+    width: 100%;
 `;
 const StyledInput = styled(Input)`
     height: 3rem;
