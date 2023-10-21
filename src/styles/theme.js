@@ -51,14 +51,49 @@ export const Theme = createGlobalStyle`
         --container-padding-mobile: 1rem;
 
 		/* Colors */
-		--primary: #000000; 
+        --primary50:  #F9F7F7;
+        --primary100: #F4EFF1;
+        --primary200: #E9E2E3;
+        --primary300: #D8C9CD;
+        --primary400: #BDA5AB;
+        --primary500: #A88B93;
 
-		--secondary: #564147;
-		--secondary-light: #BDA5AB;
+		--secondary50: #FFF0F7;
+        --secondary100: #FFE3F1;
+        --secondary200: #FFC9E5;
+        --secondary300: #FF9CCE;
+        --secondary400: #FF5FAC;
+        --secondary500: #FF318A;
+        
+        --alert50: #FFE9ED;
+        --alert100: #FFD4DB;
+        --alert200: #FFA8B7;
+        --alert300: #FF7D92;
+        --alert400: #FF516E;
+        --alert500: #FF264A;
+        --alert600: #CC1E3B;
+        --alert700: #99172C;
 
-		--white: #ffffff;
-		
-		--black: #141414;
+        --success50:  #F3FAF8;
+        --success100: #D8EFEB;
+        --success200: #B0DFD8;
+        --success300: #81C7BF;
+        --success400: #56ABA3;
+        --success500: #3D8F89;
+
+        --info-50: #F0F4FD;
+        --info-100: #E5EBFA;
+        --info-200: #CFDAF6;
+        --info-300: #B2C1EF;
+        --info-400: #92A0E7;
+        --info-500: #7881DC;
+
+        --warning-50: #fffcea;
+        --warning-100: #fff5c5;
+        --warning-200: #ffeb85;
+        --warning-300: #ffda46;
+        --warning-400: #ffc71b;
+        --warning-500: #ffa500;
 
 		--neutral50: #F9F7FA;
         --neutral100: #F0EDF2;
@@ -68,10 +103,16 @@ export const Theme = createGlobalStyle`
         --neutral500: #88848C;
         --neutral600: #6F6B73;
         --neutral700: #565259;
-        --neutral: var(--neutral500);
 
-		--success: #254D4C;
-		--success-dark: #002120;
+        --primary: var(--primary400);
+        --secondary: var(--primary100);
+        --success: var(--success500);
+        --info: var(--info500);
+        --warning: var(--warning500);
+        --neutral: var(--neutral500);
+        --white: #ffffff;
+		--black: #000000;
+		--typo: #141414;
     }
 
 `;

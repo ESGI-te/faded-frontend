@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Text from '@components/Text';
+import { Button as AriaButton } from 'react-aria-components';
 
-const Button = ({ children, startIcon, endIcon, ...props }) => {
-    const disabled = props.isDisabled || props.isLoading;
+const Button = ({ children, startIcon, endIcon, isLoading, ...props }) => {
+    const isDisabled = props.isDisabled || isLoading;
     return (
-        <ButtonStyled {...props} disabled={disabled}>
+        <ButtonStyled {...props} isDisabled={isDisabled}>
             {startIcon}
-            {children && (
-                <Text as="span" fontWeight="--fw-semibold">
-                    {children}
-                </Text>
-            )}
+            {children && <ButtonText as="span">{children}</ButtonText>}
             {endIcon}
             {/* TODO: Add loading icon */}
         </ButtonStyled>
@@ -34,6 +31,10 @@ const sizes = {
 };
 
 const variantLookup = {
+    primary: css`
+        background-color: var(--primary);
+        color: var(--white);
+    `,
     secondary: css`
         background-color: transparent;
         color: var(--primary);
@@ -44,8 +45,11 @@ const variantLookup = {
         border: 1px solid transparent;
     `,
 };
-
-const ButtonStyled = styled.button`
+const ButtonText = styled(Text)`
+    color: inherit;
+    font-weight: inherit;
+`;
+const ButtonStyled = styled(AriaButton)`
     display: flex;
     column-gap: 0.5rem;
     align-items: center;
@@ -56,21 +60,19 @@ const ButtonStyled = styled.button`
     border: 1px solid transparent;
     background-color: var(${(props) => props.backgroundColor});
     color: var(${(props) => props.color});
-    border-radius: var(--r-full);
+    border-radius: var(--r-s);
     transition-duration: 200ms;
     transition-property: opacity, background-color, color;
+    font-weight: var(--fw-semibold);
 
-    ${(props) => sizes[props.$size]}
-
+    ${(props) => sizes[props.size]}
     ${(props) => variantLookup[props.variant]}
 
-    ${(props) =>
-        props.disabled &&
-        css`
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        `}
+    &[data-disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 `;
 
 Button.propTypes = {
