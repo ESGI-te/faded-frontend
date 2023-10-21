@@ -18,10 +18,16 @@ const Container = styled.div`
     flex-direction: column;
 `;
 const Main = styled.main`
-    flex: 1;
+    width: 100%;
+    flex-grow: 1;
     min-height: 0;
     overflow-y: auto;
-    width: 100%;
     background-color: var(--white);
+    display: flex;
+    align-items: start;
+
+    & > * {
+        flex: 1;
+    }
 `;
 export default DefaultLayout;

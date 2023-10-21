@@ -111,7 +111,7 @@ export const Theme = createGlobalStyle`
         --warning: var(--warning500);
         --neutral: var(--neutral500);
         --white: #ffffff;
-		--black: #000000;
+		--black: #272727;
 		--typo: #141414;
     }
 

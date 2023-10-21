@@ -1,8 +1,8 @@
+import Link from '@components/Link';
 import Text from '@components/Text';
 import Cluster from '@components/layout/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@hooks/useAuth';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const DefaultLayoutHeader = () => {
@@ -65,7 +65,7 @@ const ProviderLink = styled(Link)`
 `;
 const LoginLink = styled(Link)`
     font-weight: var(--fw-semibold);
-    color: var(--primary);
+    color: var(--primary500);
 `;
 
 export default DefaultLayoutHeader;

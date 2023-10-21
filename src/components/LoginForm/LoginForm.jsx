@@ -19,7 +19,13 @@ const LoginForm = ({ onSubmit, isLoading }) => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputTextController control={control} name="email" placeholder="Email" label="Email" />
+            <InputTextController
+                control={control}
+                name="email"
+                placeholder="Email"
+                label="Email"
+                type="email"
+            />
             <InputTextController
                 control={control}
                 name="password"
@@ -39,9 +45,15 @@ const Form = styled.form`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        row-gap: 2rem;
+    }
 `;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
+    align-self: stretch;
+    background-color: var(--black);
 `;
 
 LoginForm.propTypes = {

@@ -6,6 +6,7 @@ import DefaultLayout from './layouts/DefaultLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import { USER_ROLES } from '@utils/constants';
 import DashboardPage from '@pages/DashboardPage';
+import AuthenticationLayout from './layouts/AuthenticationLayout';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -21,6 +22,24 @@ const applyProtectedRoutes = (routes) => {
     });
 };
 
+const authenticationRoutes = [
+    {
+        element: <AuthenticationLayout />,
+        children: [
+            {
+                path: '/login',
+                name: 'login',
+                element: <LoginPage />,
+            },
+            {
+                path: '/register',
+                name: 'register',
+                element: <RegisterPage />,
+            },
+        ],
+    },
+];
+
 const publicRoutes = [
     {
         element: <DefaultLayout />,
@@ -28,16 +47,6 @@ const publicRoutes = [
             {
                 path: '/',
                 element: <HomePage />,
-            },
-            {
-                path: 'login',
-                name: 'login',
-                element: <LoginPage />,
-            },
-            {
-                path: 'register',
-                name: 'register',
-                element: <RegisterPage />,
             },
         ],
     },
@@ -69,6 +78,6 @@ const privateRoutes = [
 
 const protectedPrivateRoutes = applyProtectedRoutes(privateRoutes);
 
-const routes = [...publicRoutes, ...protectedPrivateRoutes];
+const routes = [...authenticationRoutes, ...publicRoutes, ...protectedPrivateRoutes];
 
 export default routes;
