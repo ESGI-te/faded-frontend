@@ -1,26 +1,26 @@
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat'), url('../../public/fonts/Montserrat-Regular.woff2') format('woff2'),
-        url('../../public/fonts/Montserrat-Regular.woff') format('woff');
+    font-family: 'Gilroy';
+    src: local('Gilroy'), url('../../public/fonts/Gilroy-Regular.woff2') format('woff2'),
+        url('../../public/fonts/Gilroy-Regular.woff') format('woff');
     font-display: swap;
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat-SemiBold'),
-        url('../../public/fonts/Montserrat-Semibold.woff2') format('woff2'),
-        url('../../public/fonts/Montserrat-Semibold.woff') format('woff');
+    font-family: 'Gilroy';
+    src: local('Gilroy-SemiBold'),
+        url('../../public/fonts/Gilroy-Semibold.woff2') format('woff2'),
+        url('../../public/fonts/Gilroy-Semibold.woff') format('woff');
     font-display: swap;
     font-weight: 600;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Montserrat';
-    src: local('Montserrat-Bold'), url('../../public/fonts/Montserrat-Bold.woff2') format('woff2'),
-        url('../../public/fonts/Montserrat-Bold.woff') format('woff');
+    font-family: 'Gilroy';
+    src: local('Gilroy-Bold'), url('../../public/fonts/Gilroy-Bold.woff2') format('woff2'),
+        url('../../public/fonts/Gilroy-Bold.woff') format('woff');
     font-display: swap;
     font-weight: 700;
     font-style: normal;
@@ -29,11 +29,10 @@
 html,
 body {
     overscroll-behavior: none;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Gilroy', sans-serif;
     color: var(--typo);
 }
 
-a {
-    text-decoration: none;
-    color: var(--typo);
+#root {
+    height: 100%;
 }
