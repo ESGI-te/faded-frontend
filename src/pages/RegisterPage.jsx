@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import BlobIllustration from '@public/images/illustration-register.svg?react';
 import Register from '@components/Register';
 import Link from '@components/Link';
+import { FormattedMessage } from 'react-intl';
 
 const LoginPage = () => {
     return (
@@ -11,12 +12,14 @@ const LoginPage = () => {
             <RegisterWrapper>
                 <Stack gap="0.25rem">
                     <Text variant="headingXL" fontWeight="--fw-bold">
-                        Rejoignez des milliers d'utilisateurs.
+                        <FormattedMessage defaultMessage="Rejoignez des milliers d'utilisateurs." />
                     </Text>
                     <Text>Sunt id dolor eu officia ex amet voluptate esse velit.</Text>
                 </Stack>
                 <Register />
-                <Link to="/login">Déjà inscrit ? Connectez-vous.</Link>
+                <Link to="/login">
+                    <FormattedMessage defaultMessage="Déjà inscrit ? Connectez-vous." />
+                </Link>
             </RegisterWrapper>
             <IllustrationWrapper>
                 <Illustration />

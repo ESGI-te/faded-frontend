@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
+import { FormattedMessage } from 'react-intl';
 
 const LoginForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
@@ -30,11 +31,11 @@ const LoginForm = ({ onSubmit, isLoading }) => {
                 control={control}
                 name="password"
                 type="password"
-                label="Mot de passe"
+                label={<FormattedMessage defaultMessage="Mot de passe" />}
                 placeholder="******"
             />
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                Se connecter
+                <FormattedMessage defaultMessage="Se connecter" />
             </SubmitButton>
         </Form>
     );
