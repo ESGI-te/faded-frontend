@@ -1,6 +1,6 @@
 import { getUser } from '@api/api';
 import LoginForm from '@components/LoginForm';
-import useLoginMutation from '@components/LoginForm/useLoginMutation.hook';
+import useLoginMutation from './useLoginMutation.hook';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
