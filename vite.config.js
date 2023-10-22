@@ -6,7 +6,16 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), macrosPlugin(), svgr()],
+    plugins: [
+        react({
+            babel: {
+                plugins: ['babel-plugin-macros'],
+                configFile: true,
+            },
+        }),
+        macrosPlugin(),
+        svgr(),
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
