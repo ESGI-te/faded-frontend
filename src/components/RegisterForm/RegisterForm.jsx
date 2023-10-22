@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
 import Button from '@components/Button';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const RegisterForm = ({ onSubmit, isLoading }) => {
+    const intl = useIntl();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onChange',
         resolver: yupResolver(registerFormSchema),
@@ -26,14 +28,14 @@ const RegisterForm = ({ onSubmit, isLoading }) => {
                 <InputTextController
                     control={control}
                     name="firstName"
-                    placeholder="Prénom"
-                    label="Prénom"
+                    placeholder={intl.formatMessage({ defaultMessage: 'Prénom' })}
+                    label={<FormattedMessage defaultMessage="Prénom" />}
                 />
                 <InputTextController
                     control={control}
                     name="lastName"
-                    placeholder="Nom"
-                    label="Nom"
+                    placeholder={intl.formatMessage({ defaultMessage: 'Nom' })}
+                    label={<FormattedMessage defaultMessage="Nom" />}
                 />
             </ResponsiveWrapper>
             <InputTextController
@@ -47,18 +49,18 @@ const RegisterForm = ({ onSubmit, isLoading }) => {
                 control={control}
                 name="password"
                 placeholder="******"
-                label="Mot de passe"
+                label={<FormattedMessage defaultMessage="Mot de passe" />}
                 type="password"
             />
             <InputTextController
                 control={control}
                 name="password_confirmation"
                 placeholder="******"
-                label="Mot de passe"
+                label={<FormattedMessage defaultMessage="Mot de passe" />}
                 type="password"
             />
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                S'inscrire
+                <FormattedMessage defaultMessage="S'inscrire" />
             </SubmitButton>
         </Form>
     );

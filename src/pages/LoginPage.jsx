@@ -4,6 +4,7 @@ import Stack from '@components/layout/Stack';
 import styled from 'styled-components';
 import BlobIllustration from '@public/images/illustration-login.svg?react';
 import Link from '@components/Link';
+import { FormattedMessage } from 'react-intl';
 
 const LoginPage = () => {
     return (
@@ -11,12 +12,14 @@ const LoginPage = () => {
             <LoginWrapper>
                 <Stack gap="0.25rem">
                     <Text variant="headingXL" fontWeight="--fw-bold">
-                        Ravi de vous revoir.
+                        <FormattedMessage defaultMessage="Ravi de vous revoir." />
                     </Text>
                     <Text>Sunt id dolor eu officia ex amet voluptate esse velit.</Text>
                 </Stack>
                 <Login />
-                <Link to="/register">Pas encore inscrit ? Rejoignez nous !</Link>
+                <Link to="/register">
+                    <FormattedMessage defaultMessage="Pas encore inscrit ? Rejoignez nous !" />
+                </Link>
             </LoginWrapper>
             <IllustrationWrapper>
                 <Illustration />
