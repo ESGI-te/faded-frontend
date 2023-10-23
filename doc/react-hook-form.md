@@ -40,7 +40,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 const LoginForm = () => {
     const { control, handleSubmit, formState } = useForm({
-        mode: 'onChange',
+        mode: 'onBlur',
         resolver: yupResolver(loginFormSchema), // Here we tell react-hook-form to use our validation schema created with yup or any validation library
         defaultValues: {
             email: '',
