@@ -1,19 +1,19 @@
 import { useForm } from 'react-hook-form';
-import { loginFormSchema } from './LoginForm.schema';
+import { searchProviderFormSchema } from './SearchProviderForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import Button from '@components/Button';
 import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-const LoginForm = ({ onSubmit, isLoading }) => {
+const SearchProviderForm = ({ onSubmit, isLoading }) => {
+    const intl = useIntl();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
-        resolver: yupResolver(loginFormSchema),
+        resolver: yupResolver(searchProviderFormSchema),
         defaultValues: {
-            email: '',
-            password: '',
+            providerName: '',
         },
     });
     const { isDirty } = formState;
@@ -22,20 +22,12 @@ const LoginForm = ({ onSubmit, isLoading }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
             <InputTextController
                 control={control}
-                name="email"
-                placeholder="Email"
-                label="Email"
-                type="email"
-            />
-            <InputTextController
-                control={control}
-                name="password"
-                type="password"
-                label={<FormattedMessage defaultMessage="Mot de passe" />}
-                placeholder="******"
+                name="providerName"
+                placeholder={intl.formatMessage({ defaultMessage: "Recherche d'établissement" })}
+                label={<FormattedMessage defaultMessage="Nom de l'établissement" />}
             />
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                <FormattedMessage defaultMessage="Se connecter" />
+                <FormattedMessage defaultMessage="Rechercher" />
             </SubmitButton>
         </Form>
     );
@@ -46,10 +38,6 @@ const Form = styled.form`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        row-gap: 2rem;
-    }
 `;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
@@ -57,14 +45,14 @@ const SubmitButton = styled(Button)`
     background-color: var(--black);
 `;
 
-LoginForm.propTypes = {
+SearchProviderForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
 };
 
-LoginForm.defaultProps = {
+SearchProviderForm.defaultProps = {
     onSubmit: () => {},
     isLoading: false,
 };
 
-export default LoginForm;
+export default SearchProviderForm;

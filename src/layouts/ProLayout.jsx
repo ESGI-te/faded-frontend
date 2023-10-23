@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Outlet } from 'react-router-dom';
 
-const DashboardLayout = (props) => {
+const ProLayout = (props) => {
     return (
         <div>
             <Outlet />
@@ -10,6 +10,6 @@ const DashboardLayout = (props) => {
     );
 };
 
-DashboardLayout.propTypes = {};
+ProLayout.propTypes = {};
 
-export default DashboardLayout;
+export default ProLayout;

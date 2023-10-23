@@ -7,7 +7,7 @@ const InputText = ({ label, description, errorMessage, isInvalid, ...props }) =>
     const hasError = isInvalid || !!errorMessage;
 
     return (
-        <InputWrapper {...props} isInvalid={hasError} isReadOnly>
+        <InputWrapper {...props} isInvalid={hasError}>
             <Label>{label}</Label>
             <StyledInput />
             {description && <Description slot="description">{description}</Description>}

@@ -3,7 +3,7 @@ import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
 import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from './layouts/DefaultLayout';
-import DashboardLayout from './layouts/DashboardLayout';
+import ProLayout from './layouts/ProLayout';
 import { USER_ROLES } from '@utils/constants';
 import DashboardPage from '@pages/DashboardPage';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
@@ -54,13 +54,13 @@ const publicRoutes = [
 
 const privateRoutes = [
     {
-        path: 'dashboard',
-        element: <DashboardLayout />,
+        path: 'pro',
+        element: <ProLayout />,
         children: [
             {
                 path: '',
                 element: <DashboardPage />,
-                roles: [USER_ROLES.ADMIN, USER_ROLES.MANAGER, USER_ROLES.BARBER],
+                roles: [USER_ROLES.ADMIN, USER_ROLES.MANAGER],
             },
         ],
     },

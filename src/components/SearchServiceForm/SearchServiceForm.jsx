@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { serviceFormSchema } from './ServiceForm.schema';
+import { searchServiceFormSchema } from './SearchServiceForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import Button from '@components/Button';
@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-const ServiceForm = ({ onSubmit, isLoading }) => {
+const SearchServiceForm = ({ onSubmit, isLoading }) => {
     const intl = useIntl();
     const { control, handleSubmit, formState } = useForm({
-        mode: 'onChange',
-        resolver: yupResolver(serviceFormSchema),
+        mode: 'onBlur',
+        resolver: yupResolver(searchServiceFormSchema),
         defaultValues: {
             service: '',
             localisation: '',
@@ -24,8 +24,8 @@ const ServiceForm = ({ onSubmit, isLoading }) => {
             <InputTextController
                 control={control}
                 name="service"
-                placeholder={intl.formatMessage({ defaultMessage: 'Prestation' })}
-                label={<FormattedMessage defaultMessage="Coupe & Coiffage" />}
+                placeholder={intl.formatMessage({ defaultMessage: 'Coupe & Coiffage' })}
+                label={<FormattedMessage defaultMessage="Prestation" />}
             />
             <InputTextController
                 control={control}
@@ -45,10 +45,6 @@ const Form = styled.form`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        row-gap: 2rem;
-    }
 `;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
@@ -56,14 +52,14 @@ const SubmitButton = styled(Button)`
     background-color: var(--black);
 `;
 
-ServiceForm.propTypes = {
+SearchServiceForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
 };
 
-ServiceForm.defaultProps = {
+SearchServiceForm.defaultProps = {
     onSubmit: () => {},
     isLoading: false,
 };
 
-export default ServiceForm;
+export default SearchServiceForm;
