@@ -3,10 +3,11 @@ import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
 import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from './layouts/DefaultLayout';
-import DashboardLayout from './layouts/DashboardLayout';
+import ProviderLayout from './layouts/ProviderLayout';
 import { USER_ROLES } from '@utils/constants';
-import DashboardPage from '@pages/DashboardPage';
+import DashboardPage from '@pages/provider/DashboardPage';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
+import EstablishmentPage from '@pages/EstablishmentPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -22,7 +23,8 @@ const applyProtectedRoutes = (routes) => {
     });
 };
 
-const authenticationRoutes = [
+const customerRoutes = [
+    /* Authentication routes */
     {
         element: <AuthenticationLayout />,
         children: [
@@ -38,9 +40,7 @@ const authenticationRoutes = [
             },
         ],
     },
-];
-
-const publicRoutes = [
+    /* Public routes */
     {
         element: <DefaultLayout />,
         children: [
@@ -48,36 +48,46 @@ const publicRoutes = [
                 path: '/',
                 element: <HomePage />,
             },
-        ],
-    },
-];
-
-const privateRoutes = [
-    {
-        path: 'dashboard',
-        element: <DashboardLayout />,
-        children: [
             {
-                path: '',
-                element: <DashboardPage />,
-                roles: [USER_ROLES.ADMIN, USER_ROLES.MANAGER, USER_ROLES.BARBER],
+                path: 'establishments/:establishmentId',
+                element: <EstablishmentPage />,
             },
         ],
     },
-    {
-        element: <DefaultLayout />,
-        children: [
-            {
-                path: 'profile',
-                element: <HomePage />,
-                roles: [USER_ROLES.USER],
-            },
-        ],
-    },
+    /* Private routes */
+    ...applyProtectedRoutes([
+        {
+            element: <DefaultLayout />,
+            children: [
+                {
+                    path: 'profile',
+                    element: <HomePage />,
+                    roles: [USER_ROLES.USER],
+                },
+            ],
+        },
+    ]),
 ];
 
-const protectedPrivateRoutes = applyProtectedRoutes(privateRoutes);
+const providerRoutes = [
+    /* Private routes */
+    ...applyProtectedRoutes([
+        {
+            path: 'pro',
+            element: <ProviderLayout />,
+            children: [
+                {
+                    path: '',
+                    element: <DashboardPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.MANAGER],
+                },
+            ],
+        },
+    ]),
+];
 
-const routes = [...authenticationRoutes, ...publicRoutes, ...protectedPrivateRoutes];
+const adminRoutes = applyProtectedRoutes([]);
+
+const routes = [...customerRoutes, ...providerRoutes, ...adminRoutes];
 
 export default routes;

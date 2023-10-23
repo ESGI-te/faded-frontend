@@ -1,10 +1,10 @@
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@hooks/useAuth.hook';
 import { Navigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { USER_ROLES } from '@utils/constants';
 import useUserQuery from '@queries/user/useUserQuery.hook';
 
-const ProtectedRoute = ({ children, roles = [] }) => {
+const ProtectedRoute = ({ children, roles }) => {
     const { isAuthenticated } = useAuth();
     const { data: user } = useUserQuery();
 

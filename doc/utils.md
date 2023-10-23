@@ -12,8 +12,7 @@ Exemple:
 
 export const USER_ROLES = {
     USER: 'user',
-    BARBER: 'barber',
-    MANAGER: 'manager',
+    PROVIDER: 'provider',
     ADMIN: 'admin'
 };
 
@@ -26,7 +25,7 @@ On les utilise ensuite de cette manière :
 import { USER_ROLES } from '@utils/constants';
 
 const MyComponent = ({ user }) => {
-    if(!user.roles.includes(USER_ROLES.MANAGER)) {
+    if(!user.roles.includes(USER_ROLES.PROVIDER)) {
         return <p>Unauthorized</p>
     }
 

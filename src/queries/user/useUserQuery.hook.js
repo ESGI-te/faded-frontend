@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import userKeys from './userKeys';
 import { getUser } from '@api/api';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@hooks/useAuth.hook';
 
 const queryFn = async () => {
     const data = await getUser();
