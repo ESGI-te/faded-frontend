@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Text from '@components/Text';
 import { Button as AriaButton } from 'react-aria-components';
+import Spinner from '@components/Spinner';
 
 const Button = ({ children, startIcon, endIcon, isLoading, ...props }) => {
-    const isDisabled = props.isDisabled || isLoading;
     return (
-        <ButtonStyled {...props} isDisabled={isDisabled}>
+        <ButtonStyled {...props}>
             {startIcon}
             {children && <ButtonText as="span">{children}</ButtonText>}
             {endIcon}
-            {/* TODO: Add loading icon */}
+            {isLoading && <Spinner />}
         </ButtonStyled>
     );
 };
@@ -72,6 +72,10 @@ const ButtonStyled = styled(AriaButton)`
         opacity: 0.5;
         cursor: not-allowed;
         pointer-events: none;
+    }
+
+    &[data-focused] {
+        outline: 2px solid var(--primary500);
     }
 `;
 

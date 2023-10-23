@@ -1,6 +1,5 @@
 export const USER_ROLES = {
     USER: 'ROLE_USER',
-    BARBER: 'ROLE_BARBER',
-    MANAGER: 'ROLE_MANAGER',
+    PROVIDER: 'ROLE_PROVIDER',
     ADMIN: 'ROLE_ADMIN',
 };

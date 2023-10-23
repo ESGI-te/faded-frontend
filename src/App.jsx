@@ -5,7 +5,6 @@ import routes from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import IntlProvider from '@contexts/IntlProvider';
-
 const router = createBrowserRouter(routes);
 
 export const queryClient = new QueryClient({

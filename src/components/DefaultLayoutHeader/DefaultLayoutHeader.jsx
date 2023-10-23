@@ -2,7 +2,7 @@ import Link from '@components/Link';
 import Text from '@components/Text';
 import Cluster from '@components/layout/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@hooks/useAuth.hook';
 import styled from 'styled-components';
 
 const DefaultLayoutHeader = () => {

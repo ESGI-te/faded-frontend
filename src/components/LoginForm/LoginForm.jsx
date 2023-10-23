@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 
 const LoginForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
-        mode: 'onChange',
+        mode: 'onBlur',
         resolver: yupResolver(loginFormSchema),
         defaultValues: {
             email: '',

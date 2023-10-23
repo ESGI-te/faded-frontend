@@ -1,7 +1,23 @@
+import camelcaseKeys from 'camelcase-keys';
+
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const callApi = async (url, options) => {
-    const URL = BASE_URL + url;
+    let URL = BASE_URL + url;
+
+    if (options?.query) {
+        const queryParams = new URLSearchParams(options.query);
+
+        const pageParam = queryParams.get('page');
+        const itemsPerPageParam = queryParams.get('itemsPerPage');
+
+        if (pageParam || itemsPerPageParam) {
+            queryParams.append('pagination', 'true');
+        }
+
+        const queryString = queryParams.toString();
+        URL = `${URL}?${queryString}`;
+    }
 
     const fetchOptions = {
         method: options?.method || 'GET',
@@ -27,11 +43,15 @@ export const callApi = async (url, options) => {
         }
     }
 
-    return responseData;
+    return transformResponse(responseData);
 };
 
 const authHeader = () => {
     const token = localStorage.getItem('token');
     if (!token) return {};
     return { Authorization: 'Bearer ' + token };
+};
+
+const transformResponse = (response) => {
+    return camelcaseKeys(response, { deep: true });
 };

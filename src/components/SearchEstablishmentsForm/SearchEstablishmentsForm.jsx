@@ -1,37 +1,37 @@
 import { useForm } from 'react-hook-form';
-import { serviceFormSchema } from './ServiceForm.schema';
+import { searchEstablishmentsSchema } from './SearchEstablishmentsForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import Button from '@components/Button';
 import PropTypes from 'prop-types';
-import { InputTextController } from '@components/InputText';
 import { FormattedMessage, useIntl } from 'react-intl';
+import InputSearchPlaces from '@components/InputSearchPlaces';
+import InputSearchServiceOrProvider from '@components/InputSearchServiceOrProvider';
 
-const ServiceForm = ({ onSubmit, isLoading }) => {
+const SearchEstablishments = ({ onSubmit, isLoading }) => {
     const intl = useIntl();
     const { control, handleSubmit, formState } = useForm({
-        mode: 'onChange',
-        resolver: yupResolver(serviceFormSchema),
+        mode: 'onBlur',
+        resolver: yupResolver(searchEstablishmentsSchema),
         defaultValues: {
-            service: '',
-            localisation: '',
+            categoryId: '',
+            address: '',
+            radius: 250000,
         },
     });
     const { isDirty } = formState;
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputTextController
+            <InputSearchServiceOrProvider
+                label={<FormattedMessage defaultMessage="Que cherchez-vous ?" />}
                 control={control}
-                name="service"
-                placeholder={intl.formatMessage({ defaultMessage: 'Prestation' })}
-                label={<FormattedMessage defaultMessage="Coupe & Coiffage" />}
+                name="categoryId"
             />
-            <InputTextController
+            <InputSearchPlaces
+                label={<FormattedMessage defaultMessage="Où" />}
                 control={control}
-                name="localisation"
-                label={<FormattedMessage defaultMessage="Localisation" />}
-                placeholder={intl.formatMessage({ defaultMessage: 'Paris' })}
+                name="address"
             />
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
                 <FormattedMessage defaultMessage="Rechercher" />
@@ -45,10 +45,6 @@ const Form = styled.form`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        row-gap: 2rem;
-    }
 `;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
@@ -56,14 +52,14 @@ const SubmitButton = styled(Button)`
     background-color: var(--black);
 `;
 
-ServiceForm.propTypes = {
+SearchEstablishments.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
 };
 
-ServiceForm.defaultProps = {
+SearchEstablishments.defaultProps = {
     onSubmit: () => {},
     isLoading: false,
 };
 
-export default ServiceForm;
+export default SearchEstablishments;

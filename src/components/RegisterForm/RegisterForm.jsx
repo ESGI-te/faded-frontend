@@ -10,7 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 const RegisterForm = ({ onSubmit, isLoading }) => {
     const intl = useIntl();
     const { control, handleSubmit, formState } = useForm({
-        mode: 'onChange',
+        mode: 'onBlur',
         resolver: yupResolver(registerFormSchema),
         defaultValues: {
             email: '',
