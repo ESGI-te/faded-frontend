@@ -2,10 +2,11 @@ import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import enMessages from '../../lang/en.json';
 import frMessages from '../../lang/fr.json';
 import useUserQuery from '@queries/user/useUserQuery.hook';
+import { useState } from 'react';
 
 export const LOCALES = {
-    EN: 'en',
-    FR: 'fr',
+    EN: 'en-US',
+    FR: 'fr-FR',
 };
 
 const messagesLookup = {
@@ -14,12 +15,11 @@ const messagesLookup = {
 };
 
 const IntlProvider = (props) => {
-    const { data: user } = useUserQuery();
-    const userLocale = user?.locale || LOCALES.FR;
+    // const { data: user } = useUserQuery();
+    const [locale, setLocale] = useState(LOCALES.FR);
+    // const userLocale = user?.locale || LOCALES.FR;
 
-    return (
-        <ReactIntlProvider locale={userLocale} messages={messagesLookup[userLocale]} {...props} />
-    );
+    return <ReactIntlProvider locale={locale} messages={messagesLookup[locale]} {...props} />;
 };
 
 export default IntlProvider;
