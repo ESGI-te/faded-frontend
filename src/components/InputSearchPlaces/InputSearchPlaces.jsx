@@ -1,14 +1,16 @@
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import PropTypes from 'prop-types';
 import Text from '@components/Text';
-import { InputSearchController } from '@components/InputSearch/InputSearch.controller';
+import { InputSearchController } from '@components/InputSearch';
+import { useEffect } from 'react';
 
-const InputSearchPlaces = ({ onChange, ...props }) => {
+const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
     const {
         ready,
         suggestions: { status, data },
         setValue,
         clearSuggestions,
+        value,
     } = usePlacesAutocomplete({
         callbackName: 'YOUR_CALLBACK_NAME',
         requestOptions: {
@@ -16,6 +18,11 @@ const InputSearchPlaces = ({ onChange, ...props }) => {
         },
         debounce: 300,
     });
+
+    useEffect(() => {
+        if (!defaultValue) return;
+        setValue(defaultValue, false);
+    }, [defaultValue]);
 
     const handleSelect = ({ description }) => {
         // When the user selects a place, we can replace the keyword without request data from API
@@ -53,6 +60,7 @@ const InputSearchPlaces = ({ onChange, ...props }) => {
     return (
         <InputSearchController
             {...props}
+            value={value}
             onChange={handleChange}
             isLoading={status !== 'OK'}
             results={data}
@@ -66,6 +74,7 @@ const InputSearchPlaces = ({ onChange, ...props }) => {
 
 InputSearchPlaces.propTypes = {
     onChange: PropTypes.func.isRequired,
+    defaultValue: PropTypes.string,
 };
 
 InputSearchPlaces.defaultProps = {

@@ -1,41 +1,49 @@
 import { useForm } from 'react-hook-form';
-import { searchEstablishmentsSchema } from './SearchEstablishmentsForm.schema';
+import { searchEstablishmentsFormSchema as schema } from './SearchEstablishmentsForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
-import Button from '@components/Button';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import InputSearchPlaces from '@components/InputSearchPlaces';
 import InputSearchServiceOrProvider from '@components/InputSearchServiceOrProvider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { useEffect } from 'react';
 
-const SearchEstablishments = ({ onSubmit, isLoading }) => {
+const SearchEstablishmentsForm = ({ onSubmit, defaultValues }) => {
     const intl = useIntl();
-    const { control, handleSubmit, formState } = useForm({
+    const { control, handleSubmit, watch } = useForm({
         mode: 'onBlur',
-        resolver: yupResolver(searchEstablishmentsSchema),
+        resolver: yupResolver(schema),
         defaultValues: {
-            categoryId: '',
-            address: '',
-            radius: 250000,
+            categoryId: '' || defaultValues?.categoryId,
+            address: '' || defaultValues?.address,
+            radius: 250000 || defaultValues?.radius,
         },
     });
-    const { isDirty } = formState;
+
+    useEffect(() => {
+        const subscription = watch(() => {
+            handleSubmit(onSubmit)();
+        });
+        return () => subscription.unsubscribe();
+    }, [watch]);
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form>
             <InputSearchServiceOrProvider
-                label={<FormattedMessage defaultMessage="Que cherchez-vous ?" />}
+                placeholder={intl.formatMessage({ defaultMessage: 'Que cherchez-vous ?' })}
                 control={control}
+                startIcon={<Icon icon={icon({ name: 'magnifying-glass', style: 'solid' })} />}
                 name="categoryId"
             />
             <InputSearchPlaces
-                label={<FormattedMessage defaultMessage="Où" />}
+                placeholder={intl.formatMessage({ defaultMessage: 'Où' })}
                 control={control}
+                defaultValue={defaultValues?.address}
+                startIcon={<Icon icon={icon({ name: 'location-dot', style: 'solid' })} />}
                 name="address"
             />
-            <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                <FormattedMessage defaultMessage="Rechercher" />
-            </SubmitButton>
         </Form>
     );
 };
@@ -45,21 +53,33 @@ const Form = styled.form`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        flex-direction: row;
+        column-gap: 1rem;
+        align-items: center;
+        max-width: 800px;
+    }
 `;
-const SubmitButton = styled(Button)`
-    margin-top: 1rem;
-    align-self: stretch;
-    background-color: var(--black);
+const Icon = styled(FontAwesomeIcon)`
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--primary500);
 `;
 
-SearchEstablishments.propTypes = {
+SearchEstablishmentsForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
+    defaultValues: PropTypes.shape({
+        categoryId: PropTypes.string,
+        address: PropTypes.string,
+        radius: PropTypes.number,
+    }),
 };
 
-SearchEstablishments.defaultProps = {
+SearchEstablishmentsForm.defaultProps = {
     onSubmit: () => {},
     isLoading: false,
 };
 
-export default SearchEstablishments;
+export default SearchEstablishmentsForm;
