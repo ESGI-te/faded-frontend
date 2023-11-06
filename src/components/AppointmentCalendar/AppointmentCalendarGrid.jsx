@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { LOCALES } from '@contexts/IntlProvider';
 import styled, { css } from 'styled-components';
 import { getDayOfWeek } from '@internationalized/date';
-import Stack from '@components/layout/Stack';
+import Stack from '@components/Stack';
 
 const weekDayLookup = {
     [LOCALES.EN]: {

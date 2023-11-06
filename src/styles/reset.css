@@ -87,3 +87,8 @@ html:focus-within {
         scroll-behavior: auto !important;
     }
 }
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+}
