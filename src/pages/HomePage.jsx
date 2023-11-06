@@ -1,9 +1,9 @@
 import Text from '@components/Text';
-import Stack from '@components/layout/Stack';
+import Stack from '@components/Stack';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import BlobIllustration from '@public/images/illustration-home.svg?react';
-import SearchEstablishments from '@components/SearchEstablishments';
+import HomeSearchEstablishments from '@components/HomeSearchEstablishments';
 
 const HomePage = () => {
     return (
@@ -17,7 +17,7 @@ const HomePage = () => {
                         <FormattedMessage defaultMessage="Depuis votre lit, ou dans le bus réservez en quelques clics." />
                     </Text>
                 </Stack>
-                <SearchEstablishments />
+                <HomeSearchEstablishments />
             </RegisterWrapper>
             <IllustrationWrapper>
                 <Illustration />

@@ -1,23 +1,16 @@
 import SearchEstablishmentsForm from '@components/SearchEstablishmentsForm';
-import useEstablishmentsQuery from '@queries/establishment/useEstablishmentsQuery.hook';
-import { useState } from 'react';
+import { useMemo } from 'react';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 const SearchEstablishments = () => {
-    const [queryParameters, setQueryParameters] = useState({});
-    const establishments = useEstablishmentsQuery(queryParameters, {
-        enabled: Object.keys(queryParameters).length > 0,
-    });
+    let [searchParams, setSearchParams] = useSearchParams();
+    const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
 
-    const handleSearchService = async (data) => {
-        setQueryParameters(data);
+    const handleSearchService = (data) => {
+        setSearchParams(createSearchParams(data));
     };
 
-    return (
-        <SearchEstablishmentsForm
-            onSubmit={handleSearchService}
-            isLoading={establishments.isLoading}
-        />
-    );
+    return <SearchEstablishmentsForm onSubmit={handleSearchService} defaultValues={params} />;
 };
 
 export default SearchEstablishments;

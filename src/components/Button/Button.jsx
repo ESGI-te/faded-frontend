@@ -37,8 +37,8 @@ const variantLookup = {
     `,
     secondary: css`
         background-color: transparent;
-        color: var(--primary);
-        border: 1px solid var(--primary);
+        color: var(--black);
+        border: 1px solid var(--black);
     `,
     ghost: css`
         background: none;

@@ -8,6 +8,7 @@ import { USER_ROLES } from '@utils/constants';
 import DashboardPage from '@pages/provider/DashboardPage';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
 import EstablishmentPage from '@pages/EstablishmentPage';
+import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -47,6 +48,10 @@ const customerRoutes = [
             {
                 path: '/',
                 element: <HomePage />,
+            },
+            {
+                path: '/establishments',
+                element: <EstablishmentSearchPage />,
             },
             {
                 path: 'establishments/:establishmentId',

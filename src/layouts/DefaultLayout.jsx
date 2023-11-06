@@ -14,12 +14,11 @@ const DefaultLayout = () => (
 const Container = styled.div`
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 4.5rem 1fr;
 `;
 const Main = styled.main`
     width: 100%;
-    flex-grow: 1;
     min-height: 0;
     overflow-y: auto;
     background-color: var(--white);

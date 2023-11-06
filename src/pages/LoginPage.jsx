@@ -1,6 +1,6 @@
 import Login from '@components/Login';
 import Text from '@components/Text';
-import Stack from '@components/layout/Stack';
+import Stack from '@components/Stack';
 import styled from 'styled-components';
 import BlobIllustration from '@public/images/illustration-login.svg?react';
 import Link from '@components/Link';

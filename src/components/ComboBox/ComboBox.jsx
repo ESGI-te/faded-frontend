@@ -29,7 +29,7 @@ const ComboBox = ({
 
     return (
         <InputWrapper {...props} selectedKey={props.value} ref={triggerRef}>
-            <Label>{label}</Label>
+            {label && <Label>{label}</Label>}
             <Input
                 endIcon={
                     hasError ? (
