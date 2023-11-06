@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const searchEstablishmentsFormSchema = yup.object({
+export const HomeSearchEstablishmentsFormSchema = yup.object({
     service: yup.string(),
     address: yup.string(),
 });

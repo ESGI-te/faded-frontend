@@ -1,5 +1,5 @@
 import Text from '@components/Text';
-import Stack from '@components/layout/Stack';
+import Stack from '@components/Stack';
 import styled from 'styled-components';
 import BlobIllustration from '@public/images/illustration-register.svg?react';
 import Register from '@components/Register';

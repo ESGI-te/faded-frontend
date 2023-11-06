@@ -1,6 +1,6 @@
 import Link from '@components/Link';
 import Text from '@components/Text';
-import Cluster from '@components/layout/Cluster';
+import Cluster from '@components/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@hooks/useAuth.hook';
 import styled from 'styled-components';
@@ -32,12 +32,12 @@ const Header = styled.header`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 4.5rem;
+    height: 100%;
     background-color: var(--white);
-    padding-inline: 1rem;
+    padding-inline: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding-inline: 2.5rem;
+        padding-inline: var(--container-padding);
     }
 `;
 const ProfileIcon = styled(FontAwesomeIcon)`

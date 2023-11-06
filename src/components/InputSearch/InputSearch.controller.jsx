@@ -13,7 +13,6 @@ export const InputSearchController = (props) => {
             onChange={(value) => {
                 const forwardedValue = !value ? '' : value;
                 onChange && onChange(forwardedValue);
-                field.onChange(forwardedValue);
             }}
             onSelect={(value) => {
                 const forwardedValue = !value ? '' : value;
