@@ -18,7 +18,7 @@ const establishmentKeys = {
     ],
     allDetails: () => [{ ...establishmentKeys.all()[0], scope: 'detail' }],
     detailById: (establishmentId) => [
-        { ...establishmentKeys.allDetails()[0], establishmentId: Number(establishmentId) },
+        { ...establishmentKeys.allDetails()[0], establishmentId: establishmentId },
     ],
 };
 
