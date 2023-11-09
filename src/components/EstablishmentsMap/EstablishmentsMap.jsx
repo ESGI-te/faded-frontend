@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
+import { Link } from 'react-router-dom';
 
 const EstablishmentsMap = ({ establishments }) => {
     const mapRef = React.useRef(null);
@@ -36,13 +37,13 @@ const EstablishmentsMap = ({ establishments }) => {
 
     return (
         <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} onLoad={onLoad}>
-            {establishments.map((office) => (
+            {establishments.map((establishment) => (
                 <Marker
-                    key={office.id}
-                    onClick={() => onClickMarker(office.id)}
+                    key={establishment.id}
+                    onClick={() => onClickMarker(establishment.id)}
                     position={{
-                        lat: office.lat,
-                        lng: office.lng,
+                        lat: establishment.lat,
+                        lng: establishment.lng,
                     }}
                 />
             ))}
@@ -68,7 +69,13 @@ const EstablishmentsMap = ({ establishments }) => {
                                 <span>({selectedEstablishment.noteCount} avis)</span>
                             </InfoText>
                         </InfoWrapper>
-                        <AppointmentButton variant="primary">Prendre rendez-vous</AppointmentButton>
+                        <AppointmentButton
+                            forwardedAs={Link}
+                            to={`/establishments/${selectedEstablishment.id}`}
+                            variant="primary"
+                        >
+                            Prendre rendez-vous
+                        </AppointmentButton>
                     </InfoWindowInnerWrapper>
                 </InfoWindow>
             )}

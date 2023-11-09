@@ -1,6 +1,6 @@
 import { Children, createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import Stack from '@ui/layout/Stack';
+import Stack from '@components/Stack';
 
 export const AccordionContext = createContext({});
 
