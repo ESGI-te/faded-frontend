@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { ComboBoxController } from '@components/ComboBox/ComboBox.controller';
-import useServiceCategoriesQuery from '@queries/serviceCategory/useServiceCategories.hook';
+import useServiceCategoriesQuery from '@queries/serviceCategory/useServiceCategoriesQuery.hook';
 import useEstablishmentSuggestionsQuery from '@queries/establishment/useEstablishmentSuggestionsQuery.hook';
 
 const ListItem = ({ item }) => {
