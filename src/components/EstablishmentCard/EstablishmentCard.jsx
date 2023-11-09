@@ -4,13 +4,18 @@ import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
+import { Link } from 'react-router-dom';
 
 const EstablishmentCard = ({ establishment }) => {
     return (
         <Card>
             <ImgWrapper />
             <InfoWrapper>
-                <Text variant="headingS">{establishment.name}</Text>
+                <Text variant="headingS">{establishment.name} </Text>
+                <InfoText>
+                    <InfoIcon icon={icon({ name: 'shoe-prints', style: 'solid' })} />
+                    <span>{establishment.distance.toFixed(2)} km</span>
+                </InfoText>
                 <InfoText>
                     <InfoIcon icon={icon({ name: 'location-dot', style: 'solid' })} />
                     {establishment.address}
@@ -20,7 +25,13 @@ const EstablishmentCard = ({ establishment }) => {
                     <span>{establishment.note}</span>
                     <span>({establishment.noteCount} avis)</span>
                 </InfoText>
-                <AppointmentButton variant="primary">Réserver</AppointmentButton>
+                <AppointmentButton
+                    forwardedAs={Link}
+                    to={`/establishments/${establishment.id}`}
+                    variant="primary"
+                >
+                    Réserver
+                </AppointmentButton>
             </InfoWrapper>
         </Card>
     );
