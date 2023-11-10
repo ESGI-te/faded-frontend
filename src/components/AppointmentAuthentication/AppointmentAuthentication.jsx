@@ -1,9 +1,9 @@
-import { getUser } from '@api/api';
 import Button from '@components/Button';
 import useLoginMutation from '@components/Login/useLoginMutation.hook';
 import LoginForm from '@components/LoginForm';
 import RegisterForm from '@components/RegisterForm';
 import Text from '@components/Text';
+import { useAuth } from '@contexts/AuthProvider';
 import useCreateUserMutation from '@queries/user/useCreateUserMutation.hook';
 import { useState } from 'react';
 import { Separator } from 'react-aria-components';
@@ -13,13 +13,12 @@ const AppointmentAuthentication = () => {
     const [form, setForm] = useState();
     const register = useCreateUserMutation();
     const login = useLoginMutation();
+    const { onAuthenticate } = useAuth();
 
     const handleLogin = (data) => {
         login.mutate(data, {
-            onSuccess: async ({ token }) => {
-                localStorage.setItem('token', token);
-                const user = await getUser();
-                localStorage.setItem('user_roles', JSON.stringify(user.roles));
+            onSuccess: ({ token }) => {
+                onAuthenticate(token);
             },
         });
     };
@@ -42,11 +41,7 @@ const AppointmentAuthentication = () => {
                     <Text variant="headingS" fontWeight="--fw-semibold">
                         Nouveau sur Barbers ?
                     </Text>
-                    <AuthenticationButton
-                        isFormSelected={!!form}
-                        onPress={() => setForm('register')}
-                        variant="secondary"
-                    >
+                    <AuthenticationButton onPress={() => setForm('register')} variant="secondary">
                         Créer mon compte
                     </AuthenticationButton>
                 </CallToActionWrapper>
