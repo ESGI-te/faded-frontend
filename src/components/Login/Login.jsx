@@ -1,18 +1,17 @@
-import { getUser } from '@api/api';
 import LoginForm from '@components/LoginForm';
 import useLoginMutation from './useLoginMutation.hook';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@contexts/AuthProvider';
 
 const Login = () => {
     const navigate = useNavigate();
     const login = useLoginMutation();
+    const { onAuthenticate } = useAuth();
 
     const onSubmit = (data) => {
         login.mutate(data, {
-            onSuccess: async ({ token }) => {
-                localStorage.setItem('token', token);
-                const user = await getUser();
-                localStorage.setItem('user_roles', JSON.stringify(user.roles));
+            onSuccess: ({ token }) => {
+                onAuthenticate(token);
                 navigate('/', { replace: true });
             },
         });

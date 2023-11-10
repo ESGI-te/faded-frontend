@@ -14,8 +14,8 @@ import AppointmentCalendar from '@components/AppointmentCalendar';
 import { dayjs } from '@utils/dayjs';
 import { InputSelectController } from '@components/InputSelect';
 import AppointmentAuthentication from '@components/AppointmentAuthentication';
-import { useAuth } from '@hooks/useAuth.hook';
 import Button from '@components/Button';
+import { useAuth } from '@contexts/AuthProvider';
 
 const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
     const { isAuthenticated } = useAuth();
@@ -48,85 +48,89 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Step>
-                <StepTitle>
-                    <span>1.</span>
-                    <span>Choix de la prestation</span>
-                </StepTitle>
-                {serviceValue ? (
-                    <StepResume>
-                        <ServiceInnerWrapper>
-                            <Text>{serviceValue.name}</Text>
-                            <Cluster gap="0.5rem" align="center">
-                                <Text color="--neutral500">{serviceValue.duration} min</Text>
-                                <Divider />
-                                <Text color="--neutral500">{serviceValue.price} €</Text>
-                            </Cluster>
-                        </ServiceInnerWrapper>
-                        <EditButton
-                            variant="ghost"
-                            icon={<TrashIcon icon={icon({ name: 'trash', style: 'solid' })} />}
-                            onPress={() => {
-                                handleResetValue('service');
-                                handleResetValue('date');
-                                handleResetValue('barberId');
-                            }}
-                        />
-                    </StepResume>
-                ) : (
-                    <EstablishmentServicesAccordion
-                        services={services}
-                        onChange={handleChangeService}
-                        defaultIndex={0}
-                    />
-                )}
-            </Step>
-            {serviceValue && (
+        <>
+            <Form onSubmit={handleSubmit(onSubmit)}>
                 <Step>
                     <StepTitle>
-                        <span>2.</span>
-                        <span>Choix de la date & heure</span>
+                        <span>1.</span>
+                        <span>Choix de la prestation</span>
                     </StepTitle>
-                    {dateValue ? (
+                    {serviceValue ? (
                         <StepResume>
-                            <Text>{dayjs(dateValue).format('dddd DD MMMM YYYY HH:mm')}</Text>
+                            <ServiceInnerWrapper>
+                                <Text>{serviceValue.name}</Text>
+                                <Cluster gap="0.5rem" align="center">
+                                    <Text color="--neutral500">{serviceValue.duration} min</Text>
+                                    <Divider />
+                                    <Text color="--neutral500">{serviceValue.price} €</Text>
+                                </Cluster>
+                            </ServiceInnerWrapper>
                             <EditButton
                                 variant="ghost"
-                                icon={<EditIcon icon={icon({ name: 'pen', style: 'solid' })} />}
-                                onPress={() => handleResetValue('date')}
+                                icon={<TrashIcon icon={icon({ name: 'trash', style: 'solid' })} />}
+                                onPress={() => {
+                                    handleResetValue('service');
+                                    handleResetValue('date');
+                                    handleResetValue('barberId');
+                                }}
                             />
                         </StepResume>
                     ) : (
-                        <DateStepContent>
-                            <BarberSelect
-                                control={control}
-                                name="barberId"
-                                items={barbers}
-                                label="Avec qui ?"
-                            >
-                                {(item) => (
-                                    <BarberSelectListItem id={item.name}>
-                                        <Cluster gap="0.5rem" align="center">
-                                            <BarberImage>
-                                                <Text
-                                                    color="--white"
-                                                    fontWeight="--fw-semibold"
-                                                    as="span"
-                                                >
-                                                    {item.name[0]}
-                                                </Text>
-                                            </BarberImage>
-                                            <Text slot="label">{item.name}</Text>
-                                        </Cluster>
-                                    </BarberSelectListItem>
-                                )}
-                            </BarberSelect>
-                            <AppointmentCalendar onChange={handleChangeDate} />
-                        </DateStepContent>
+                        <EstablishmentServicesAccordion
+                            services={services}
+                            onChange={handleChangeService}
+                            defaultIndex={0}
+                        />
                     )}
                 </Step>
-            )}
+                {serviceValue && (
+                    <Step>
+                        <StepTitle>
+                            <span>2.</span>
+                            <span>Choix de la date & heure</span>
+                        </StepTitle>
+                        {dateValue ? (
+                            <StepResume>
+                                <Text>{dayjs(dateValue).format('dddd DD MMMM YYYY HH:mm')}</Text>
+                                <EditButton
+                                    variant="ghost"
+                                    icon={<EditIcon icon={icon({ name: 'pen', style: 'solid' })} />}
+                                    onPress={() => handleResetValue('date')}
+                                />
+                            </StepResume>
+                        ) : (
+                            <DateStepContent>
+                                <BarberSelect
+                                    control={control}
+                                    name="barberId"
+                                    items={barbers}
+                                    label="Avec qui ?"
+                                >
+                                    {(item) => (
+                                        <BarberSelectListItem id={item.name}>
+                                            <Cluster gap="0.5rem" align="center">
+                                                <BarberImage>
+                                                    <Text
+                                                        color="--white"
+                                                        fontWeight="--fw-semibold"
+                                                        as="span"
+                                                    >
+                                                        {item.name[0]}
+                                                    </Text>
+                                                </BarberImage>
+                                                <Text slot="label">{item.name}</Text>
+                                            </Cluster>
+                                        </BarberSelectListItem>
+                                    )}
+                                </BarberSelect>
+                                <AppointmentCalendar onChange={handleChangeDate} />
+                            </DateStepContent>
+                        )}
+                    </Step>
+                )}
+
+                {isAuthenticated && <SubmitButton type="submit">Réserver</SubmitButton>}
+            </Form>
             {isValid && !isAuthenticated && (
                 <Step>
                     <StepTitle>
@@ -136,8 +140,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
                     <AppointmentAuthentication />
                 </Step>
             )}
-            {isAuthenticated && <SubmitButton type="submit">Réserver</SubmitButton>}
-        </Form>
+        </>
     );
 };
 
@@ -243,6 +246,11 @@ const BarberSelectListItem = styled(Item)`
 `;
 const SubmitButton = styled(Button)`
     background-color: var(--black);
+    margin-top: 1rem;
+
+    ${({ theme }) => theme.mediaQueries.tabletAndUp} {
+        margin-top: 2rem;
+    }
 `;
 
 AppointmentForm.propTypes = {

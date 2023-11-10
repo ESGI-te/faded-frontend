@@ -11,10 +11,6 @@ const LoginForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
         resolver: yupResolver(loginFormSchema),
-        defaultValues: {
-            email: '',
-            password: '',
-        },
     });
     const { isDirty } = formState;
 
