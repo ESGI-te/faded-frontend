@@ -98,6 +98,7 @@ const AppointmentCalendarGrid = ({ state, ...props }) => {
 const Table = styled.table`
     width: 100%;
     text-align: center;
+    border-spacing: 0.375rem 1rem;
 `;
 const HeaderCell = styled.th`
     ${({ isUnavailable }) =>

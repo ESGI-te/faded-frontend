@@ -1,4 +1,4 @@
-import AppointmentTimeSlots from '@components/AppointmentTimeSlots';
+import AppointmentTimeSlots from './AppointmentTimeSlots';
 import { useRef } from 'react';
 import { useCalendarCell } from 'react-aria';
 import styled from 'styled-components';

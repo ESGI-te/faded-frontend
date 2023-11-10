@@ -3,17 +3,19 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 
 const AppointmentTimeSlot = ({ children, ...props }) => {
-    return (
-        <TimeSlot variant="ghost" {...props}>
-            {children}
-        </TimeSlot>
-    );
+    return <TimeSlot {...props}>{children}</TimeSlot>;
 };
 
 const TimeSlot = styled(Button)`
     width: 100%;
-    border-radius: 0;
     color: var(--black);
+    background-color: var(--neutral50);
+    font-size: var(--fs-body-m);
+    padding: 0.25rem;
+
+    &:hover {
+        background-color: var(--neutral100);
+    }
 `;
 
 AppointmentTimeSlot.propTypes = {
