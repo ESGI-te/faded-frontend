@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import AppointmentTimeSlot from '@components/AppointmentTimeSlot';
+import AppointmentTimeSlot from './AppointmentTimeSlot';
 import { dayjs } from '@utils/dayjs';
-import { useAppointmentCalendar } from '@components/AppointmentCalendar';
+import { useAppointmentCalendar } from './AppointmentCalendar';
+import Stack from '@components/Stack';
 
 /* TODO: Get data from api */
 const TIME_SLOT_DURATION = 30;
@@ -31,7 +32,8 @@ const AppointmentTimeSlots = ({ date, ...props }) => {
         const formattedDate = dayjs(`${date.year}-${date.month}-${date.day}`);
         const formattedDateTime = formattedDate
             .set('hour', time.split(':')[0])
-            .set('minute', time.split(':')[1]);
+            .set('minute', time.split(':')[1])
+            .toISOString();
         return formattedDateTime;
     };
 
@@ -41,7 +43,7 @@ const AppointmentTimeSlots = ({ date, ...props }) => {
     };
 
     return (
-        <div>
+        <Stack gap="0.5rem">
             {timeSlots.map((timeSlot) => (
                 <AppointmentTimeSlot
                     {...props}
@@ -51,7 +53,7 @@ const AppointmentTimeSlots = ({ date, ...props }) => {
                     {timeSlot}
                 </AppointmentTimeSlot>
             ))}
-        </div>
+        </Stack>
     );
 };
 

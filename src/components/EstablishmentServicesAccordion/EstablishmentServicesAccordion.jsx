@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Accordion from '@components/Accordion';
 import AccordionItem from '@components/AccordionItem';
@@ -15,6 +14,7 @@ import Button from '@components/Button';
 
 const AccordionItemButton = ({ label }) => {
     const { isExpanded } = useAccordionItem();
+
     return (
         <AccordionButtonStyled>
             <Text variant="headingS" fontWeight="--fw-semibold">
@@ -28,7 +28,7 @@ const AccordionItemButton = ({ label }) => {
     );
 };
 
-const EstablishmentServicesAccordion = ({ services }) => {
+const EstablishmentServicesAccordion = ({ services, onChange, ...props }) => {
     const servicesByCategory = services.reduce((acc, item) => {
         const categoryName = item.category.name;
         if (!acc[categoryName]) {
@@ -40,7 +40,7 @@ const EstablishmentServicesAccordion = ({ services }) => {
     const items = Object.values(servicesByCategory);
 
     return (
-        <ServicesAccordion>
+        <ServicesAccordion {...props}>
             {items.map((item) => (
                 <AccordionItem key={item.category.id}>
                     <AccordionItemInnerWrapper>
@@ -62,7 +62,12 @@ const EstablishmentServicesAccordion = ({ services }) => {
                                                 <Divider />
                                                 <Text color="--neutral500">{service.price} €</Text>
                                             </Cluster>
-                                            <ServiceButton size="small">Choisir</ServiceButton>
+                                            <ServiceButton
+                                                onPress={() => onChange(service)}
+                                                size="small"
+                                            >
+                                                Choisir
+                                            </ServiceButton>
                                         </ServiceInnerWrapper>
                                     </Service>
                                 ))}
@@ -113,7 +118,6 @@ const ServicesWrapper = styled.div`
 const Service = styled.div`
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
 
     &:not(:last-child) {
         border-bottom: 1px solid var(--neutral100);
@@ -154,9 +158,9 @@ const ServiceButton = styled(Button)`
 EstablishmentServicesAccordion.propTypes = {
     services: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
+            price: PropTypes.string.isRequired,
             duration: PropTypes.number.isRequired,
             category: PropTypes.shape({
                 id: PropTypes.number.isRequired,
@@ -164,6 +168,12 @@ EstablishmentServicesAccordion.propTypes = {
             }),
         }),
     ),
+    onChange: PropTypes.func.isRequired,
+};
+
+EstablishmentServicesAccordion.defaultProps = {
+    services: [],
+    onChange: () => {},
 };
 
 export default EstablishmentServicesAccordion;

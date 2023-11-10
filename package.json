@@ -25,6 +25,7 @@
         "camelcase-keys": "^9.1.2",
         "dayjs": "^1.11.10",
         "eslint-plugin-formatjs": "^4.11.0",
+        "eslint-plugin-unused-imports": "^3.0.0",
         "framer-motion": "^10.16.4",
         "install": "^0.13.0",
         "npm": "^10.1.0",
