@@ -9,6 +9,8 @@ import DashboardPage from '@pages/provider/DashboardPage';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
 import EstablishmentPage from '@pages/EstablishmentPage';
 import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
+import AppointmentPage from '@pages/AppointmentPage';
+import EstablishmentAppointmentProvider from '@contexts/EstablishmentAppointmentProvider';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -55,7 +57,17 @@ const customerRoutes = [
             },
             {
                 path: 'establishments/:establishmentId',
-                element: <EstablishmentPage />,
+                element: <EstablishmentAppointmentProvider />,
+                children: [
+                    {
+                        path: 'appointment',
+                        element: <AppointmentPage />,
+                    },
+                    {
+                        path: '',
+                        element: <EstablishmentPage />,
+                    },
+                ],
             },
         ],
     },

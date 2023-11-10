@@ -12,7 +12,7 @@ const DefaultLayout = () => {
     return (
         <Container>
             <Header>
-                <Text variant="bodyL" fontWeight="--fw-bold">
+                <Text as={Link} to="/" variant="bodyL" fontWeight="--fw-bold">
                     BARBERS
                 </Text>
                 {isAuthenticated ? (

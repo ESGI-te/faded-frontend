@@ -46,7 +46,12 @@ const AppointmentCalendar = ({ onChange, ...props }) => {
     );
 };
 
-const Calendar = styled.div``;
+const Calendar = styled.div`
+    /* display: flex;
+    flex-direction: column;
+    row-gap: 1rem; */
+    width: 100%;
+`;
 const CalendarHeader = styled.div`
     display: flex;
     justify-content: space-between;

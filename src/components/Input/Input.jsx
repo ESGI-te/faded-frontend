@@ -48,6 +48,7 @@ const StyledInput = styled(AriaInput)`
     border: solid var(--black) 1px;
     border-radius: var(--r-s);
     width: 100%;
+    background-color: var(--white);
 
     &[type='search']::-webkit-search-cancel-button,
     &::-webkit-search-decoration {
@@ -75,7 +76,8 @@ const StyledInput = styled(AriaInput)`
         border-color: var(--primary500);
     }
 
-    &[data-invalid] {
+    &[data-invalid],
+    &[data-focused] {
         outline: solid 2px var(--alert50);
     }
 
