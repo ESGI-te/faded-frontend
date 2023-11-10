@@ -2,9 +2,9 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Cluster from '@components/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from '@hooks/useAuth.hook';
 import Link from '@components/Link';
 import Text from '@components/Text';
+import { useAuth } from '@contexts/AuthProvider';
 
 const DefaultLayout = () => {
     const { isAuthenticated } = useAuth();
