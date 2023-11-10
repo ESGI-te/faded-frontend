@@ -1,8 +1,8 @@
-import { useAuth } from '@hooks/useAuth.hook';
 import { Navigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { USER_ROLES } from '@utils/constants';
 import useUserQuery from '@queries/user/useUserQuery.hook';
+import { useAuth } from '@contexts/AuthProvider';
 
 const ProtectedRoute = ({ children, roles }) => {
     const { isAuthenticated } = useAuth();
