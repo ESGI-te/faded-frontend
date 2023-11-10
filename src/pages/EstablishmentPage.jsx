@@ -1,27 +1,27 @@
 import Text from '@components/Text';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useEstablishmentQuery from '@queries/establishment/useEstablishmentQuery.hook';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import EstablishmentCarousel from '@components/EstablishmentCarousel';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import EstablishmentServicesAccordion from '@components/EstablishmentServicesAccordion';
 import EstablishmentOpeningHours from '@components/EstablishmentOpeningHours';
 import Stack from '@components/Stack';
 import EstablishmentMap from '@components/EstablishmentMap';
 import EstablishmentBarbers from '@components/EstablishmentBarbers';
 import EstablishmentFeedback from '@components/EstablishmentFeedback';
+import {
+    useEstablishment,
+    useEstablishmentAppointment,
+} from '@contexts/EstablishmentAppointmentProvider';
 
 const EstablishmentPage = () => {
+    const navigate = useNavigate();
     const { establishmentId } = useParams();
-    const { data: establishment, isLoading } = useEstablishmentQuery(establishmentId);
+    const { establishment, isLoading } = useEstablishment();
+    const { onSelectService } = useEstablishmentAppointment();
     const [images, setImages] = useState([]);
-    const noteCount = useMemo(() => establishment?.feedback.length, [establishment?.feedback]);
-    const note = useMemo(() => {
-        const sum = establishment?.feedback.reduce((acc, feedback) => acc + feedback.note, 0);
-        return sum / noteCount;
-    }, [establishment?.feedback, noteCount]);
 
     useEffect(() => {
         (async () => {
@@ -31,6 +31,11 @@ const EstablishmentPage = () => {
         })();
     }, []);
 
+    const handleSelectService = (service) => {
+        onSelectService(service);
+        navigate(`/establishments/${establishmentId}/appointment`);
+    };
+
     if (isLoading) return <Page>Loading...</Page>; // TODO: Add skeleton
 
     return (
@@ -38,48 +43,52 @@ const EstablishmentPage = () => {
             <PageInnerWrapper>
                 <ResponsiveWrapper>
                     <EstablishmentCarousel images={images} />
-                    <EstablishmentInfo>
+                    <TitleWrapper>
                         <Text as="h1" variant="headingM" fontWeight="--fw-bold">
                             {establishment.name}
                         </Text>
-                        <InfoText>
-                            <InfoIcon icon={icon({ name: 'location-dot', style: 'solid' })} />
+                        <Subtitle>
+                            <SubtitleIcon icon={icon({ name: 'location-dot', style: 'solid' })} />
                             {establishment.address}
-                        </InfoText>
-                        <InfoText>
-                            <InfoIcon icon={icon({ name: 'star', style: 'regular' })} />
-                            <span>{note}</span>
-                            <span>({noteCount} avis)</span>
-                        </InfoText>
-                    </EstablishmentInfo>
+                        </Subtitle>
+                        <Subtitle>
+                            <SubtitleIcon icon={icon({ name: 'star', style: 'regular' })} />
+                            <span>{establishment.note}</span>
+                            <span>({establishment.noteCount} avis)</span>
+                        </Subtitle>
+                    </TitleWrapper>
                 </ResponsiveWrapper>
-                <TtitleWrapper>
+                <InformationTitleWrapper>
                     <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
                         Réserver en ligne chez {establishment.name}
                     </Text>
                     <Text as="h3" variant="bodyL" color="--neutral500">
                         24h/24 - Paiement sur place - Confirmation immédiate
                     </Text>
-                </TtitleWrapper>
+                </InformationTitleWrapper>
                 <ResponsiveContentWrapper>
                     <Stack gap="2rem">
                         <EstablishmentServicesWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
                                 Les prestations
                             </Text>
-                            <EstablishmentServicesAccordion services={establishment.services} />
+                            <EstablishmentServicesAccordion
+                                onChange={handleSelectService}
+                                services={establishment.services}
+                                defaultIndex={0}
+                            />
                         </EstablishmentServicesWrapper>
                         <EstablishmentMapWrapper>
                             <Stack gap="0.25rem">
                                 <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
                                     Où se situe le salon ?
                                 </Text>
-                                <InfoText>
-                                    <InfoIcon
+                                <Subtitle>
+                                    <SubtitleIcon
                                         icon={icon({ name: 'location-dot', style: 'solid' })}
                                     />
                                     {establishment.address}
-                                </InfoText>
+                                </Subtitle>
                             </Stack>
                             <EstablishmentMap
                                 position={{
@@ -97,8 +106,8 @@ const EstablishmentPage = () => {
                     </Stack>
                     <Stack gap="2rem">
                         <EstablishmentFeedback
-                            note={note}
-                            noteCount={noteCount}
+                            note={establishment.note}
+                            noteCount={establishment.noteCount}
                             feedback={establishment.feedback}
                         />
                         <EstablishmentOpeningHoursWrapper>
@@ -139,13 +148,14 @@ const PageInnerWrapper = styled.div`
         padding-block: var(--container-padding);
     }
 `;
-const InfoText = styled(Text)`
+const Subtitle = styled(Text)`
     color: var(--neutral500);
+    font-size: var(--fs-body-l);
     display: flex;
     column-gap: 0.25rem;
     align-items: center;
 `;
-const InfoIcon = styled(FontAwesomeIcon)`
+const SubtitleIcon = styled(FontAwesomeIcon)`
     width: 0.875rem;
     height: 0.875rem;
     color: var(--neutral500);
@@ -164,7 +174,7 @@ const ResponsiveWrapper = styled.div`
         }
     }
 `;
-const EstablishmentInfo = styled.div`
+const TitleWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 0.25rem;
@@ -181,7 +191,7 @@ const Wrapper = styled.div`
     row-gap: 1rem;
     width: 100%;
 `;
-const TtitleWrapper = styled.div`
+const InformationTitleWrapper = styled.div`
     display: none;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
