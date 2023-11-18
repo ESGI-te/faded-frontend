@@ -6,7 +6,7 @@ export const useAppointmentFormSchema = () => {
 
     return yup.object({
         service: yup.object().required(),
-        barberId: yup.string().notRequired(),
-        date: yup.string().required(),
+        barber: yup.string().notRequired(),
+        dateTime: yup.string().required(),
     });
 };

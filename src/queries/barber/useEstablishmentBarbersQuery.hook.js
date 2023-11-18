@@ -2,15 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getEstablishmentBarbers } from '@/api/api';
 import barberKeys from '@/queries/barber/barberKeys';
 
-const queryFn = async ({ queryKey: [{ establishmentId, page, itemsPerPage }] }) => {
-    const data = await getEstablishmentBarbers(establishmentId, { page, itemsPerPage });
+const queryFn = async ({ queryKey: [{ establishmentId }] }) => {
+    const data = await getEstablishmentBarbers(establishmentId);
 
     return data;
 };
 
-const useEstablishmentBarbersQuery = (establishmentId, { page, itemsPerPage } = {}) => {
+const useEstablishmentBarbersQuery = (establishmentId) => {
     return useQuery({
-        queryKey: barberKeys.listByEstablishmentId({ establishmentId, page, itemsPerPage }),
+        queryKey: barberKeys.listByEstablishmentId(establishmentId),
         queryFn,
         enabled: !!establishmentId,
     });

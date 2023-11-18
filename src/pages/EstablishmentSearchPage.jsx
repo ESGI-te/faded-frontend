@@ -11,7 +11,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 const EstablishmentSearchPage = () => {
     const [searchParams] = useSearchParams();
     const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
-    const establishments = useEstablishmentsQuery(params, {
+    const { data: establishments, isLoading } = useEstablishmentsQuery(params, {
         enabled: Object.keys(params).length > 0,
     });
     const [isMapVisible, setIsMapVisible] = useState(false);
@@ -58,8 +58,8 @@ const EstablishmentSearchPage = () => {
             </SearchEstablishmentWrapper>
             <EstablishmentResultsWrapper>
                 <EstablishmentResults
-                    establishments={establishments.data}
-                    isLoading={establishments.isLoading}
+                    establishments={establishments}
+                    isLoading={isLoading}
                     isMapVisible={isMapVisible}
                 />
             </EstablishmentResultsWrapper>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@components/Button';
 
 const AppointmentTimeSlot = ({ children, ...props }) => {
@@ -16,6 +16,14 @@ const TimeSlot = styled(Button)`
     &:hover {
         background-color: var(--neutral100);
     }
+
+    ${({ isUnavailable }) =>
+        isUnavailable &&
+        css`
+            text-decoration-line: line-through;
+            opacity: 0.5;
+            pointer-events: none;
+        `};
 `;
 
 AppointmentTimeSlot.propTypes = {

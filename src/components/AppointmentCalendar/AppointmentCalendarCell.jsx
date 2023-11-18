@@ -13,16 +13,17 @@ const AppointmentCalendarCell = ({ state, date }) => {
 
     return (
         <Cell {...cellProps} isUnavailable={isUnavailable}>
-            <CellInnerWrapper isUnavailable={isUnavailable}>
-                {(!isUnavailable || isDisabled) && (
-                    <AppointmentTimeSlots {...buttonProps} date={date} ref={ref} />
-                )}
-            </CellInnerWrapper>
+            <AppointmentTimeSlots
+                {...buttonProps}
+                date={date}
+                ref={ref}
+                isDisabled={isDisabled}
+                isUnavailable={isUnavailable}
+            />
         </Cell>
     );
 };
 
-const CellInnerWrapper = styled.div``;
 const Cell = styled.td``;
 
 export default AppointmentCalendarCell;

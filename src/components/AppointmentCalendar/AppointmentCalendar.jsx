@@ -13,7 +13,8 @@ const AppointmentCalendarContext = createContext({});
 
 const AppointmentCalendar = ({ onChange, ...props }) => {
     const { locale } = useIntl();
-    let now = today(getLocalTimeZone());
+    const now = today(getLocalTimeZone());
+
     const state = useCalendarState({
         ...props,
         visibleDuration: { weeks: 1 },
