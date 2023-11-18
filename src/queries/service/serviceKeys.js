@@ -1,16 +1,14 @@
 const serviceKeys = {
     all: () => [{ entity: 'service' }],
     allLists: () => [{ ...serviceKeys.all()[0], scope: 'list' }],
-    list: ({ page, itemsPerPage, ...q } = {}) => [
-        { ...serviceKeys.allLists()[0], ...q, page, itemsPerPage },
-    ],
-    listByEstablishmentId: (establishmentId, { page, itemsPerPage, ...q } = {}) => [
+    list: ({ page, perPage, ...q } = {}) => [{ ...serviceKeys.allLists()[0], ...q, page, perPage }],
+    listByEstablishmentId: (establishmentId, { page, perPage, ...q } = {}) => [
         {
             ...serviceKeys.allLists()[0],
             ...q,
             establishmentId,
             page,
-            itemsPerPage,
+            perPage,
         },
     ],
     allDetails: () => [{ ...serviceKeys.all()[0], scope: 'detail' }],

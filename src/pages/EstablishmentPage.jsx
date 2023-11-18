@@ -53,7 +53,7 @@ const EstablishmentPage = () => {
                         </Subtitle>
                         <Subtitle>
                             <SubtitleIcon icon={icon({ name: 'star', style: 'regular' })} />
-                            <span>{establishment.note}</span>
+                            <span>{establishment.note.toFixed(1)}</span>
                             <span>({establishment.noteCount} avis)</span>
                         </Subtitle>
                     </TitleWrapper>
@@ -108,13 +108,12 @@ const EstablishmentPage = () => {
                         <EstablishmentFeedback
                             note={establishment.note}
                             noteCount={establishment.noteCount}
-                            feedback={establishment.feedback}
                         />
                         <EstablishmentOpeningHoursWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
                                 Les horaires d'ouverture
                             </Text>
-                            <EstablishmentOpeningHours openingHours={establishment.openingHours} />
+                            <EstablishmentOpeningHours planning={establishment.planning} />
                         </EstablishmentOpeningHoursWrapper>
                     </Stack>
                 </ResponsiveContentWrapper>

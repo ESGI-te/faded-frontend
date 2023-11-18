@@ -10,7 +10,7 @@ const TABS = {
     DETAILS: 'details',
 };
 
-const EstablishmentFeedback = ({ feedback, note, noteCount }) => {
+const EstablishmentFeedback = ({ note, noteCount }) => {
     const [activeTab, setActiveTab] = useState(TABS.GLOBAL);
 
     return (
@@ -23,7 +23,7 @@ const EstablishmentFeedback = ({ feedback, note, noteCount }) => {
                 {activeTab === TABS.GLOBAL && (
                     <EstablishmentFeedbackNote note={note} noteCount={noteCount} />
                 )}
-                {activeTab === TABS.DETAILS && <EstablishmentFeedbackList feedback={feedback} />}
+                {activeTab === TABS.DETAILS && <EstablishmentFeedbackList />}
             </TabWrapper>
         </Wrapper>
     );

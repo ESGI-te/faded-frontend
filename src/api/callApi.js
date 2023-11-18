@@ -6,14 +6,14 @@ export const callApi = async (url, options) => {
     let URL = BASE_URL + url;
 
     if (options?.query) {
-        const queryParams = new URLSearchParams(options.query);
-
+        const queryParams = new URLSearchParams();
+        Object.entries(options.query).forEach(([key, value]) => {
+            if (!value) return;
+            queryParams.append(key, value);
+        });
         const pageParam = queryParams.get('page');
-        const itemsPerPageParam = queryParams.get('itemsPerPage');
 
-        if (pageParam || itemsPerPageParam) {
-            queryParams.append('pagination', 'true');
-        }
+        queryParams.append('pagination', !!pageParam);
 
         const queryString = queryParams.toString();
         URL = `${URL}?${queryString}`;

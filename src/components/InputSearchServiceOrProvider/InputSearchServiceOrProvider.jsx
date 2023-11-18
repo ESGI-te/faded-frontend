@@ -2,7 +2,7 @@ import useDebounce from '@hooks/useDebounce.hook';
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Text from '@components/Text';
-import { Item } from 'react-aria-components';
+import { ListBoxItem } from 'react-aria-components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
@@ -42,7 +42,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
 
     const formattedCategories = useMemo(
         () =>
-            categories.data?.map((category) => ({
+            categories.data?.data?.map((category) => ({
                 ...category,
                 type: 'category',
             })) || [],
@@ -51,7 +51,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
 
     const formattedEstablishments = useMemo(
         () =>
-            establishments.data?.map((establishment) => ({
+            establishments.data?.data?.map((establishment) => ({
                 ...establishment,
                 type: 'establishment',
             })) || [],
@@ -83,7 +83,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
     );
 };
 
-const ListItemStyled = styled(Item)`
+const ListItemStyled = styled(ListBoxItem)`
     display: flex;
     align-items: center;
     column-gap: 0.5rem;

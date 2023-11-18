@@ -1,64 +1,42 @@
-import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Text from '@components/Text';
 import { dayjs } from '@utils/dayjs';
+import { useLocale } from 'react-aria';
+import { LOCALES } from '@contexts/IntlProvider';
+import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
-const EstablishmentOpeningHours = ({ openingHours }) => {
-    const { id, ...hours } = openingHours;
-    const formattedOpeningHours = useMemo(() => {
-        const formattedHours = {};
-        Object.entries(hours).forEach(
-            ([key, value]) => (formattedHours[key] = dayjs(value).format('HH:mm')),
-        );
-        return formattedHours;
-    }, [hours]);
+const daysLookup = {
+    monday: 'lundi',
+    tuesday: 'mardi',
+    wednesday: 'mercredi',
+    thursday: 'jeudi',
+    friday: 'vendredi',
+    saturday: 'samedi',
+    sunday: 'dimanche',
+};
+
+const EstablishmentOpeningHours = ({ planning }) => {
     const today = dayjs().format('dddd').toLowerCase();
+    const { locale } = useLocale();
 
     return (
         <Wrapper>
-            <Day isToday={today === 'monday'}>
-                <Text>Lundi</Text>
-                <Text>
-                    {formattedOpeningHours.mondayOpen} - {formattedOpeningHours.mondayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'tuesday'}>
-                <Text>Mardi</Text>
-                <Text>
-                    {formattedOpeningHours.tuesdayOpen} - {formattedOpeningHours.tuesdayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'wednesday'}>
-                <Text>Mercredi</Text>
-                <Text>
-                    {formattedOpeningHours.wednesdayOpen} - {formattedOpeningHours.wednesdayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'thursday'}>
-                <Text>Jeudi</Text>
-                <Text>
-                    {formattedOpeningHours.thursdayOpen} - {formattedOpeningHours.thursdayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'friday'}>
-                <Text>Vendredi</Text>
-                <Text>
-                    {formattedOpeningHours.fridayOpen} - {formattedOpeningHours.fridayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'saturday'}>
-                <Text>Samedi</Text>
-                <Text>
-                    {formattedOpeningHours.saturdayOpen} - {formattedOpeningHours.saturdayClose}
-                </Text>
-            </Day>
-            <Day isToday={today === 'sunday'}>
-                <Text>Dimanche</Text>
-                <Text>
-                    {formattedOpeningHours.sundayOpen} - {formattedOpeningHours.sundayClose}
-                </Text>
-            </Day>
+            {Object.entries(planning).map(([day, hours]) => (
+                <Day key={day} isToday={today === day}>
+                    <DayName>{locale === LOCALES.FR ? daysLookup[day] : day}</DayName>
+                    <Text>
+                        {isEmpty(hours) ? (
+                            <FormattedMessage defaultMessage="Fermé" />
+                        ) : (
+                            `${dayjs(hours.open).format('HH:mm')} - ${dayjs(hours.close).format(
+                                'HH:mm',
+                            )}`
+                        )}
+                    </Text>
+                </Day>
+            ))}
         </Wrapper>
     );
 };
@@ -97,24 +75,40 @@ const Day = styled.div`
         padding-bottom: 1rem;
     }
 `;
+const DayName = styled(Text)`
+    text-transform: capitalize;
+`;
 
 EstablishmentOpeningHours.propTypes = {
-    openingHours: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        mondayOpen: PropTypes.string.isRequired,
-        mondayClose: PropTypes.string.isRequired,
-        tuesdayOpen: PropTypes.string.isRequired,
-        tuesdayClose: PropTypes.string.isRequired,
-        wednesdayOpen: PropTypes.string.isRequired,
-        wednesdayClose: PropTypes.string.isRequired,
-        thursdayOpen: PropTypes.string.isRequired,
-        thursdayClose: PropTypes.string.isRequired,
-        fridayOpen: PropTypes.string.isRequired,
-        fridayClose: PropTypes.string.isRequired,
-        saturdayOpen: PropTypes.string.isRequired,
-        saturdayClose: PropTypes.string.isRequired,
-        sundayOpen: PropTypes.string.isRequired,
-        sundayClose: PropTypes.string.isRequired,
+    planning: PropTypes.shape({
+        monday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        tuesday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        wednesday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        thursday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        friday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        saturday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
+        sunday: PropTypes.shape({
+            open: PropTypes.string.isRequired,
+            close: PropTypes.string.isRequired,
+        }).isRequired,
     }).isRequired,
 };
 

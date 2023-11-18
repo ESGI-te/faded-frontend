@@ -1,16 +1,16 @@
 const openingHoursKeys = {
     all: () => [{ entity: 'openingHours' }],
     allLists: () => [{ ...openingHoursKeys.all()[0], scope: 'list' }],
-    list: ({ page, itemsPerPage, ...q } = {}) => [
-        { ...openingHoursKeys.allLists()[0], ...q, page, itemsPerPage },
+    list: ({ page, perPage, ...q } = {}) => [
+        { ...openingHoursKeys.allLists()[0], ...q, page, perPage },
     ],
-    listByEstablishmentId: (establishmentId, { page, itemsPerPage, ...q } = {}) => [
+    listByEstablishmentId: (establishmentId, { page, perPage, ...q } = {}) => [
         {
             ...openingHoursKeys.allLists()[0],
             ...q,
             establishmentId,
             page,
-            itemsPerPage,
+            perPage,
         },
     ],
     allDetails: () => [{ ...openingHoursKeys.all()[0], scope: 'detail' }],
