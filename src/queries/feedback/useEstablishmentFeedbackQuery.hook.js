@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
-import { getEstablishmentFeedback } from '@/api/api';
+import { getAllFeedback } from '@/api/api';
 import feedbackKeys from '@/queries/feedback/feedbackKeys';
 
-const queryFn = async ({ queryKey: [{ establishmentId, page, itemsPerPage }] }) => {
-    const data = await getEstablishmentFeedback(establishmentId, { page, itemsPerPage });
+const queryFn = async ({ queryKey: [{ establishmentId, page, perPage }] }) => {
+    const data = await getAllFeedback(establishmentId, { page, perPage });
 
     return data;
 };
 
-const useEstablishmentFeedbackQuery = (establishmentId, { page, itemsPerPage } = {}) => {
+const useEstablishmentFeedbackQuery = (establishmentId, { page = 1, perPage = 5 } = {}) => {
     return useQuery({
-        queryKey: feedbackKeys.listByEstablishmentId({ establishmentId, page, itemsPerPage }),
+        queryKey: feedbackKeys.listByEstablishmentId(establishmentId, {
+            page,
+            perPage,
+        }),
         queryFn,
         enabled: !!establishmentId,
     });

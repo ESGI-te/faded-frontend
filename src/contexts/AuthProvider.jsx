@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('token'));
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
     const logout = () => {
         localStorage.removeItem('token');

@@ -1,16 +1,16 @@
 const feedbackKeys = {
     all: () => [{ entity: 'feedback' }],
     allLists: () => [{ ...feedbackKeys.all()[0], scope: 'list' }],
-    list: ({ page, itemsPerPage, ...q } = {}) => [
-        { ...feedbackKeys.allLists()[0], ...q, page, itemsPerPage },
+    list: ({ page, perPage, ...q } = {}) => [
+        { ...feedbackKeys.allLists()[0], ...q, page, perPage },
     ],
-    listByEstablishmentId: (establishmentId, { page, itemsPerPage, ...q } = {}) => [
+    listByEstablishmentId: (establishmentId, { page, perPage, ...q } = {}) => [
         {
             ...feedbackKeys.allLists()[0],
             ...q,
             establishmentId,
             page,
-            itemsPerPage,
+            perPage,
         },
     ],
     allDetails: () => [{ ...feedbackKeys.all()[0], scope: 'detail' }],

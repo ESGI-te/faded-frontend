@@ -26,7 +26,7 @@ const AppointmentPage = () => {
                         <Divider />
                         <Subtitle>
                             <SubtitleIcon icon={icon({ name: 'star', style: 'regular' })} />
-                            <span>{establishment.note}</span>
+                            <span>{establishment.note.toFixed(1)}</span>
                             <span>({establishment.noteCount} avis)</span>
                         </Subtitle>
                     </SubtitleWrapper>
