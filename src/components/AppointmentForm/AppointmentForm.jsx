@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useAppointmentFormSchema } from './useAppointmentFormSchema.hook';
 import styled from 'styled-components';
 import EstablishmentServicesAccordion from '@components/EstablishmentServicesAccordion';
 import Text from '@components/Text';
 import Cluster from '@components/Cluster';
-import { Item, Separator } from 'react-aria-components';
+import { ListBoxItem, Separator } from 'react-aria-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconButton from '@components/IconButton';
@@ -16,39 +16,47 @@ import { InputSelectController } from '@components/InputSelect';
 import AppointmentAuthentication from '@components/AppointmentAuthentication';
 import Button from '@components/Button';
 import { useAuth } from '@contexts/AuthProvider';
+import { useMemo } from 'react';
 
 const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
+    const formattedBarbers = useMemo(() => {
+        const data = barbers?.map((barber) => ({ id: barber.id, name: barber.firstName })) || [];
+        return [{ id: '', name: 'Sans préférence' }, ...data];
+    }, [barbers]);
+
     const { isAuthenticated } = useAuth();
     const schema = useAppointmentFormSchema();
+    const form = useForm({
+        mode: 'onBlur',
+        resolver: yupResolver(schema),
+        defaultValues: {
+            service,
+            barber: '',
+        },
+    });
     const {
         control,
         handleSubmit,
         formState: { isValid },
         setValue,
         watch,
-    } = useForm({
-        mode: 'onBlur',
-        resolver: yupResolver(schema),
-        defaultValues: {
-            service,
-        },
-    });
+    } = form;
+
     const serviceValue = watch('service');
-    const barberValue = watch('barberId');
-    const dateValue = watch('date');
+    const dateTimeValue = watch('dateTime');
 
     const handleChangeService = (service) => {
         setValue('service', service, { shouldValidate: true, shouldDirty: true });
     };
-    const handleChangeDate = (date) => {
-        setValue('date', date, { shouldValidate: true, shouldDirty: true });
+    const handleChangeDate = (dateTime) => {
+        setValue('dateTime', dateTime, { shouldValidate: true, shouldDirty: true });
     };
     const handleResetValue = (value) => {
         setValue(value, null, { shouldValidate: true, shouldDirty: true });
     };
 
     return (
-        <>
+        <FormProvider {...form}>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Step>
                     <StepTitle>
@@ -71,7 +79,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
                                 onPress={() => {
                                     handleResetValue('service');
                                     handleResetValue('date');
-                                    handleResetValue('barberId');
+                                    handleResetValue('barber');
                                 }}
                             />
                         </StepResume>
@@ -89,40 +97,47 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
                             <span>2.</span>
                             <span>Choix de la date & heure</span>
                         </StepTitle>
-                        {dateValue ? (
+                        {dateTimeValue ? (
                             <StepResume>
-                                <Text>{dayjs(dateValue).format('dddd DD MMMM YYYY HH:mm')}</Text>
+                                <Text>
+                                    {dayjs(dateTimeValue).format('dddd DD MMMM YYYY HH:mm')}
+                                </Text>
                                 <EditButton
                                     variant="ghost"
                                     icon={<EditIcon icon={icon({ name: 'pen', style: 'solid' })} />}
-                                    onPress={() => handleResetValue('date')}
+                                    onPress={() => handleResetValue('dateTime')}
                                 />
                             </StepResume>
                         ) : (
                             <DateStepContent>
-                                <BarberSelect
-                                    control={control}
-                                    name="barberId"
-                                    items={barbers}
-                                    label="Avec qui ?"
-                                >
-                                    {(item) => (
-                                        <BarberSelectListItem id={item.name}>
-                                            <Cluster gap="0.5rem" align="center">
-                                                <BarberImage>
-                                                    <Text
-                                                        color="--white"
-                                                        fontWeight="--fw-semibold"
-                                                        as="span"
-                                                    >
-                                                        {item.name[0]}
-                                                    </Text>
-                                                </BarberImage>
-                                                <Text slot="label">{item.name}</Text>
-                                            </Cluster>
-                                        </BarberSelectListItem>
-                                    )}
-                                </BarberSelect>
+                                {formattedBarbers?.length > 1 && (
+                                    <BarberSelect
+                                        control={control}
+                                        name="barber"
+                                        items={formattedBarbers}
+                                        label="Avec qui ?"
+                                        defaultSelectedKey=""
+                                    >
+                                        {(item) => (
+                                            <BarberSelectListItem id={item.id}>
+                                                <Cluster gap="0.5rem" align="center">
+                                                    {item.id && (
+                                                        <BarberImage>
+                                                            <Text
+                                                                color="--white"
+                                                                fontWeight="--fw-semibold"
+                                                                as="span"
+                                                            >
+                                                                {item.name[0]}
+                                                            </Text>
+                                                        </BarberImage>
+                                                    )}
+                                                    <Text slot="label">{item.name}</Text>
+                                                </Cluster>
+                                            </BarberSelectListItem>
+                                        )}
+                                    </BarberSelect>
+                                )}
                                 <AppointmentCalendar onChange={handleChangeDate} />
                             </DateStepContent>
                         )}
@@ -140,7 +155,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
                     <AppointmentAuthentication />
                 </Step>
             )}
-        </>
+        </FormProvider>
     );
 };
 
@@ -223,9 +238,10 @@ const BarberImage = styled.div`
     border-radius: var(--r-full);
     background-color: var(--black);
 `;
-const BarberSelectListItem = styled(Item)`
+const BarberSelectListItem = styled(ListBoxItem)`
     border-radius: var(--r-xs);
     padding: 0.25rem;
+    cursor: pointer;
 
     &[data-selected] {
         background-color: var(--primary400);
@@ -236,11 +252,15 @@ const BarberSelectListItem = styled(Item)`
         }
     }
 
-    &:hover::not([data-selected]) {
+    &:hover:not([data-selected]) {
         background-color: var(--primary50);
     }
 
     &[data-focused] {
+        outline: none;
+    }
+
+    &[data-focus-visible] {
         outline: 2px solid var(--primary500);
     }
 `;

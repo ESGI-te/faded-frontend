@@ -78,7 +78,7 @@ const AppointmentCalendarGrid = ({ state, ...props }) => {
                     ))}
                 </tr>
             </thead>
-            <tbody>
+            <Tbody>
                 <tr>
                     {state
                         .getDatesInWeek(0)
@@ -90,7 +90,7 @@ const AppointmentCalendarGrid = ({ state, ...props }) => {
                             ),
                         )}
                 </tr>
-            </tbody>
+            </Tbody>
         </Table>
     );
 };
@@ -107,6 +107,9 @@ const HeaderCell = styled.th`
             color: var(--neutral500);
             opacity: 0.5;
         `}
+`;
+const Tbody = styled.tbody`
+    vertical-align: top;
 `;
 
 export default AppointmentCalendarGrid;

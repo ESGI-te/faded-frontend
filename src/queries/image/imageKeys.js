@@ -1,16 +1,14 @@
 const imageKeys = {
     all: () => [{ entity: 'image' }],
     allLists: () => [{ ...imageKeys.all()[0], scope: 'list' }],
-    list: ({ page, itemsPerPage, ...q } = {}) => [
-        { ...imageKeys.allLists()[0], ...q, page, itemsPerPage },
-    ],
-    listByEstablishmentId: (establishmentId, { page, itemsPerPage, ...q } = {}) => [
+    list: ({ page, perPage, ...q } = {}) => [{ ...imageKeys.allLists()[0], ...q, page, perPage }],
+    listByEstablishmentId: (establishmentId, { page, perPage, ...q } = {}) => [
         {
             ...imageKeys.allLists()[0],
             ...q,
             establishmentId,
             page,
-            itemsPerPage,
+            perPage,
         },
     ],
     allDetails: () => [{ ...imageKeys.all()[0], scope: 'detail' }],

@@ -1,19 +1,19 @@
 const establishmentKeys = {
     all: () => [{ entity: 'establishment' }],
     allLists: () => [{ ...establishmentKeys.all()[0], scope: 'list' }],
-    list: ({ page, itemsPerPage, ...q } = {}) => [
-        { ...establishmentKeys.allLists()[0], ...q, page, itemsPerPage },
+    list: ({ page, perPage, ...q } = {}) => [
+        { ...establishmentKeys.allLists()[0], ...q, page, perPage },
     ],
-    suggestionList: ({ page, itemsPerPage, name } = {}) => [
-        { ...establishmentKeys.allLists()[0], name, page, itemsPerPage },
+    suggestionList: ({ page, perPage, name } = {}) => [
+        { ...establishmentKeys.allLists()[0], name, page, perPage },
     ],
-    listByProviderId: (providerId, { page, itemsPerPage, ...q } = {}) => [
+    listByProviderId: (providerId, { page, perPage, ...q } = {}) => [
         {
             ...establishmentKeys.allLists()[0],
             ...q,
             providerId,
             page,
-            itemsPerPage,
+            perPage,
         },
     ],
     allDetails: () => [{ ...establishmentKeys.all()[0], scope: 'detail' }],

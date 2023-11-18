@@ -1,64 +1,51 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import AppointmentTimeSlot from './AppointmentTimeSlot';
-import { dayjs } from '@utils/dayjs';
-import { useAppointmentCalendar } from './AppointmentCalendar';
-import Stack from '@components/Stack';
+import AppointmentTimeSlotList from './AppointmentTimeSlotList';
+import useEstablishmentBarbersQuery from '@queries/barber/useEstablishmentBarbersQuery.hook';
+import { useFormContext } from 'react-hook-form';
+import { useEstablishment } from '@contexts/EstablishmentAppointmentProvider';
+import { getDayOfWeek } from '@internationalized/date';
+import useTimeSlots from './useTimeSlots.hook';
+import { useParams } from 'react-router-dom';
+import { useLocale } from 'react-aria';
 
-/* TODO: Get data from api */
-const TIME_SLOT_DURATION = 30;
-const OPENING_HOURS = {
-    open: dayjs().set('hour', 8).set('minute', 0),
-    close: dayjs().set('hour', 20).set('minute', 0),
-};
+const AppointmentTimeSlots = ({ date, isDisabled, isUnavailable, ...props }) => {
+    const { establishmentId } = useParams();
+    const barbers = useEstablishmentBarbersQuery(establishmentId);
+    const { establishment } = useEstablishment();
+    const { watch } = useFormContext();
+    const barberId = watch('barber');
+    const planning = useMemo(() => {
+        if (!barberId) return establishment.planning;
+        return barbers.data?.find((barber) => barber.id === barberId)?.planning;
+    }, [barberId, barbers, establishment.planning]);
 
-const generateTimeSlots = () => {
-    const timeSlots = [];
-    let openingTime = OPENING_HOURS.open.clone();
+    const { locale } = useLocale();
+    const dayPlanning = Object.entries(planning)[getDayOfWeek(date, locale)]?.[1];
+    const {
+        timeSlots,
+        unavailableTimeSlots,
+        isLoading: timeSlotsIsLoading,
+    } = useTimeSlots(date, dayPlanning, barberId);
 
-    while (openingTime.isSameOrBefore(OPENING_HOURS.close)) {
-        const timeSlot = openingTime.format('HH:mm');
-        timeSlots.push(timeSlot);
-        openingTime = openingTime.add(TIME_SLOT_DURATION, 'minutes');
-    }
+    if (isDisabled || isUnavailable || !timeSlots) return null;
 
-    return timeSlots;
-};
-
-const AppointmentTimeSlots = ({ date, ...props }) => {
-    const { onChange } = useAppointmentCalendar();
-    const timeSlots = generateTimeSlots();
-
-    const formatDateTime = (time) => {
-        const formattedDate = dayjs(`${date.year}-${date.month}-${date.day}`);
-        const formattedDateTime = formattedDate
-            .set('hour', time.split(':')[0])
-            .set('minute', time.split(':')[1])
-            .toISOString();
-        return formattedDateTime;
-    };
-
-    const handleSelectTimeSlot = (time) => {
-        const dateTime = formatDateTime(time);
-        onChange(dateTime);
-    };
+    if (timeSlotsIsLoading || (barberId && barbers.isLoading)) return <p>Is loading...</p>; // TODO: Add skeleton
 
     return (
-        <Stack gap="0.5rem">
-            {timeSlots.map((timeSlot) => (
-                <AppointmentTimeSlot
-                    {...props}
-                    key={timeSlot}
-                    onPress={() => handleSelectTimeSlot(timeSlot)}
-                >
-                    {timeSlot}
-                </AppointmentTimeSlot>
-            ))}
-        </Stack>
+        <AppointmentTimeSlotList
+            timeSlots={timeSlots}
+            unavailableTimeSlots={unavailableTimeSlots}
+            date={date}
+            {...props}
+        />
     );
 };
 
 AppointmentTimeSlots.propTypes = {
     date: PropTypes.object.isRequired,
+    isUnavailable: PropTypes.bool,
+    isDisabled: PropTypes.bool,
 };
 
 export default AppointmentTimeSlots;

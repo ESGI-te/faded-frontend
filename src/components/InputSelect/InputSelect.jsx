@@ -1,4 +1,4 @@
-import { Select, Popover, ListBox, Item, Button, SelectValue } from 'react-aria-components';
+import { Select, Popover, ListBox, ListBoxItem, Button, SelectValue } from 'react-aria-components';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -89,8 +89,11 @@ const InputWrapper = styled(Select)`
 const List = styled(ListBox)`
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
 `;
-const ListItem = styled(Item)`
+const ListItem = styled(ListBoxItem)`
     display: flex;
     align-items: center;
     column-gap: 0.5rem;

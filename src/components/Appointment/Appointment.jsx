@@ -1,20 +1,35 @@
 import PropTypes from 'prop-types';
 import AppointmentForm from '@components/AppointmentForm';
 import { useEstablishmentAppointment } from '@contexts/EstablishmentAppointmentProvider';
-import { useMemo } from 'react';
+import useCreateAppointmentMutation from '@queries/appointment/useCreateAppointmentMutation.hook';
+import { useParams } from 'react-router-dom';
+import useUserQuery from '@queries/user/useUserQuery.hook';
+import useEstablishmentBarbersQuery from '@queries/barber/useEstablishmentBarbersQuery.hook';
 
 const Appointment = ({ establishment }) => {
+    const { establishmentId } = useParams();
     const { selectedService } = useEstablishmentAppointment();
-    const formattedBarbers = useMemo(
-        () => establishment.barbers.map((barber) => ({ id: barber.id, name: barber.firstName })),
-        [establishment.barbers],
-    );
+    const { data: user } = useUserQuery();
+    const { data: barbers } = useEstablishmentBarbersQuery(establishmentId);
+    const appointmentMutation = useCreateAppointmentMutation();
+
+    const handleCreateAppointment = (data) => {
+        const formattedData = {
+            establishment: establishmentId,
+            service: data.service.id,
+            barber: data.barber,
+            dateTime: data.dateTime,
+            user: user?.id,
+        };
+        appointmentMutation.mutate(formattedData);
+    };
 
     return (
         <AppointmentForm
             service={selectedService}
             services={establishment.services}
-            barbers={formattedBarbers}
+            barbers={barbers}
+            onSubmit={handleCreateAppointment}
         />
     );
 };

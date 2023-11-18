@@ -11,7 +11,6 @@ export const InputSelectController = (props) => {
     return (
         <InputSelect
             onSelectionChange={(value) => {
-                if (!value) return;
                 onSelectionChange && onSelectionChange(value);
                 field.onChange(value);
             }}
