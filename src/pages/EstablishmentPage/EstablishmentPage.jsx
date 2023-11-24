@@ -15,6 +15,7 @@ import {
     useEstablishment,
     useEstablishmentAppointment,
 } from '@contexts/EstablishmentAppointmentProvider';
+import EstablishmentPageSkeleton from './EstablishmentPageSkeleton';
 
 const EstablishmentPage = () => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ const EstablishmentPage = () => {
         navigate(`/establishments/${establishmentId}/appointment`);
     };
 
-    if (isLoading) return <Page>Loading...</Page>; // TODO: Add skeleton
+    if (isLoading) return <EstablishmentPageSkeleton />;
 
     return (
         <Page>
