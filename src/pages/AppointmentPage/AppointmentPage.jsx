@@ -5,11 +5,12 @@ import Text from '@components/Text';
 import { Separator } from 'react-aria-components';
 import Appointment from '@components/Appointment';
 import { useEstablishment } from '@contexts/EstablishmentAppointmentProvider';
+import AppointmentPageSkeleton from './AppointmentPageSkeleton';
 
 const AppointmentPage = () => {
     const { establishment, isLoading } = useEstablishment();
 
-    if (isLoading) return <Page>Loading...</Page>; // TODO: Add skeleton
+    if (isLoading) return <AppointmentPageSkeleton />;
 
     return (
         <Page>
