@@ -4,9 +4,10 @@ import Text from '@components/Text';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
+import EstablishmentResultsSkeleton from './EstablishmentResultsSkeleton';
 
 const EstablishmentResults = ({ establishments, isLoading, isMapVisible }) => {
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <EstablishmentResultsSkeleton />;
 
     if (establishments.length === 0) return <div>Aucun résultat</div>;
 
@@ -90,6 +91,7 @@ EstablishmentResults.propTypes = {
         }),
     ),
     isLoading: PropTypes.bool.isRequired,
+    isMapVisible: PropTypes.bool.isRequired,
 };
 
 export default EstablishmentResults;
