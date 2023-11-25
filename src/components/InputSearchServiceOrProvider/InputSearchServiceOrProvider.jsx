@@ -49,6 +49,14 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
         [categories.data],
     );
 
+    const filteredCategories = useMemo(() => {
+        return query
+            ? formattedCategories.filter((category) =>
+                  category.name.toLowerCase().includes(query.toLowerCase()),
+              )
+            : formattedCategories;
+    }, [formattedCategories, query]);
+
     const formattedEstablishments = useMemo(
         () =>
             establishments.data?.data?.map((establishment) => ({
@@ -58,10 +66,9 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
         [establishments.data],
     );
 
-    const suggestions = useMemo(
-        () => [...formattedCategories, ...formattedEstablishments],
-        [formattedCategories, formattedEstablishments],
-    );
+    const suggestions = useMemo(() => {
+        return [...formattedEstablishments, ...filteredCategories];
+    }, [filteredCategories, formattedEstablishments]);
 
     const handleInputChange = (value) => {
         onChange(value);
@@ -75,8 +82,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
             {...props}
             onInputChange={handleInputChange}
             isLoading={establishments.isFetching}
-            defaultItems={formattedCategories}
-            items={suggestions}
+            defaultItems={suggestions}
         >
             {(item) => <ListItem item={item} />}
         </ComboBoxController>
