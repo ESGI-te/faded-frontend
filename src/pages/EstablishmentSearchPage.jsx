@@ -83,7 +83,7 @@ const SearchEstablishmentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    background-color: var(--neutral100);
+    background-color: var(--primary300);
     padding: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.mobile} {

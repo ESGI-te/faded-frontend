@@ -6,6 +6,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
 import { Link } from 'react-router-dom';
+import useResponsive from '@hooks/useResponsive';
 
 const EstablishmentsMap = ({ establishments }) => {
     const mapRef = React.useRef(null);
@@ -14,6 +15,16 @@ const EstablishmentsMap = ({ establishments }) => {
         id: 'google-map-script',
         googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     });
+    const { isDesktopAndUp } = useResponsive();
+
+    const MAP_OPTIONS = {
+        disableDefaultUI: true,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: window.google.maps.ControlPosition.RIGHT_CENTER,
+        },
+        scrollwheel: !isDesktopAndUp,
+    };
 
     const onLoad = React.useCallback(
         (mapInstance) => {
@@ -36,7 +47,11 @@ const EstablishmentsMap = ({ establishments }) => {
     if (!isLoaded) return null;
 
     return (
-        <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} onLoad={onLoad}>
+        <GoogleMap
+            mapContainerStyle={{ height: '100%', width: '100%' }}
+            onLoad={onLoad}
+            options={MAP_OPTIONS}
+        >
             {establishments.map((establishment) => (
                 <Marker
                     key={establishment.id}
@@ -65,7 +80,7 @@ const EstablishmentsMap = ({ establishments }) => {
                             </InfoText>
                             <InfoText>
                                 <InfoIcon icon={icon({ name: 'star', style: 'regular' })} />
-                                <span>{selectedEstablishment.note}</span>
+                                <span>{selectedEstablishment.note.toFixed(1)}</span>
                                 <span>({selectedEstablishment.noteCount} avis)</span>
                             </InfoText>
                         </InfoWrapper>
