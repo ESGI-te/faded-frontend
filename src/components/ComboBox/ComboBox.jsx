@@ -8,16 +8,7 @@ import Input from '@components/Input';
 import IconButton from '@components/IconButton';
 import { useEffect, useRef, useState } from 'react';
 
-const ComboBox = ({
-    renderItem,
-    label,
-    endIcon,
-    startIcon,
-    errorMessage,
-    children,
-    isLoading,
-    ...props
-}) => {
+const ComboBox = ({ label, endIcon, startIcon, errorMessage, children, isLoading, ...props }) => {
     const hasError = !!errorMessage;
     const triggerRef = useRef(null);
     const [triggerWidth, setTriggerWidth] = useState(0);
@@ -87,7 +78,6 @@ ComboBox.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     onSelectionChange: PropTypes.func,
     onInputChange: PropTypes.func,
-    renderItem: PropTypes.func,
     label: PropTypes.string,
     endIcon: PropTypes.node,
     startIcon: PropTypes.node,

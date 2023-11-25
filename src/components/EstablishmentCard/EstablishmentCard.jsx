@@ -22,7 +22,7 @@ const EstablishmentCard = ({ establishment }) => {
                 </InfoText>
                 <InfoText>
                     <InfoIcon icon={icon({ name: 'star', style: 'regular' })} />
-                    <span>{establishment.note}</span>
+                    <span>{establishment.note.toFixed(1)}</span>
                     <span>({establishment.noteCount} avis)</span>
                 </InfoText>
                 <AppointmentButton
@@ -81,6 +81,7 @@ const InfoText = styled(Text)`
 `;
 const AppointmentButton = styled(Button)`
     margin-top: 0.75rem;
+    background-color: var(--black);
 
     ${({ theme }) => theme.mediaQueries.desktopLargeAndUp} {
         margin-top: auto;
