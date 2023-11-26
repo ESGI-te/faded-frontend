@@ -31,4 +31,6 @@ export const getEstablishmentAppointments = (establishmentId, { page, perPage } 
     callApi('/appointments/establishment', {
         query: { establishment: establishmentId, page, perPage },
     });
+export const getAppointment = (appointmentId) => callApi(`/appointments/${appointmentId}`);
+
 export const getServiceCategories = () => callApi('/service_categories');
