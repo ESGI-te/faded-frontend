@@ -36,6 +36,7 @@
         "react-aria-components": "^1.0.0-rc.0",
         "react-cool-onclickoutside": "^1.7.0",
         "react-dom": "^18.2.0",
+        "react-dom-confetti": "^0.2.0",
         "react-hook-form": "^7.46.1",
         "react-intl": "^6.5.0",
         "react-router-dom": "^6.15.0",

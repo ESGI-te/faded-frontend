@@ -5,6 +5,7 @@ import useCreateAppointmentMutation from '@queries/appointment/useCreateAppointm
 import { useParams } from 'react-router-dom';
 import useUserQuery from '@queries/user/useUserQuery.hook';
 import useEstablishmentBarbersQuery from '@queries/barber/useEstablishmentBarbersQuery.hook';
+import { useNavigate } from 'react-router-dom';
 
 const Appointment = ({ establishment }) => {
     const { establishmentId } = useParams();
@@ -12,6 +13,7 @@ const Appointment = ({ establishment }) => {
     const { data: user } = useUserQuery();
     const { data: barbers } = useEstablishmentBarbersQuery(establishmentId);
     const appointmentMutation = useCreateAppointmentMutation();
+    const navigate = useNavigate();
 
     const handleCreateAppointment = (data) => {
         const formattedData = {
@@ -21,7 +23,11 @@ const Appointment = ({ establishment }) => {
             barber: null,
             user: user?.id,
         };
-        appointmentMutation.mutate(formattedData);
+        appointmentMutation.mutate(formattedData, {
+            onSuccess: (appointment) => {
+                navigate(`/appointment/${appointment.id}/success`);
+            },
+        });
     };
 
     return (
