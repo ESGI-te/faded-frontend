@@ -14,9 +14,7 @@ const appointmentKeys = {
         },
     ],
     allDetails: () => [{ ...appointmentKeys.all()[0], scope: 'detail' }],
-    detailById: (appointmentId) => [
-        { ...appointmentKeys.allDetails()[0], appointmentId: appointmentId },
-    ],
+    detailById: (appointmentId) => [{ ...appointmentKeys.allDetails()[0], appointmentId }],
 };
 
 export default appointmentKeys;
