@@ -28,7 +28,7 @@ export const getEstablishmentBarbers = (establishmentId) =>
 export const createAppointment = (appointment) =>
     callApi('/appointments', { method: 'POST', data: appointment });
 export const getEstablishmentAppointments = (establishmentId, { page, perPage } = {}) =>
-    callApi('/appointments', {
+    callApi('/appointments/establishment', {
         query: { establishment: establishmentId, page, perPage },
     });
 export const getServiceCategories = () => callApi('/service_categories');
