@@ -34,7 +34,7 @@ const Page = styled.section`
     row-gap: 1rem;
     width: 100%;
     padding: var(--container-padding-mobile);
-    background-image: url('/public/images/blob-home.svg');
+    background-image: url('/images/blob-home.svg');
     background-repeat: no-repeat;
     background-position: top 20% left 50%;
     background-size: 18rem;
