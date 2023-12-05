@@ -17,8 +17,8 @@ const Appointment = ({ establishment }) => {
         const formattedData = {
             establishment: establishmentId,
             service: data.service.id,
-            barber: data.barber,
             dateTime: data.dateTime,
+            barber: null,
             user: user?.id,
         };
         appointmentMutation.mutate(formattedData);
