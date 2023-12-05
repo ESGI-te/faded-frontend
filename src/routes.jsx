@@ -12,6 +12,7 @@ import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
 import AppointmentPage from '@pages/AppointmentPage';
 import EstablishmentAppointmentProvider from '@contexts/EstablishmentAppointmentProvider';
 import AppointmentSummaryPage from '@pages/AppointmentSummaryPage';
+import UserAppointmentsPage from '@pages/UserAppointmentsPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -80,6 +81,11 @@ const customerRoutes = [
                 {
                     path: 'profile',
                     element: <HomePage />,
+                    roles: [USER_ROLES.USER],
+                },
+                {
+                    path: '/appointments',
+                    element: <UserAppointmentsPage />,
                     roles: [USER_ROLES.USER],
                 },
                 {
