@@ -37,7 +37,7 @@ const Page = styled.section`
     height: 100%;
     width: 100%;
     padding: var(--container-padding-mobile);
-    background-image: url('/public/images/blob-login.svg');
+    background-image: url('/images/blob-login.svg');
     background-repeat: no-repeat;
     background-position: top 20% left 50%;
     background-size: 18rem;
