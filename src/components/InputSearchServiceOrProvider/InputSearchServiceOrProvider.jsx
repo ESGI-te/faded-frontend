@@ -82,7 +82,8 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
             {...props}
             onInputChange={handleInputChange}
             isLoading={establishments.isFetching}
-            defaultItems={suggestions}
+            defaultItems={formattedCategories}
+            items={suggestions}
         >
             {(item) => <ListItem item={item} />}
         </ComboBoxController>

@@ -9,13 +9,14 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from '@components/Button';
 import EstablishmentFeedbackListPagination from './EstablishmentFeedbackListPagination';
+import EstablishmentFeedbackListSkeleton from './EstablishmentFeedbackListSkeleton';
 
 const EstablishmentFeedbackList = () => {
     const { establishmentId } = useParams();
     const [page, setPage] = useState(1);
     const { data: feedback, isLoading } = useEstablishmentFeedbackQuery(establishmentId, { page });
 
-    if (isLoading) return <div>Loading...</div>; // TODO: Add skeleton
+    if (isLoading) return <EstablishmentFeedbackListSkeleton />;
 
     return (
         <Wrapper>
