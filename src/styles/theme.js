@@ -81,19 +81,19 @@ export const Theme = createGlobalStyle`
         --success400: #56ABA3;
         --success500: #3D8F89;
 
-        --info-50: #F0F4FD;
-        --info-100: #E5EBFA;
-        --info-200: #CFDAF6;
-        --info-300: #B2C1EF;
-        --info-400: #92A0E7;
-        --info-500: #7881DC;
+        --info50: #F0F4FD;
+        --info100: #E5EBFA;
+        --info200: #CFDAF6;
+        --info300: #B2C1EF;
+        --info400: #92A0E7;
+        --info500: #7881DC;
 
-        --warning-50: #fffcea;
-        --warning-100: #fff5c5;
-        --warning-200: #ffeb85;
-        --warning-300: #ffda46;
-        --warning-400: #ffc71b;
-        --warning-500: #ffa500;
+        --warning50: #fffcea;
+        --warning100: #fff5c5;
+        --warning200: #ffeb85;
+        --warning300: #ffda46;
+        --warning400: #ffc71b;
+        --warning500: #ffa500;
 
 		--neutral50: #F9F7FA;
         --neutral100: #F0EDF2;
@@ -113,6 +113,7 @@ export const Theme = createGlobalStyle`
         --white: #ffffff;
 		--black: #272727;
 		--typo: #141414;
+        --background: #FCFBFD;
     }
 
 `;
