@@ -1,22 +1,22 @@
 import UserAppointments from '@components/UserAppointments';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const UserAppointmentsPage = () => {
-  return (
-    <Page>
-        <PageInnerWrapper>
-            <UserAppointments/>
-        </PageInnerWrapper>
-    </Page>
-  )
-}
+    return (
+        <Page>
+            <PageInnerWrapper>
+                <UserAppointments />
+            </PageInnerWrapper>
+        </Page>
+    );
+};
 
 const Page = styled.section`
     min-height: 100%;
     width: 100%;
     display: flex;
     align-items: start;
-    background-color: var(--neutral50);
+    background-color: var(--background);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         justify-content: center;
@@ -29,7 +29,7 @@ const PageInnerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    background-color: var(--neutral50);
+    background-color: var(--background);
     padding: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
@@ -38,4 +38,4 @@ const PageInnerWrapper = styled.div`
     }
 `;
 
-export default UserAppointmentsPage
+export default UserAppointmentsPage;

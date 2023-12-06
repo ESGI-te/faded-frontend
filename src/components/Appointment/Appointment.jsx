@@ -36,6 +36,7 @@ const Appointment = ({ establishment }) => {
             services={establishment.services}
             barbers={barbers}
             onSubmit={handleCreateAppointment}
+            isLoading={appointmentMutation.isLoading}
         />
     );
 };

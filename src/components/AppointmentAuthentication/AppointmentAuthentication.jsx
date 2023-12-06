@@ -35,7 +35,7 @@ const AppointmentAuthentication = () => {
     return (
         <AppointmentAuthenticationWrapper>
             {form === 'register' ? (
-                <RegisterForm onSubmit={handleRegister} />
+                <RegisterForm onSubmit={handleRegister} isLoading={register.isLoading} />
             ) : (
                 <CallToActionWrapper>
                     <Text variant="headingS" fontWeight="--fw-semibold">
@@ -52,7 +52,7 @@ const AppointmentAuthentication = () => {
                 <DividerLine />
             </DividerWrapper>
             {form === 'login' ? (
-                <LoginForm onSubmit={handleLogin} />
+                <LoginForm onSubmit={handleLogin} isLoading={login.isLoading} />
             ) : (
                 <CallToActionWrapper>
                     <Text variant="headingS" fontWeight="--fw-semibold">

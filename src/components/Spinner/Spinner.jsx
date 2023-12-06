@@ -8,7 +8,7 @@ const Spinner = (props) => {
 const SpinnerStyled = styled.div`
     width: ${({ size }) => size};
     height: ${({ size }) => size};
-    border: ${({ size }) => `calc(${size} / 8)`} solid var(${({ color }) => color || '--white'});
+    border: ${({ size }) => `calc(${size} / 8)`} solid var(${({ color }) => color});
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -30,7 +30,7 @@ Spinner.propTypes = {
 };
 
 Spinner.defaultProps = {
-    color: 'var(--white)',
+    color: '--white',
     size: '1rem',
 };
 
