@@ -18,7 +18,7 @@ import Button from '@components/Button';
 import { useAuth } from '@contexts/AuthProvider';
 import { useMemo } from 'react';
 
-const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
+const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) => {
     const formattedBarbers = useMemo(() => {
         const data = barbers?.map((barber) => ({ id: barber.id, name: barber.firstName })) || [];
         return [{ id: '', name: 'Sans préférence' }, ...data];
@@ -144,7 +144,11 @@ const AppointmentForm = ({ service, services, barbers, onSubmit }) => {
                     </Step>
                 )}
 
-                {isAuthenticated && <SubmitButton type="submit">Réserver</SubmitButton>}
+                {isAuthenticated && (
+                    <SubmitButton type="submit" isLoading={isLoading}>
+                        Réserver
+                    </SubmitButton>
+                )}
             </Form>
             {isValid && !isAuthenticated && (
                 <Step>
@@ -296,10 +300,12 @@ AppointmentForm.propTypes = {
         }),
     ).isRequired,
     onSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 AppointmentForm.defaultProps = {
     onSubmit: () => {},
+    isLoading: false,
 };
 
 export default AppointmentForm;

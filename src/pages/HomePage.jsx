@@ -8,55 +8,60 @@ import HomeSearchEstablishments from '@components/HomeSearchEstablishments';
 const HomePage = () => {
     return (
         <Page>
-            <RegisterWrapper>
-                <Stack gap="0.25rem">
-                    <Text variant="headingXL" fontWeight="--fw-bold">
-                        <FormattedMessage defaultMessage="Barber appointment Solution in Single Platform." />
-                    </Text>
-                    <Text>
-                        <FormattedMessage defaultMessage="Depuis votre lit, ou dans le bus réservez en quelques clics." />
-                    </Text>
-                </Stack>
-                <HomeSearchEstablishments />
-            </RegisterWrapper>
-            <IllustrationWrapper>
-                <Illustration />
-            </IllustrationWrapper>
+            <PageInnerWrapper>
+                <SearchWrapper>
+                    <Stack gap="0.25rem">
+                        <Text variant="headingXL" fontWeight="--fw-bold">
+                            <FormattedMessage defaultMessage="Barber appointment Solution in Single Platform." />
+                        </Text>
+                        <Text>
+                            <FormattedMessage defaultMessage="Depuis votre lit, ou dans le bus réservez en quelques clics." />
+                        </Text>
+                    </Stack>
+                    <HomeSearchEstablishments />
+                </SearchWrapper>
+                <IllustrationWrapper>
+                    <Illustration />
+                </IllustrationWrapper>
+            </PageInnerWrapper>
         </Page>
     );
 };
 
 const Page = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    row-gap: 1rem;
     width: 100%;
-    padding: var(--container-padding-mobile);
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
     background-image: url('/images/blob-home.svg');
     background-repeat: no-repeat;
     background-position: top 20% left 50%;
     background-size: 18rem;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding: var(--container-padding);
         flex-direction: row;
-        column-gap: 2rem;
         background: none;
-        align-self: center;
-
-        & > * {
-            width: 50%;
-        }
     }
 `;
-const RegisterWrapper = styled.div`
+const PageInnerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    column-gap: 4rem;
+    max-width: var(--container-width);
+    padding: var(--container-padding-mobile);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding: var(--container-padding);
+    }
+`;
+const SearchWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
 `;
 const Illustration = styled(BlobIllustration)`
     width: 40rem;

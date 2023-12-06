@@ -128,7 +128,7 @@ const Page = styled.section`
     width: 100%;
     display: flex;
     align-items: start;
-    background-color: var(--neutral50);
+    background-color: var(--background);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         justify-content: center;
@@ -140,7 +140,7 @@ const PageInnerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    background-color: var(--neutral50);
+    background-color: var(--background);
     padding-bottom: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {

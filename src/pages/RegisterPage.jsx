@@ -9,48 +9,53 @@ import { FormattedMessage } from 'react-intl';
 const LoginPage = () => {
     return (
         <Page>
-            <RegisterWrapper>
-                <Stack gap="0.25rem">
-                    <Text variant="headingXL" fontWeight="--fw-bold">
-                        <FormattedMessage defaultMessage="Rejoignez des milliers d'utilisateurs." />
-                    </Text>
-                    <Text>Sunt id dolor eu officia ex amet voluptate esse velit.</Text>
-                </Stack>
-                <Register />
-                <Link to="/login">
-                    <FormattedMessage defaultMessage="Déjà inscrit ? Connectez-vous." />
-                </Link>
-            </RegisterWrapper>
-            <IllustrationWrapper>
-                <Illustration />
-            </IllustrationWrapper>
+            <PageInnerWrapper>
+                <RegisterWrapper>
+                    <Stack gap="0.25rem">
+                        <Text variant="headingXL" fontWeight="--fw-bold">
+                            <FormattedMessage defaultMessage="Rejoignez des milliers d'utilisateurs." />
+                        </Text>
+                        <Text>Sunt id dolor eu officia ex amet voluptate esse velit.</Text>
+                    </Stack>
+                    <Register />
+                    <Link to="/login">
+                        <FormattedMessage defaultMessage="Déjà inscrit ? Connectez-vous." />
+                    </Link>
+                </RegisterWrapper>
+                <IllustrationWrapper>
+                    <Illustration />
+                </IllustrationWrapper>
+            </PageInnerWrapper>
         </Page>
     );
 };
 
 const Page = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    row-gap: 1rem;
     width: 100%;
-    padding: var(--container-padding-mobile);
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
     background-image: url('/images/blob-register.svg');
     background-repeat: no-repeat;
     background-position: top 20% left 50%;
     background-size: 18rem;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding: var(--container-padding);
         flex-direction: row;
-        column-gap: 2rem;
         background: none;
-        align-self: center;
+    }
+`;
+const PageInnerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    column-gap: 4rem;
+    max-width: var(--container-width);
+    padding: var(--container-padding-mobile);
 
-        & > * {
-            width: 50%;
-        }
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding: var(--container-padding);
     }
 `;
 const RegisterWrapper = styled.div`
@@ -58,7 +63,7 @@ const RegisterWrapper = styled.div`
     flex-direction: column;
     row-gap: 1rem;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
 `;
 const Illustration = styled(BlobIllustration)`
     width: 40rem;
