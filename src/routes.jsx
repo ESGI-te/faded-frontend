@@ -13,6 +13,7 @@ import AppointmentPage from '@pages/AppointmentPage';
 import EstablishmentAppointmentProvider from '@contexts/EstablishmentAppointmentProvider';
 import AppointmentSummaryPage from '@pages/AppointmentSummaryPage';
 import UserAppointmentsPage from '@pages/UserAppointmentsPage';
+import ProfilePage from '@pages/ProfilePage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -54,7 +55,7 @@ const customerRoutes = [
                 element: <HomePage />,
             },
             {
-                path: '/establishments',
+                path: 'establishments',
                 element: <EstablishmentSearchPage />,
             },
             {
@@ -79,14 +80,21 @@ const customerRoutes = [
             element: <DefaultLayout />,
             children: [
                 {
+                    element: <ProfilePage />,
+                    roles: [USER_ROLES.USER],
                     path: 'profile',
-                    element: <HomePage />,
-                    roles: [USER_ROLES.USER],
-                },
-                {
-                    path: '/appointments',
-                    element: <UserAppointmentsPage />,
-                    roles: [USER_ROLES.USER],
+                    children: [
+                        // {
+                        //     path: 'settings',
+                        //     element: <ProfilePage />,
+                        //     roles: [USER_ROLES.USER],
+                        // },
+                        {
+                            path: 'appointments',
+                            element: <UserAppointmentsPage />,
+                            roles: [USER_ROLES.USER],
+                        },
+                    ],
                 },
                 {
                     path: 'appointment/:appointmentId/success',
