@@ -1,41 +1,34 @@
+import { useState } from 'react';
 import UserAppointments from '@components/UserAppointments';
-// import styled from 'styled-components';
+import { APPOINTMENT_STATUS } from '@utils/constants';
+import styled from 'styled-components';
+import UserAppointmentsTabs from '@components/UserAppointmentsTabs';
+import Stack from '@components/Stack';
 
 const UserAppointmentsPage = () => {
+    const [selectedStatus, setSelectedStatus] = useState(APPOINTMENT_STATUS.PLANNED);
     return (
-        // <Page>
-        //     <PageInnerWrapper>
-        <UserAppointments />
-        //     </PageInnerWrapper>
-        // </Page>
+        <Stack gap="1rem">
+            <StickyContainer>
+                <UserAppointmentsTabs
+                    onChangeSelectedStatus={setSelectedStatus}
+                    activeTab={selectedStatus}
+                />
+            </StickyContainer>
+            <UserAppointments selectedStatus={selectedStatus} />
+        </Stack>
     );
 };
 
-// const Page = styled.section`
-//     min-height: 100%;
-//     width: 100%;
-//     display: flex;
-//     align-items: start;
-//     background-color: var(--background);
+const StickyContainer = styled.div`
+    position: sticky;
+    top: 56px;
+    z-index: 1;
+    background-color: var(--background);
 
-//     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-//         justify-content: center;
-//     }
-// `;
-// const PageInnerWrapper = styled.div`
-//     width: 100%;
-//     align-self: stretch;
-//     max-width: 900px;
-//     display: flex;
-//     flex-direction: column;
-//     row-gap: 1rem;
-//     background-color: var(--background);
-//     padding: var(--container-padding-mobile);
-
-//     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-//         row-gap: 2rem;
-//         padding: var(--container-padding);
-//     }
-// `;
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        top: var(--container-padding);
+    }
+`;
 
 export default UserAppointmentsPage;
