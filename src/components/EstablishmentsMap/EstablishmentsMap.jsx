@@ -6,7 +6,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
 import { Link } from 'react-router-dom';
-import useResponsive from '@hooks/useResponsive';
+import useResponsive from '@hooks/useResponsive.hook';
 
 const EstablishmentsMap = ({ establishments }) => {
     const mapRef = React.useRef(null);

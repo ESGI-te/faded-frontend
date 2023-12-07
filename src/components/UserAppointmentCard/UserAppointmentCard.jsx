@@ -10,6 +10,7 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 import useCancelAppointmentMutation from '@queries/appointment/useCancelAppointmentMutation.hook';
 import { APPOINTMENT_STATUS } from '@utils/constants';
 import Link from '@components/Link';
+import useGoogleCalendarEventLink from '@hooks/useGoogleCalendarEventLink.hook';
 
 const statusColorLookup = {
     [APPOINTMENT_STATUS.PLANNED]: '--info',
@@ -26,6 +27,7 @@ const statusLabelLookup = defineMessages({
 const UserAppointmentCard = ({ appointment }) => {
     const cancelAppointment = useCancelAppointmentMutation();
     const isPlanned = appointment.status === APPOINTMENT_STATUS.PLANNED;
+    const link = useGoogleCalendarEventLink(appointment);
 
     return (
         <Card>
@@ -76,9 +78,9 @@ const UserAppointmentCard = ({ appointment }) => {
                         <FormattedMessage defaultMessage="Déplacer le rdv" />
                     </PostponeButton>
                     <ActionsInnerWrapper>
-                        <TextButton>
+                        <Link to={link}>
                             <FormattedMessage defaultMessage="Ajouter à mon agenda" />
-                        </TextButton>
+                        </Link>
                         <TextButton onPress={() => cancelAppointment.mutate(appointment.id)}>
                             <FormattedMessage defaultMessage="Annuler le RDV" />
                         </TextButton>
