@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl';
-import dayjs from '@/utils/dayjs';
+import { dayjs } from '@utils/dayjs';
 
 const useGoogleCalendarEventLink = (appointment) => {
     const intl = useIntl();

@@ -78,7 +78,7 @@ const UserAppointmentCard = ({ appointment }) => {
                         <FormattedMessage defaultMessage="Déplacer le rdv" />
                     </PostponeButton>
                     <ActionsInnerWrapper>
-                        <Link to={link}>
+                        <Link to={link} target="_blank">
                             <FormattedMessage defaultMessage="Ajouter à mon agenda" />
                         </Link>
                         <TextButton onPress={() => cancelAppointment.mutate(appointment.id)}>
