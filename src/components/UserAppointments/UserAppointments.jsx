@@ -1,15 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import UserAppointmentsList from '@components/UserAppointmentsList';
 import useAppointmentsQuery from '@queries/appointment/useAppointementsQuery.hook';
 import { APPOINTMENT_STATUS } from '@utils/constants';
-import UserAppointmentsTabs from '@components/UserAppointmentsTabs';
-import Stack from '@components/Stack';
 import UserAppointmentsSkeleton from './UserAppointmentsSkeleton';
-import styled from 'styled-components';
 
-const UserAppointments = () => {
+const UserAppointments = ({ selectedStatus }) => {
     const { data: appointments, isLoading } = useAppointmentsQuery();
-    const [selectedStatus, setSelectedStatus] = useState(APPOINTMENT_STATUS.PLANNED);
     const filteredAppointments = useMemo(() => {
         if (selectedStatus === APPOINTMENT_STATUS.PLANNED) {
             return appointments?.data?.filter(
@@ -23,28 +19,7 @@ const UserAppointments = () => {
 
     if (isLoading) return <UserAppointmentsSkeleton />;
 
-    return (
-        <Stack gap="1rem">
-            <StickyContainer>
-                <UserAppointmentsTabs
-                    onChangeSelectedStatus={setSelectedStatus}
-                    activeTab={selectedStatus}
-                />
-            </StickyContainer>
-            <UserAppointmentsList appointments={filteredAppointments} />
-        </Stack>
-    );
+    return <UserAppointmentsList appointments={filteredAppointments} />;
 };
-
-const StickyContainer = styled.div`
-    position: sticky;
-    top: 56px;
-    z-index: 1;
-    background-color: var(--background);
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        top: var(--container-padding);
-    }
-`;
 
 export default UserAppointments;
