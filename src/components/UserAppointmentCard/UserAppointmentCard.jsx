@@ -9,6 +9,7 @@ import Button from '@components/Button';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import useCancelAppointmentMutation from '@queries/appointment/useCancelAppointmentMutation.hook';
 import { APPOINTMENT_STATUS } from '@utils/constants';
+import Link from '@components/Link';
 
 const statusColorLookup = {
     [APPOINTMENT_STATUS.PLANNED]: '--info',
@@ -40,7 +41,9 @@ const UserAppointmentCard = ({ appointment }) => {
                 <ImageWrapper>
                     {/* TODO: Use actual image here and remove background color */}
                 </ImageWrapper>
-                <Text>{appointment.establishment.name}</Text>
+                <Link to={`/establishments/${appointment.establishment.id}`}>
+                    {appointment.establishment.name}
+                </Link>
             </Cluster>
             <Cluster gap="0.5rem" align="center">
                 <Icon icon={icon({ name: 'location-dot', style: 'solid' })} />
@@ -59,7 +62,7 @@ const UserAppointmentCard = ({ appointment }) => {
                     <Divider />
                     <Cluster gap="0.5rem" align="center">
                         <Icon icon={icon({ name: 'money-bill-wave', style: 'solid' })} />
-                        <InformationText>{appointment.service.price} min</InformationText>
+                        <InformationText>{appointment.service.price} €</InformationText>
                     </Cluster>
                 </Cluster>
             </ResponsiveWrapper>

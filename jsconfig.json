@@ -1,17 +1,27 @@
 {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-        "@components/*": ["src/components/*"],
-        "@styles/*": ["src/styles/*"],
-        "@utils/*": ["src/utils/*"],
-        "@pages/*": ["src/pages/*"],
-        "@hooks/*": ["src/hooks/*"],
-        "@contexts/*": ["src/contexts/*"],
-        "@queries/*": ["src/queries/*"],
-        "@public/*": ["public/*"],
-        "@api/*": ["src/api/*"],
-      }
-    }
-  }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"],
+      "@pages/*": ["src/pages/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@queries/*": ["src/queries/*"],
+      "@public/*": ["public/*"],
+      "@api/*": ["src/api/*"],
+    },
+    "target": "es6",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
   
