@@ -83,7 +83,7 @@ const AppointmentSummaryPage = () => {
                             </Cluster>
                         </AppointmentService>
                     </Cluster>
-                    <AppointmentsButton forwardedAs={Link} to="/appointments">
+                    <AppointmentsButton forwardedAs={Link} to="/profile/appointments">
                         Mes rendez-vous
                     </AppointmentsButton>
                 </Summary>

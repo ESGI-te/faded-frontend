@@ -38,9 +38,13 @@ const UserAppointments = () => {
 
 const StickyContainer = styled.div`
     position: sticky;
-    top: 0;
+    top: 56px;
     z-index: 1;
     background-color: var(--background);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        top: var(--container-padding);
+    }
 `;
 
 export default UserAppointments;

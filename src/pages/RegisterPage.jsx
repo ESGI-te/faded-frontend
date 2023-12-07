@@ -57,6 +57,10 @@ const PageInnerWrapper = styled.div`
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);
     }
+
+    ${({ theme }) => theme.mediaQueries.desktopLargeAndUp} {
+        column-gap: 6rem;
+    }
 `;
 const RegisterWrapper = styled.div`
     display: flex;
