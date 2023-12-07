@@ -2,9 +2,10 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Cluster from '@components/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from '@components/Link';
 import Text from '@components/Text';
 import { useAuth } from '@contexts/AuthProvider';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import Link from '@components/Link';
 
 const DefaultLayout = () => {
     const { isAuthenticated } = useAuth();
@@ -16,8 +17,8 @@ const DefaultLayout = () => {
                     BARBERS
                 </Text>
                 {isAuthenticated ? (
-                    <ProfileLink>
-                        <ProfileIcon />
+                    <ProfileLink to="/profile">
+                        <ProfileIcon icon={icon({ name: 'circle-user', style: 'solid' })} />
                         <ProfileLinkText>Mon compte</ProfileLinkText>
                     </ProfileLink>
                 ) : (
@@ -72,7 +73,7 @@ const ProfileIcon = styled(FontAwesomeIcon)`
 const ProfileLink = styled(Link)`
     display: flex;
     align-items: center;
-    column-gap: 0.25rem;
+    column-gap: 0.5rem;
 `;
 const ProfileLinkText = styled(Text)`
     display: none;
