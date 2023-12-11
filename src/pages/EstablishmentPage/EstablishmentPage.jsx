@@ -16,6 +16,7 @@ import {
     useEstablishmentAppointment,
 } from '@contexts/EstablishmentAppointmentProvider';
 import EstablishmentPageSkeleton from './EstablishmentPageSkeleton';
+import { FormattedMessage } from 'react-intl';
 
 const EstablishmentPage = () => {
     const navigate = useNavigate();
@@ -61,17 +62,22 @@ const EstablishmentPage = () => {
                 </ResponsiveWrapper>
                 <InformationTitleWrapper>
                     <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
-                        Réserver en ligne chez {establishment.name}
+                        <FormattedMessage
+                            defaultMessage="Réserver en ligne chez {establishment}"
+                            values={{
+                                establishment: establishment.name,
+                            }}
+                        />
                     </Text>
                     <Text as="h3" variant="bodyL" color="--neutral500">
-                        24h/24 - Paiement sur place - Confirmation immédiate
+                        <FormattedMessage defaultMessage="24h/24 - Paiement sur place - Confirmation immédiate" />
                     </Text>
                 </InformationTitleWrapper>
                 <ResponsiveContentWrapper>
                     <Stack gap="2rem">
                         <EstablishmentServicesWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
-                                Les prestations
+                                <FormattedMessage defaultMessage="Les prestations" />
                             </Text>
                             <EstablishmentServicesAccordion
                                 onChange={handleSelectService}
@@ -82,7 +88,7 @@ const EstablishmentPage = () => {
                         <EstablishmentMapWrapper>
                             <Stack gap="0.25rem">
                                 <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
-                                    Où se situe le salon ?
+                                    <FormattedMessage defaultMessage="Où se situe le salon ?" />
                                 </Text>
                                 <Subtitle>
                                     <SubtitleIcon
@@ -100,7 +106,7 @@ const EstablishmentPage = () => {
                         </EstablishmentMapWrapper>
                         <EstablishmentBarbersWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
-                                L'équipe
+                                <FormattedMessage defaultMessage="L'équipe" />
                             </Text>
                             <EstablishmentBarbers barbers={establishment.barbers} />
                         </EstablishmentBarbersWrapper>
@@ -112,7 +118,7 @@ const EstablishmentPage = () => {
                         />
                         <EstablishmentOpeningHoursWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
-                                Les horaires d'ouverture
+                                <FormattedMessage defaultMessage="Les horaires d'ouverture" />
                             </Text>
                             <EstablishmentOpeningHours planning={establishment.planning} />
                         </EstablishmentOpeningHoursWrapper>

@@ -4,11 +4,11 @@ import styled, { keyframes, css } from 'styled-components';
 const UserAppointmentsSkeleton = () => {
     return (
         <Stack gap="1rem">
-            <Block height="15rem" width="100%" />
-            <Block height="15rem" width="100%" />
-            <Block height="15rem" width="100%" />
-            <Block height="15rem" width="100%" />
-            <Block height="15rem" width="100%" />
+            <Block height="22rem" width="100%" />
+            <Block height="22rem" width="100%" />
+            <Block height="22rem" width="100%" />
+            <Block height="22rem" width="100%" />
+            <Block height="22rem" width="100%" />
         </Stack>
     );
 };

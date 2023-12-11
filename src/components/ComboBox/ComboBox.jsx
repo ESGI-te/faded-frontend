@@ -6,17 +6,11 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Label from '@components/Label';
 import Input from '@components/Input';
 import IconButton from '@components/IconButton';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const ComboBox = ({ label, endIcon, startIcon, errorMessage, children, isLoading, ...props }) => {
     const hasError = !!errorMessage;
     const triggerRef = useRef(null);
-    const [triggerWidth, setTriggerWidth] = useState(0);
-
-    useEffect(() => {
-        const width = triggerRef.current?.offsetWidth;
-        setTriggerWidth(width);
-    }, [triggerRef]);
 
     return (
         <InputWrapper {...props} selectedKey={props.value} ref={triggerRef}>
@@ -38,7 +32,7 @@ const ComboBox = ({ label, endIcon, startIcon, errorMessage, children, isLoading
                 }
                 isLoading={isLoading}
             />
-            <PopoverStyled style={{ width: triggerWidth + 'px' }}>
+            <PopoverStyled>
                 <List>{children}</List>
             </PopoverStyled>
         </InputWrapper>
@@ -47,6 +41,7 @@ const ComboBox = ({ label, endIcon, startIcon, errorMessage, children, isLoading
 
 const PopoverStyled = styled(Popover)`
     width: 100%;
+    max-width: var(--trigger-width);
     max-height: 10rem;
     overflow-y: scroll;
     background-color: var(--white);

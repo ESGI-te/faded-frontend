@@ -3,14 +3,12 @@ import AppointmentForm from '@components/AppointmentForm';
 import { useEstablishmentAppointment } from '@contexts/EstablishmentAppointmentProvider';
 import useCreateAppointmentMutation from '@queries/appointment/useCreateAppointmentMutation.hook';
 import { useParams } from 'react-router-dom';
-import useUserQuery from '@queries/user/useUserQuery.hook';
 import useEstablishmentBarbersQuery from '@queries/barber/useEstablishmentBarbersQuery.hook';
 import { useNavigate } from 'react-router-dom';
 
 const Appointment = ({ establishment }) => {
     const { establishmentId } = useParams();
     const { selectedService } = useEstablishmentAppointment();
-    const { data: user } = useUserQuery();
     const { data: barbers } = useEstablishmentBarbersQuery(establishmentId);
     const appointmentMutation = useCreateAppointmentMutation();
     const navigate = useNavigate();
@@ -20,8 +18,7 @@ const Appointment = ({ establishment }) => {
             establishment: establishmentId,
             service: data.service.id,
             dateTime: data.dateTime,
-            barber: null,
-            user: user?.id,
+            barber: data.barber || null,
         };
         appointmentMutation.mutate(formattedData, {
             onSuccess: (appointment) => {

@@ -4,16 +4,10 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Label from '@components/Label';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const InputSelect = ({ label, endIcon, startIcon, errorMessage, children, items, ...props }) => {
     const triggerRef = useRef(null);
-    const [triggerWidth, setTriggerWidth] = useState(0);
-
-    useEffect(() => {
-        const width = triggerRef.current?.offsetWidth;
-        setTriggerWidth(width);
-    }, [triggerRef]);
 
     return (
         <InputWrapper {...props} ref={triggerRef}>
@@ -24,7 +18,7 @@ const InputSelect = ({ label, endIcon, startIcon, errorMessage, children, items,
                     <CarretIcon icon={icon({ name: 'caret-down', style: 'solid' })} />
                 </span>
             </InputButton>
-            <PopoverStyled style={{ width: triggerWidth + 'px' }}>
+            <PopoverStyled>
                 <List items={items}>
                     {children || ((item) => <ListItem>{item.name}</ListItem>)}
                 </List>
@@ -35,6 +29,7 @@ const InputSelect = ({ label, endIcon, startIcon, errorMessage, children, items,
 
 const PopoverStyled = styled(Popover)`
     width: 100%;
+    max-width: var(--trigger-width);
     max-height: 10rem;
     overflow-y: scroll;
     background-color: var(--white);
@@ -43,7 +38,7 @@ const PopoverStyled = styled(Popover)`
     border: 1px solid var(--neutral500);
 `;
 const InputButton = styled(Button)`
-    height: 3rem;
+    height: 100%;
     padding: 1rem;
     border: solid var(--black) 1px;
     border-radius: var(--r-s);
@@ -84,6 +79,7 @@ const InputWrapper = styled(Select)`
     flex-direction: column;
     row-gap: 0.5rem;
     width: 100%;
+    height: 3rem;
     position: relative;
 `;
 const List = styled(ListBox)`

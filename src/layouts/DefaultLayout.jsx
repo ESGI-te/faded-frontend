@@ -6,34 +6,60 @@ import Text from '@components/Text';
 import { useAuth } from '@contexts/AuthProvider';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Link from '@components/Link';
+import { FormattedMessage, useIntl } from 'react-intl';
+import InputSelect from '@components/InputSelect';
+import { LOCALES, useChangeLocale } from '@contexts/IntlProvider';
 
-const DefaultLayout = () => {
+const Header = () => {
     const { isAuthenticated } = useAuth();
+    const { locale } = useIntl();
+    const localeItems = Object.values(LOCALES).map((locale) => ({
+        name: locale.toUpperCase(),
+        id: locale,
+    }));
+    const changeLocale = useChangeLocale();
 
     return (
-        <Container>
-            <Header>
-                <Text as={Link} to="/" variant="bodyL" fontWeight="--fw-bold">
-                    BARBERS
-                </Text>
+        <HeaderStyled>
+            <Text as={Link} to="/" variant="bodyL" fontWeight="--fw-bold">
+                BARBERS
+            </Text>
+            <Cluster gap="2rem" align="center">
+                <LanguageSelect
+                    onSelectionChange={(locale) => changeLocale(locale)}
+                    defaultSelectedKey={locale}
+                    items={localeItems}
+                />
                 {isAuthenticated ? (
                     <ProfileLink to="/profile">
                         <ProfileIcon icon={icon({ name: 'circle-user', style: 'solid' })} />
-                        <ProfileLinkText>Mon compte</ProfileLinkText>
+                        <ProfileLinkText>
+                            <FormattedMessage defaultMessage="Mon compte" />
+                        </ProfileLinkText>
                     </ProfileLink>
                 ) : (
                     <Cluster align="center" gap="1rem">
-                        <ProviderLink to="/login">Je suis un prestataire</ProviderLink>
-                        <LoginLink to="/login">Je m'identifie</LoginLink>
+                        <ProviderLink to="/login">
+                            <FormattedMessage defaultMessage="Je suis un prestataire" />
+                        </ProviderLink>
+                        <LoginLink to="/login">
+                            <FormattedMessage defaultMessage="Je m'identifie" />
+                        </LoginLink>
                     </Cluster>
                 )}
-            </Header>
-            <Main>
-                <Outlet />
-            </Main>
-        </Container>
+            </Cluster>
+        </HeaderStyled>
     );
 };
+
+const DefaultLayout = () => (
+    <Container>
+        <Header />
+        <Main>
+            <Outlet />
+        </Main>
+    </Container>
+);
 
 const Container = styled.div`
     height: 100%;
@@ -53,7 +79,7 @@ const Main = styled.main`
         flex: 1;
     }
 `;
-const Header = styled.header`
+const HeaderStyled = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -93,4 +119,14 @@ const LoginLink = styled(Link)`
     font-weight: var(--fw-semibold);
     color: var(--primary500);
 `;
+const LanguageSelect = styled(InputSelect)`
+    width: fit-content;
+    height: 2rem;
+
+    & > button {
+        padding: 0.5rem;
+        border: none;
+    }
+`;
+
 export default DefaultLayout;
