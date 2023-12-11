@@ -11,6 +11,7 @@ import { useAccordionItem } from '@components/AccordionItem/useAccordionItem.hoo
 import Cluster from '@components/Cluster';
 import { Separator } from 'react-aria-components';
 import Button from '@components/Button';
+import { FormattedMessage } from 'react-intl';
 
 const AccordionItemButton = ({ label }) => {
     const { isExpanded } = useAccordionItem();
@@ -66,7 +67,7 @@ const EstablishmentServicesAccordion = ({ services, onChange, ...props }) => {
                                                 onPress={() => onChange(service)}
                                                 size="small"
                                             >
-                                                Choisir
+                                                <FormattedMessage defaultMessage="Choisir" />
                                             </ServiceButton>
                                         </ServiceInnerWrapper>
                                     </Service>

@@ -17,11 +17,16 @@ import AppointmentAuthentication from '@components/AppointmentAuthentication';
 import Button from '@components/Button';
 import { useAuth } from '@contexts/AuthProvider';
 import { useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) => {
+    const intl = useIntl();
     const formattedBarbers = useMemo(() => {
         const data = barbers?.map((barber) => ({ id: barber.id, name: barber.firstName })) || [];
-        return [{ id: '', name: 'Sans préférence' }, ...data];
+        return [
+            { id: '', name: intl.formatMessage({ defaultMessage: 'Sans préférence' }) },
+            ...data,
+        ];
     }, [barbers]);
 
     const { isAuthenticated } = useAuth();
@@ -61,7 +66,9 @@ const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) =>
                 <Step>
                     <StepTitle>
                         <span>1.</span>
-                        <span>Choix de la prestation</span>
+                        <span>
+                            <FormattedMessage defaultMessage="Choix de la prestation" />
+                        </span>
                     </StepTitle>
                     {serviceValue ? (
                         <StepResume>
@@ -95,7 +102,9 @@ const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) =>
                     <Step>
                         <StepTitle>
                             <span>2.</span>
-                            <span>Choix de la date & heure</span>
+                            <span>
+                                <FormattedMessage defaultMessage="Choix de la date & heure" />
+                            </span>
                         </StepTitle>
                         {dateTimeValue ? (
                             <StepResume>
@@ -115,7 +124,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) =>
                                         control={control}
                                         name="barber"
                                         items={formattedBarbers}
-                                        label="Avec qui ?"
+                                        label={<FormattedMessage defaultMessage="Avec qui ?" />}
                                         defaultSelectedKey=""
                                     >
                                         {(item) => (
@@ -146,7 +155,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) =>
 
                 {isAuthenticated && (
                     <SubmitButton type="submit" isLoading={isLoading}>
-                        Réserver
+                        <FormattedMessage defaultMessage="Réserver" />
                     </SubmitButton>
                 )}
             </Form>

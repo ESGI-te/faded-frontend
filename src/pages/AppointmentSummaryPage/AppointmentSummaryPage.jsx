@@ -12,6 +12,7 @@ import Cluster from '@components/Cluster';
 import Stack from '@components/Stack';
 import { Separator } from 'react-aria-components';
 import AppointmentSummaryPageSkeleton from './AppointmentSummaryPageSkeleton';
+import { FormattedMessage } from 'react-intl';
 
 const CONFETTI_LEFT_CONFIG = {
     angle: '45',
@@ -55,7 +56,9 @@ const AppointmentSummaryPage = () => {
         <Page>
             <PageInnerWrapper>
                 <CalendarIcon icon={icon({ name: 'calendar-check', style: 'regular' })} />
-                <Title>Bravo ! Votre rendez-vous est confirmé.</Title>
+                <Title>
+                    <FormattedMessage defaultMessage="Bravo ! Votre rendez-vous est confirmé." />
+                </Title>
                 <Summary>
                     <EstablishmentTitleWrapper>
                         <EstablishmentImageWrapper></EstablishmentImageWrapper>
@@ -84,7 +87,7 @@ const AppointmentSummaryPage = () => {
                         </AppointmentService>
                     </Cluster>
                     <AppointmentsButton forwardedAs={Link} to="/profile/appointments">
-                        Mes rendez-vous
+                        <FormattedMessage defaultMessage="Mes rendez-vous" />
                     </AppointmentsButton>
                 </Summary>
             </PageInnerWrapper>

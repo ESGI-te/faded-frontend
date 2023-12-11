@@ -29,6 +29,10 @@ const UserAppointmentCard = ({ appointment }) => {
     const isPlanned = appointment.status === APPOINTMENT_STATUS.PLANNED;
     const link = useGoogleCalendarEventLink(appointment);
 
+    const handleCancelAppointment = () => {
+        cancelAppointment.mutate({ appointmentId: appointment.id, dateTime: appointment.dateTime });
+    };
+
     return (
         <Card>
             <Cluster justify="space-between" align="center">
@@ -81,7 +85,7 @@ const UserAppointmentCard = ({ appointment }) => {
                         <Link to={link} target="_blank">
                             <FormattedMessage defaultMessage="Ajouter à mon agenda" />
                         </Link>
-                        <TextButton onPress={() => cancelAppointment.mutate(appointment.id)}>
+                        <TextButton onPress={handleCancelAppointment}>
                             <FormattedMessage defaultMessage="Annuler le RDV" />
                         </TextButton>
                     </ActionsInnerWrapper>
