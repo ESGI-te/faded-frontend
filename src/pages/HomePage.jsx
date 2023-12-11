@@ -12,7 +12,7 @@ const HomePage = () => {
                 <SearchWrapper>
                     <Stack gap="0.25rem">
                         <Text variant="headingXL" fontWeight="--fw-bold">
-                            <FormattedMessage defaultMessage="Barber appointment Solution in Single Platform." />
+                            <FormattedMessage defaultMessage="Votre style, votre horaire. Simplifiez vos rdv." />
                         </Text>
                         <Text>
                             <FormattedMessage defaultMessage="Depuis votre lit, ou dans le bus réservez en quelques clics." />

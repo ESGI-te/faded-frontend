@@ -33,7 +33,7 @@ export const getEstablishmentAppointments = (establishmentId, { page, perPage } 
     });
 export const getAppointment = (appointmentId) => callApi(`/appointments/${appointmentId}`);
 export const getAppointments = () => callApi('/appointments');
-export const cancelAppointment = ({ appointmentId, status }) =>
-    callApi(`/appointments/${appointmentId}/cancel`, { method: 'PATCH', data: { status } });
+export const cancelAppointment = (appointmentId, appointment) =>
+    callApi(`/appointments/${appointmentId}/cancel`, { method: 'PATCH', data: appointment });
 
 export const getServiceCategories = () => callApi('/service_categories');
