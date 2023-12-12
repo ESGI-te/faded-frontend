@@ -117,7 +117,7 @@ const providerRoutes = [
                 {
                     path: '',
                     element: <DashboardPage />,
-                    roles: [USER_ROLES.ADMIN, USER_ROLES.MANAGER],
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                 },
             ],
         },
