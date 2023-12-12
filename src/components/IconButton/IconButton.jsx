@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import Button from '@components/Button';
+import styled from 'styled-components';
 
 const IconButton = ({ size, icon, ...props }) => (
-    <Button size={`${size}Icon`} startIcon={icon} {...props} />
+    <ButtonStyled size={`${size}Icon`} startIcon={icon} {...props} />
 );
+
+const ButtonStyled = styled(Button)`
+    &[data-focused] {
+        outline: none;
+    }
+`;
 
 IconButton.propTypes = {
     variant: PropTypes.oneOf(['primary', 'secondary', 'ghost']),
