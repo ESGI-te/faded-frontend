@@ -6,6 +6,7 @@ import IconButton from '@components/IconButton';
 import { useState } from 'react';
 import Text from '@components/Text';
 import Link from '@components/Link';
+import ErrorBoundary from '@components/ErrorBoundary';
 
 const Drawer = ({ isOpen, onToggleDrawer }) => {
     return (
@@ -87,7 +88,9 @@ const ProviderLayout = () => {
             <InnerWrapper>
                 <Header onToggleDrawer={handleToggleDrawer} />
                 <Main>
-                    <Outlet />
+                    <ErrorBoundary>
+                        <Outlet />
+                    </ErrorBoundary>
                 </Main>
             </InnerWrapper>
         </Container>
