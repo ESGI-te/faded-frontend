@@ -1,32 +1,52 @@
-import Checkbox from '@components/Checkbox';
-import Cluster from '@components/Cluster';
 import IconButton from '@components/IconButton';
 import { useState } from 'react';
 import {
     Cell as AriaCell,
     Column,
-    Row,
     Table as AriaTable,
     TableBody,
-    TableHeader,
     DialogTrigger,
 } from 'react-aria-components';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteBarberModal from '@components/DeleteBarberModal';
 import EditBarberModal from '@components/EditBarberModal';
 import useDeleteBarberMutation from '@queries/barber/useDeleteBarberMutation.hook';
+import TableColumn from '@components/TableColumn';
+import TableHeader from '@components/TableHeader';
+import TableRow from '@components/TableRow';
 
 const BarbersTable = ({ barbers }) => {
+    const intl = useIntl();
     const [selectedItems, setSelectedItems] = useState([]);
     const items = barbers.map((barber) => ({
         id: barber.id,
         lastName: barber.lastName,
         firstName: barber.firstName,
     }));
-
+    const columns = [
+        {
+            key: 'lastName',
+            isRowHeader: true,
+            allowsSorting: true,
+            name: intl.formatMessage({ defaultMessage: 'Nom' }),
+        },
+        {
+            key: 'firstName',
+            allowsSorting: true,
+            name: intl.formatMessage({ defaultMessage: 'Prénom' }),
+        },
+        {
+            key: 'actions',
+            name: null,
+        },
+    ];
+    let [sortDescriptor, setSortDescriptor] = useState({
+        column: 'lastName',
+        direction: 'ascending',
+    });
     const deleteBarber = useDeleteBarberMutation();
     const [isdeleteLoading, setIsDeleteLoading] = useState(false);
 
@@ -48,41 +68,41 @@ const BarbersTable = ({ barbers }) => {
     };
 
     return (
-        <Table onSelectionChange={handleSelection} aria-label="Users" selectionMode="multiple">
-            <TableHeader>
-                <HeaderSelectionColumn>
-                    <Cluster align="center" gap="0.5rem">
-                        <Checkbox slot="selection" />
-                        {selectedItems.length > 0 && (
-                            <DialogTrigger>
-                                <DeleteButton
-                                    variant="ghost"
-                                    icon={
-                                        <TrashIcon icon={icon({ name: 'trash', style: 'solid' })} />
-                                    }
-                                />
-                                <DeleteBarberModal
-                                    onDelete={handleDelete}
-                                    isLoading={isdeleteLoading}
-                                />
-                            </DialogTrigger>
-                        )}
-                    </Cluster>
-                </HeaderSelectionColumn>
-                <HeaderColumn isRowHeader>
-                    <FormattedMessage defaultMessage="Nom" />
-                </HeaderColumn>
-                <HeaderColumn>
-                    <FormattedMessage defaultMessage="Prénom" />
-                </HeaderColumn>
-                <HeaderColumn />
+        <Table
+            onSelectionChange={handleSelection}
+            sortDescriptor={setSortDescriptor}
+            onSortChange={(data) => {
+                console.log(data);
+            }}
+            aria-label="Users"
+            selectionMode="multiple"
+        >
+            <TableHeader
+                actions={
+                    selectedItems.length > 0 ? (
+                        <DialogTrigger>
+                            <DeleteButton
+                                variant="ghost"
+                                icon={<TrashIcon icon={icon({ name: 'trash', style: 'solid' })} />}
+                            />
+                            <DeleteBarberModal
+                                onDelete={handleDelete}
+                                isLoading={isdeleteLoading}
+                            />
+                        </DialogTrigger>
+                    ) : null
+                }
+                columns={columns}
+            >
+                {({ key, ...column }) => (
+                    <TableColumn id={key} {...column}>
+                        {column.name}
+                    </TableColumn>
+                )}
             </TableHeader>
             <TableBody items={items} renderEmptyState={() => 'No results found.'}>
                 {(barber) => (
-                    <BodyRow id={barber.id}>
-                        <Cell>
-                            <Checkbox slot="selection" />
-                        </Cell>
+                    <TableRow id={barber.id}>
                         <Cell>{barber.lastName}</Cell>
                         <Cell>{barber.firstName}</Cell>
                         <ActionCell>
@@ -91,10 +111,12 @@ const BarbersTable = ({ barbers }) => {
                                     variant="ghost"
                                     icon={<Icon icon={icon({ name: 'pen', style: 'solid' })} />}
                                 />
-                                <EditBarberModal barber={barbers.find((b) => b.id === barber.id)} />
+                                <EditBarberModal
+                                    barber={selectedItems.find((b) => b.id === barber.id)}
+                                />
                             </DialogTrigger>
                         </ActionCell>
-                    </BodyRow>
+                    </TableRow>
                 )}
             </TableBody>
         </Table>
@@ -109,28 +131,6 @@ const Table = styled(AriaTable)`
     padding: 1rem;
     border-spacing: 0 0.5rem;
     border-collapse: collapse;
-`;
-const HeaderColumn = styled(Column)`
-    text-align: left;
-    padding: 1rem;
-`;
-const HeaderSelectionColumn = styled(HeaderColumn)`
-    width: 5rem;
-`;
-const BodyRow = styled(Row)`
-    &:not(:last-child) {
-        border-bottom: 1px solid var(--neutral100);
-    }
-
-    &[data-hovered] {
-        background-color: var(--neutral50);
-    }
-    &[data-selected] {
-        background-color: var(--primary100);
-    }
-    &[data-focused] {
-        outline: 2px solid var(--primary500);
-    }
 `;
 const Cell = styled(AriaCell)`
     padding: 0.75rem 1rem;

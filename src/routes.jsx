@@ -19,6 +19,7 @@ import ProfileInformationPage from '@pages/ProfileInformationPage';
 import TeamPage from '@pages/provider/TeamPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import ProviderRequestPasswordSetPage from '@pages/ProviderRequestPasswordSetPage';
+import { Navigate } from 'react-router-dom';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
