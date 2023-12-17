@@ -45,7 +45,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled(AriaInput)`
     height: 3rem;
     padding: 1rem;
-    border: solid var(--neutral500) 1px;
+    border: solid var(--black) 1px;
     border-radius: var(--r-s);
     width: 100%;
     background-color: var(--white);
@@ -61,7 +61,7 @@ const StyledInput = styled(AriaInput)`
         pointer-events: none;
         color: var(--neutral500);
         background-color: var(--neutral50);
-        border-color: var(--neutral500);
+        border-color: var(--neutral100);
     }
 
     &[data-invalid] {
