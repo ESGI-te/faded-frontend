@@ -68,6 +68,7 @@ const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
             renderItems={renderSuggestions}
             onSelect={handleSelect}
             onClickOutside={clearSuggestions}
+            autoComplete
         />
     );
 };

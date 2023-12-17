@@ -104,16 +104,23 @@ export const Theme = createGlobalStyle`
         --neutral600: #6F6B73;
         --neutral700: #565259;
 
+        /* Shadows */
+        --shadow-xs: 0 0 0.125rem rgba(0, 0, 0, 0.1);
+        --shadow-s: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        --shadow-m: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
         --primary: var(--primary400);
         --secondary: var(--primary100);
         --success: var(--success500);
         --info: var(--info500);
         --warning: var(--warning500);
+        --alert: var(--alert500);
         --neutral: var(--neutral500);
         --white: #ffffff;
 		--black: #272727;
 		--typo: #141414;
         --background: #FCFBFD;
+
     }
 
 `;

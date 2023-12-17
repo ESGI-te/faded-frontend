@@ -4,9 +4,25 @@ import Text from '@components/Text';
 import { Button as AriaButton } from 'react-aria-components';
 import Spinner from '@components/Spinner';
 
-const Button = ({ children, startIcon, endIcon, isLoading, ...props }) => {
+const Button = ({
+    children,
+    startIcon,
+    endIcon,
+    isLoading,
+    size,
+    variant,
+    color,
+    backgroundColor,
+    ...props
+}) => {
     return (
-        <ButtonStyled {...props}>
+        <ButtonStyled
+            $size={size}
+            $variant={variant}
+            $color={color}
+            $backgroundColor={backgroundColor}
+            {...props}
+        >
             {startIcon}
             {children && <ButtonText as="span">{children}</ButtonText>}
             {endIcon}
@@ -58,15 +74,16 @@ const ButtonStyled = styled(AriaButton)`
     cursor: pointer;
     text-decoration: none;
     border: 1px solid transparent;
-    background-color: var(${(props) => props.backgroundColor});
-    color: var(${(props) => props.color});
+    color: var(${(props) => props.$color});
     border-radius: var(--r-s);
     transition-duration: 200ms;
     transition-property: opacity, background-color, color;
     font-weight: var(--fw-semibold);
 
-    ${(props) => sizes[props.size]}
-    ${(props) => variantLookup[props.variant]}
+    ${(props) => sizes[props.$size]}
+    ${(props) => variantLookup[props.$variant]}
+
+    ${({ $backgroundColor }) => $backgroundColor && `background-color: var(${$backgroundColor});`}
 
     &[data-disabled] {
         opacity: 0.5;
@@ -94,7 +111,6 @@ Button.propTypes = {
 
 Button.defaultProps = {
     color: '--white',
-    backgroundColor: '--primary',
     variant: 'primary',
     size: 'medium',
 };

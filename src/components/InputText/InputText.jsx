@@ -51,7 +51,7 @@ const ErrorIcon = styled(FontAwesomeIcon)`
 `;
 
 InputText.propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     description: PropTypes.string,
     errorMessage: PropTypes.string,
     isInvalid: PropTypes.bool,
