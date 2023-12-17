@@ -20,6 +20,7 @@ import TeamPage from '@pages/provider/TeamPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import ProviderRequestPasswordSetPage from '@pages/ProviderRequestPasswordSetPage';
 import { Navigate } from 'react-router-dom';
+import NoRouteFoundPage from '@pages/status/404Page';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -128,6 +129,10 @@ const customerRoutes = [
             ],
         },
     ]),
+    {
+        path: '*',
+        element: <NoRouteFoundPage />,
+    },
 ];
 
 const providerRoutes = [
