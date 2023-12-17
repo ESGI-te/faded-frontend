@@ -9,6 +9,7 @@ import Link from '@components/Link';
 import { FormattedMessage, useIntl } from 'react-intl';
 import InputSelect from '@components/InputSelect';
 import { LOCALES, useChangeLocale } from '@contexts/IntlProvider';
+import ErrorBoundary from '@components/ErrorBoundary';
 
 const Header = () => {
     const { isAuthenticated } = useAuth();
@@ -56,7 +57,9 @@ const DefaultLayout = () => (
     <Container>
         <Header />
         <Main>
-            <Outlet />
+            <ErrorBoundary>
+                <Outlet />
+            </ErrorBoundary>
         </Main>
     </Container>
 );

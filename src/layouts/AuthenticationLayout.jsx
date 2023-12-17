@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Link from '@components/Link';
+import ErrorBoundary from '@components/ErrorBoundary';
 
 const AuthenticationLayout = () => (
     <Container>
@@ -8,7 +9,9 @@ const AuthenticationLayout = () => (
             <HomeLink to="/">BARBERS</HomeLink>
         </Header>
         <Main>
-            <Outlet />
+            <ErrorBoundary>
+                <Outlet />
+            </ErrorBoundary>
         </Main>
     </Container>
 );
