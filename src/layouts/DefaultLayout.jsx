@@ -39,8 +39,8 @@ const Header = () => {
                     </ProfileLink>
                 ) : (
                     <Cluster align="center" gap="1rem">
-                        <ProviderLink to="/login">
-                            <FormattedMessage defaultMessage="Je suis un prestataire" />
+                        <ProviderLink to="/provider-request">
+                            <FormattedMessage defaultMessage="Je deviens un prestataire" />
                         </ProviderLink>
                         <LoginLink to="/login">
                             <FormattedMessage defaultMessage="Je m'identifie" />
