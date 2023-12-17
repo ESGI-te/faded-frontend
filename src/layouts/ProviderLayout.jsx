@@ -23,7 +23,7 @@ const Drawer = ({ isOpen, onToggleDrawer }) => {
             <Nav>
                 <NavList>
                     <NavItem>
-                        <NavLink to="">
+                        <NavLink to="overview">
                             <NavItemIcon icon={icon({ name: 'table-columns', style: 'solid' })} />
                             Dashboard
                         </NavLink>
@@ -143,6 +143,7 @@ const DrawerHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     align-self: stretch;
+    width: 100%;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         align-self: initial;
@@ -166,7 +167,6 @@ const Main = styled.main`
     background-color: var(--white);
     display: flex;
     align-items: start;
-    background-color: var(--background);
 
     & > * {
         flex: 1;

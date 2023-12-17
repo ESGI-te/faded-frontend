@@ -1,9 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const DashboardPage = (props) => {
-    return <div>DashboardPage</div>;
+    return <Page>DashboardPage</Page>;
 };
+
+const Page = styled.section`
+    align-self: stretch;
+    display: flex;
+    align-items: start;
+    background-color: var(--background);
+    padding: var(--container-padding-mobile);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding: var(--container-padding);
+    }
+`;
 
 DashboardPage.propTypes = {};
 

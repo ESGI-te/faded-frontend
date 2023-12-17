@@ -4,12 +4,12 @@ import styled, { css } from 'styled-components';
 
 const Input = ({ startIcon, endIcon, customButton, isLoading, ...props }) => {
     return (
-        <InputWrapper hasStartIcon={!!startIcon} hasEndIcon={!!customButton || !!endIcon}>
+        <InputWrapper $hasStartIcon={!!startIcon} $hasEndIcon={!!customButton || !!endIcon}>
             {startIcon}
             <StyledInput
                 {...props}
-                hasStartIcon={!!startIcon}
-                hasEndIcon={!!customButton || !!endIcon}
+                $hasStartIcon={!!startIcon}
+                $hasEndIcon={!!customButton || !!endIcon}
             />
             {isLoading ? <Spinner color="--primary500" /> : customButton || endIcon}
         </InputWrapper>
@@ -20,8 +20,8 @@ const InputWrapper = styled.div`
     width: 100%;
     position: relative;
 
-    ${({ hasStartIcon }) =>
-        hasStartIcon &&
+    ${({ $hasStartIcon }) =>
+        $hasStartIcon &&
         css`
             & > :first-child {
                 position: absolute;
@@ -31,8 +31,8 @@ const InputWrapper = styled.div`
             }
         `}
 
-    ${({ hasEndIcon }) =>
-        hasEndIcon &&
+    ${({ $hasEndIcon }) =>
+        $hasEndIcon &&
         css`
             & > :last-child {
                 position: absolute;
@@ -45,7 +45,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled(AriaInput)`
     height: 3rem;
     padding: 1rem;
-    border: solid var(--black) 1px;
+    border: solid var(--neutral500) 1px;
     border-radius: var(--r-s);
     width: 100%;
     background-color: var(--white);
@@ -69,11 +69,11 @@ const StyledInput = styled(AriaInput)`
     }
 
     &[data-focused] {
-        outline: solid 2px var(--primary500);
+        outline: solid 2px var(--primary);
     }
 
     &[data-hovered] {
-        border-color: var(--primary500);
+        border-color: var(--primary);
     }
 
     &[data-invalid],
@@ -86,8 +86,8 @@ const StyledInput = styled(AriaInput)`
         border-color: var(--neutral300);
     }
 
-    ${({ hasStartIcon }) => hasStartIcon && `padding-left: 2.5rem;`}
-    ${({ hasEndIcon }) => hasEndIcon && `padding-right: 2.5rem;`}
+    ${({ $hasStartIcon }) => $hasStartIcon && `padding-left: 2.5rem;`}
+    ${({ $hasEndIcon }) => $hasEndIcon && `padding-right: 2.5rem;`}
 `;
 
 export default Input;
