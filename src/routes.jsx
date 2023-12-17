@@ -15,6 +15,8 @@ import AppointmentSummaryPage from '@pages/AppointmentSummaryPage';
 import UserAppointmentsPage from '@pages/UserAppointmentsPage';
 import ProfilePage from '@pages/ProfilePage';
 import ProfileInformationPage from '@pages/ProfileInformationPage';
+import TeamPage from '@pages/provider/TeamPage';
+import { Navigate } from 'react-router-dom';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -116,7 +118,16 @@ const providerRoutes = [
             children: [
                 {
                     path: '',
+                    element: <Navigate to="overview" />,
+                },
+                {
+                    path: 'overview',
                     element: <DashboardPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'team',
+                    element: <TeamPage />,
                     roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                 },
             ],

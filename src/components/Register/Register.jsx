@@ -7,7 +7,7 @@ const Register = () => {
 
     const register = useCreateUserMutation();
 
-    const handleregister = (formData) => {
+    const handleRegister = (formData) => {
         const { password_confirmation, ...data } = formData;
         register.mutate(data, {
             onSuccess: () => {
@@ -16,7 +16,7 @@ const Register = () => {
         });
     };
 
-    return <RegisterForm onSubmit={handleregister} isLoading={register.isLoading} />;
+    return <RegisterForm onSubmit={handleRegister} isLoading={register.isLoading} />;
 };
 
 export default Register;

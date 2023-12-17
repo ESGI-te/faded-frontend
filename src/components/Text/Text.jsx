@@ -2,12 +2,28 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Text = ({ variant, ...props }) => {
+const Text = ({
+    variant,
+    fontWeight,
+    textAlign,
+    wordBreak,
+    overflowWrap,
+    textTransform,
+    color,
+    numberOfLines,
+    ...props
+}) => {
     return (
         <TextBase
+            $fontWeight={fontWeight}
+            $textAlign={textAlign}
+            $wordBreak={wordBreak}
+            $overflowWrap={overflowWrap}
+            $textTransform={textTransform}
+            $color={color}
+            $numberOfLines={numberOfLines}
+            $variant={variant}
             {...props}
-            fontSize={variantLookup[variant]?.fontSize || 'initial'}
-            lineHeight={variantLookup[variant]?.lineHeight || 'initial'}
         />
     );
 };
@@ -27,17 +43,19 @@ const truncatedOnMultipleLinesCss = css`
 `;
 
 const TextBase = styled.p`
-    color: var(${(props) => props.color || '--typo'});
-    font-size: ${(props) => props.fontSize};
-    font-weight: var(${(props) => props.fontWeight});
-    line-height: ${(props) => props.lineHeight};
-    text-align: ${(props) => props.textAlign};
-    font-style: ${(props) => props.fontStyle};
-    word-break: ${(props) => props.wordBreak};
-    overflow-wrap: ${(props) => props.overflowWrap};
-    text-overflow: ${(props) => props.textOverflow};
-    text-transform: ${(props) => props.textTransform};
-    white-space: ${(props) => props.whiteSpace};
+    ${(props) => variantLookup[props.$variant]}
+
+    color: var(${(props) => props.$color || '--typo'});
+    font-size: ${(props) => props.$fontSize};
+    font-weight: var(${(props) => props.$fontWeight});
+    line-height: ${(props) => props.$lineHeight};
+    text-align: ${(props) => props.$textAlign};
+    font-style: ${(props) => props.$fontStyle};
+    word-break: ${(props) => props.$wordBreak};
+    overflow-wrap: ${(props) => props.$overflowWrap};
+    text-overflow: ${(props) => props.$textOverflow};
+    text-transform: ${(props) => props.$textTransform};
+    white-space: ${(props) => props.$whiteSpace};
 
     ${(p) =>
         ['a', Link].includes(p.as) &&
