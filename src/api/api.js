@@ -44,8 +44,18 @@ export const cancelAppointment = (appointmentId, appointment) =>
 
 export const getServiceCategories = () => callApi('/service_categories');
 
+/* Barber */
 export const createBarber = (barberUser) =>
     callApi('/users/barber', { method: 'POST', data: barberUser });
 export const updateBarber = (barberId, barber) =>
     callApi(`/barbers/${barberId}`, { method: 'PATCH', data: barber });
 export const deleteBarber = (barberId) => callApi(`/barbers/${barberId}`, { method: 'DELETE' });
+
+/* Provider */
+export const createProvider = (formData) =>
+    callApi('/users/provider', { method: 'POST', data: formData });
+
+export const createProviderRequest = (formData) =>
+    callApi('/provider_requests', { method: 'POST', data: formData });
+export const getProviderRequests = ({ token, page, perPage }) =>
+    callApi(`/provider_requests/`, { query: { token, page, perPage } });

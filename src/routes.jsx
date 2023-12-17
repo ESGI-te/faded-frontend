@@ -1,6 +1,7 @@
 import ProtectedRoute from '@components/ProtectedRoute';
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
+import ProviderRequestPage from '@pages/ProviderRequestPage';
 import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from './layouts/DefaultLayout';
 import ProviderLayout from './layouts/ProviderLayout';
@@ -16,7 +17,8 @@ import UserAppointmentsPage from '@pages/UserAppointmentsPage';
 import ProfilePage from '@pages/ProfilePage';
 import ProfileInformationPage from '@pages/ProfileInformationPage';
 import TeamPage from '@pages/provider/TeamPage';
-import { Navigate } from 'react-router-dom';
+import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
+import ProviderRequestPasswordSetPage from '@pages/ProviderRequestPasswordSetPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -72,6 +74,24 @@ const customerRoutes = [
                     {
                         path: '',
                         element: <EstablishmentPage />,
+                    },
+                ],
+            },
+            {
+                path: 'provider-request',
+                children: [
+                    {
+                        path: '',
+                        name: 'provider-request',
+                        element: <ProviderRequestPage />,
+                    },
+                    {
+                        path: 'success',
+                        element: <ProviderRequestSuccessPage />,
+                    },
+                    {
+                        path: 'password-set/',
+                        element: <ProviderRequestPasswordSetPage />,
                     },
                 ],
             },
