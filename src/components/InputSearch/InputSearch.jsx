@@ -1,5 +1,5 @@
 import Input from '@components/Input';
-import { SearchField } from 'react-aria-components';
+import { SearchField as AriaSearchField } from 'react-aria-components';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import useOnclickOutside from 'react-cool-onclickoutside';
@@ -23,8 +23,10 @@ const InputSearch = ({
     const ref = useOnclickOutside(() => onClickOutside());
     const hasError = !!errorMessage;
 
+    const valueProp = value ? { value } : {};
+
     return (
-        <InputWrapper {...props} autoComplete value={value} ref={ref}>
+        <SearchField {...props} {...valueProp} ref={ref}>
             {label && <Label>{label}</Label>}
             <Input
                 endIcon={
@@ -56,7 +58,7 @@ const InputSearch = ({
                     </List>
                 </InputPopover>
             )}
-        </InputWrapper>
+        </SearchField>
     );
 };
 
@@ -102,7 +104,7 @@ const ListItem = styled.li`
         background-color: var(--primary50);
     }
 `;
-const InputWrapper = styled(SearchField)`
+const SearchField = styled(AriaSearchField)`
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;

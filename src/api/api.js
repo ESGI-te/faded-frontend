@@ -5,6 +5,10 @@ export const login = (credentials) => callApi('/login', { method: 'POST', data: 
 export const register = (user) => callApi('/users', { method: 'POST', data: user });
 export const getUser = () => callApi('/auth/user');
 
+/* Users */
+export const updateUser = (userId, user) =>
+    callApi(`/users/${userId}`, { method: 'PATCH', data: user });
+
 export const getEstablishments = ({ page, perPage, ...q }) =>
     callApi('/establishments/search', {
         query: { ...q, page, perPage },
@@ -24,6 +28,8 @@ export const getAllFeedback = (establishmentId, { page, perPage }) =>
 
 export const getEstablishmentBarbers = (establishmentId) =>
     callApi(`/barbers`, { query: { establishment: establishmentId } });
+export const getBarbers = ({ page, perPage, ...q } = {}) =>
+    callApi('/barbers', { query: { ...q, page, perPage } });
 
 export const createAppointment = (appointment) =>
     callApi('/appointments', { method: 'POST', data: appointment });
@@ -37,3 +43,9 @@ export const cancelAppointment = (appointmentId, appointment) =>
     callApi(`/appointments/${appointmentId}/cancel`, { method: 'PATCH', data: appointment });
 
 export const getServiceCategories = () => callApi('/service_categories');
+
+export const createBarber = (barberUser) =>
+    callApi('/users/barber', { method: 'POST', data: barberUser });
+export const updateBarber = (barberId, barber) =>
+    callApi(`/barbers/${barberId}`, { method: 'PATCH', data: barber });
+export const deleteBarber = (barberId) => callApi(`/barbers/${barberId}`, { method: 'DELETE' });
