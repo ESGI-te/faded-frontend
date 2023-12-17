@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { USER_ROLES } from '@utils/constants';
 import useUserQuery from '@queries/user/useUserQuery.hook';
@@ -7,13 +7,14 @@ import { useAuth } from '@contexts/AuthProvider';
 const ProtectedRoute = ({ children, roles }) => {
     const { isAuthenticated } = useAuth();
     const { data: user } = useUserQuery();
+    const location = useLocation();
+    const referrer = location.pathname;
 
     if (!isAuthenticated) {
-        return <Navigate to="/login" />;
+        return <Navigate to={`/login?referrer=${referrer}`} />;
     }
 
-    const userRoles = user?.roles || JSON.parse(localStorage.getItem('user_roles'));
-    const isDenied = !userRoles?.some((role) => roles.includes(role));
+    const isDenied = user && !user.roles.some((role) => roles.includes(role));
 
     if (isDenied) {
         return <Navigate to="/" />;

@@ -1,5 +1,7 @@
 import { getUser } from '@api/api';
+import userKeys from '@queries/user/userKeys';
 import { createContext, useContext, useState } from 'react';
+import { queryClient } from '@/App';
 
 const AuthContext = createContext({});
 
@@ -14,8 +16,7 @@ const AuthProvider = ({ children }) => {
 
     const onAuthenticate = async (token) => {
         localStorage.setItem('token', token);
-        const user = await getUser();
-        localStorage.setItem('user_roles', JSON.stringify(user.roles));
+        await queryClient.fetchQuery({ queryKey: userKeys.detail, queryFn: getUser });
         setIsAuthenticated(true);
     };
 

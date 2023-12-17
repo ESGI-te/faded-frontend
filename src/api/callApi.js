@@ -47,6 +47,7 @@ export const callApi = async (url, options) => {
             localStorage.removeItem('token');
             location.reload();
         }
+        throw new Error('Network request failed');
     }
 
     return transformResponse(responseData);
