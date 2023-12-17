@@ -12,7 +12,7 @@ const barberKeys = {
         },
     ],
     allDetails: () => [{ ...barberKeys.all()[0], scope: 'detail' }],
-    detailById: (barberId) => [{ ...barberKeys.allDetails()[0], barberId: barberId }],
+    detailById: (barberId) => [{ ...barberKeys.allDetails()[0], barberId }],
 };
 
 export default barberKeys;
