@@ -33,7 +33,13 @@ export const callApi = async (url, options) => {
     }
 
     const response = await fetch(URL, fetchOptions);
-    const responseData = await response.json();
+    let responseData;
+
+    try {
+        responseData = await response.json();
+    } catch (error) {
+        responseData = null;
+    }
 
     if (!response.ok) {
         if (response.status === 401) {
