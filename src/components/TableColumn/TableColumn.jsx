@@ -18,7 +18,7 @@ const TableColumn = ({ children, ...props }) => {
             {({ allowsSorting, sortDirection }) => (
                 <>
                     {children}
-                    {allowsSorting && (
+                    {allowsSorting && sortDirection && (
                         <span aria-hidden="true" className="sort-indicator">
                             <SortIcon icon={sortIconMatch[sortDirection]} />
                         </span>
