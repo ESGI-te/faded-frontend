@@ -1,4 +1,3 @@
-import Cluster from '@components/Cluster';
 import Stack from '@components/Stack';
 import styled, { keyframes, css } from 'styled-components';
 
