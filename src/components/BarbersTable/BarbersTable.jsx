@@ -2,12 +2,11 @@ import IconButton from '@components/IconButton';
 import { useState } from 'react';
 import {
     Cell as AriaCell,
-    Column,
     Table as AriaTable,
     TableBody,
     DialogTrigger,
 } from 'react-aria-components';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -111,9 +110,7 @@ const BarbersTable = ({ barbers }) => {
                                     variant="ghost"
                                     icon={<Icon icon={icon({ name: 'pen', style: 'solid' })} />}
                                 />
-                                <EditBarberModal
-                                    barber={selectedItems.find((b) => b.id === barber.id)}
-                                />
+                                <EditBarberModal barber={barbers.find((b) => b.id === barber.id)} />
                             </DialogTrigger>
                         </ActionCell>
                     </TableRow>
