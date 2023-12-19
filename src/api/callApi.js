@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
+let isRefreshing = false;
 
 export const callApi = async (url, options) => {
     let URL = BASE_URL + url;
@@ -33,32 +34,48 @@ export const callApi = async (url, options) => {
     }
 
     const response = await fetch(URL, fetchOptions);
-    let responseData;
 
+    if (!response.ok) {
+        if (!isRefreshing && response.status === 401) {
+            return refreshToken();
+        }
+        throw new Error('Network request failed');
+    }
+
+    let responseData;
     try {
         responseData = await response.json();
     } catch (error) {
         responseData = null;
     }
 
-    if (!response.ok) {
-        if (response.status === 401) {
-            // auto logout if 401 response returned from api
-            localStorage.removeItem('token');
-            location.reload();
-        }
-        throw new Error('Network request failed');
-    }
-
     return transformResponse(responseData);
 };
 
 const authHeader = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (!token) return {};
     return { Authorization: 'Bearer ' + token };
 };
 
 const transformResponse = (response) => {
     return camelcaseKeys(response, { deep: true });
+};
+
+const refreshToken = async () => {
+    isRefreshing = true;
+    try {
+        const response = await callApi('/auth/refresh-token', {
+            method: 'POST',
+            data: { refreshToken: localStorage.getItem('refreshToken') },
+        });
+        localStorage.setItem('accessToken', response.token);
+        localStorage.setItem('refreshToken', response.refreshToken);
+        isRefreshing = false;
+    } catch (error) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        isRefreshing = false;
+        throw error;
+    }
 };
