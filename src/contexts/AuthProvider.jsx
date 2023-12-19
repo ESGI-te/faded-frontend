@@ -6,16 +6,17 @@ import { queryClient } from '@/App';
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('accessToken'));
 
     const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_roles');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         setIsAuthenticated(false);
     };
 
-    const onAuthenticate = async (token) => {
-        localStorage.setItem('token', token);
+    const onAuthenticate = async ({ accessToken, refreshToken }) => {
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
         await queryClient.fetchQuery({ queryKey: userKeys.detail, queryFn: getUser });
         setIsAuthenticated(true);
     };

@@ -13,8 +13,8 @@ const Login = () => {
 
     const onSubmit = (data) => {
         login.mutate(data, {
-            onSuccess: async ({ token }) => {
-                await onAuthenticate(token);
+            onSuccess: async ({ token, refreshToken }) => {
+                await onAuthenticate({ accessToken: token, refreshToken });
                 navigate(redirectionLink, { replace: true });
             },
         });
