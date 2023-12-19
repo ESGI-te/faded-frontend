@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import CreateBarberModal from '@components/CreateBarberModal';
 import Button from '@components/Button';
-import { DialogTrigger } from 'react-aria-components';
+import { DialogTrigger, Table } from 'react-aria-components';
+import TableSkeleton from '@components/TableSkeleton';
 
 const Barbers = () => {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -56,7 +57,6 @@ const Barbers = () => {
                     <CreateBarberModal />
                 </DialogTrigger>
             </InputSearchWrapper>
-            {/* TODO: Add skeleton loader */}
             {!isLoading ? (
                 <>
                     <BarbersTable barbers={data.data} />
@@ -67,7 +67,7 @@ const Barbers = () => {
                     />
                 </>
             ) : (
-                <div>Loading...</div>
+                <TableSkeleton />
             )}
         </Stack>
     );
