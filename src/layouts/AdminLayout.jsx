@@ -1,4 +1,4 @@
-import ProviderLayout from './ProviderLayout';
+import ProviderLayout from './ProLayout';
 
 const AdminLayout = ProviderLayout;
 

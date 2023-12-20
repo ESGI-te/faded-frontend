@@ -1,19 +1,19 @@
+import Establishments from '@components/Establishments';
 import Text from '@components/Text';
 import styled from 'styled-components';
-import Barbers from '@components/Barbers';
 
-const TeamPage = () => (
+const ProviderEstablishmentsPage = () => (
     <Page>
         <PageInnerWrapper>
             <TitleWrapper>
                 <Text variant="headingM" fontWeight="--fw-bold">
-                    Gérer mon équipe
+                    Gérer mes établissements
                 </Text>
                 <Text variant="bodyL" color="--neutral500">
-                    Ajoutez, modifiez ou supprimez des membres de votre équipe
+                    Ajoutez, modifiez ou supprimez des établissements
                 </Text>
             </TitleWrapper>
-            <Barbers />
+            <Establishments />
         </PageInnerWrapper>
     </Page>
 );
@@ -40,4 +40,4 @@ const TitleWrapper = styled.div`
     row-gap: 0.25rem;
 `;
 
-export default TeamPage;
+export default ProviderEstablishmentsPage;

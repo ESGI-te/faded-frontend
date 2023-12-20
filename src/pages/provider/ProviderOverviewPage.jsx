@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const DashboardPage = (props) => {
-    return <Page>DashboardPage</Page>;
+const ProviderOverviewPage = (props) => {
+    return <Page>ProviderOverviewPage</Page>;
 };
 
 const Page = styled.section`
@@ -16,6 +16,6 @@ const Page = styled.section`
     }
 `;
 
-DashboardPage.propTypes = {};
+ProviderOverviewPage.propTypes = {};
 
-export default DashboardPage;
+export default ProviderOverviewPage;
