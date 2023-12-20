@@ -9,15 +9,19 @@ export const getUser = () => callApi('/auth/user');
 export const updateUser = (userId, user) =>
     callApi(`/users/${userId}`, { method: 'PATCH', data: user });
 
-export const getEstablishments = ({ page, perPage, ...q }) =>
+export const getEstablishmentsSearch = ({ page, perPage, ...q }) =>
     callApi('/establishments/search', {
+        query: { ...q, page, perPage },
+    });
+export const getEstablishments = ({ page, perPage, ...q }) =>
+    callApi('/establishments', {
         query: { ...q, page, perPage },
     });
 export const getEstablishment = (establishmentId) => callApi(`/establishments/${establishmentId}`);
 export const getEstablishmentServices = (establishmentId, query) =>
     callApi(`/services/establishment/${establishmentId}`, query);
 export const getEstablishmentSuggestions = ({ page, perPage, name }) =>
-    callApi('/establishments', {
+    callApi('/establishments/suggestions', {
         query: { name, page, perPage },
     });
 export const getEstablishmentImages = (establishmentId, query) =>

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import CreateBarberModal from '@components/CreateBarberModal';
 import Button from '@components/Button';
-import { DialogTrigger, Table } from 'react-aria-components';
+import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from '@components/TableSkeleton';
 
 const Barbers = () => {
@@ -63,7 +63,7 @@ const Barbers = () => {
                     <Pagination
                         pagination={data.pagination}
                         onPageChange={handlePageChange}
-                        pagesRange={3}
+                        pagesRange={5}
                     />
                 </>
             ) : (
