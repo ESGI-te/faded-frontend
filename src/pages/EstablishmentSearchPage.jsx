@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import useEstablishmentsQuery from '@queries/establishment/useEstablishmentsQuery.hook';
+import useEstablishmentsSearchQuery from '@queries/establishment/useEstablishmentsSearchQuery.hook';
 import { useSearchParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import EstablishmentResults from '@components/EstablishmentResults';
@@ -11,7 +11,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 const EstablishmentSearchPage = () => {
     const [searchParams] = useSearchParams();
     const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
-    const { data: establishments, isLoading } = useEstablishmentsQuery(params, {
+    const { data: establishments, isLoading } = useEstablishmentsSearchQuery(params, {
         enabled: Object.keys(params).length > 0,
     });
     const [isMapVisible, setIsMapVisible] = useState(false);

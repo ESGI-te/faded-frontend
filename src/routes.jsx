@@ -4,9 +4,8 @@ import LoginPage from '@pages/LoginPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from './layouts/DefaultLayout';
-import ProviderLayout from './layouts/ProviderLayout';
+import ProLayout from './layouts/ProLayout';
 import { USER_ROLES } from '@utils/constants';
-import DashboardPage from '@pages/provider/DashboardPage';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
 import EstablishmentPage from '@pages/EstablishmentPage';
 import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
@@ -16,11 +15,18 @@ import AppointmentSummaryPage from '@pages/AppointmentSummaryPage';
 import UserAppointmentsPage from '@pages/UserAppointmentsPage';
 import ProfilePage from '@pages/ProfilePage';
 import ProfileInformationPage from '@pages/ProfileInformationPage';
-import TeamPage from '@pages/provider/TeamPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import ProviderRequestPasswordSetPage from '@pages/ProviderRequestPasswordSetPage';
 import { Navigate } from 'react-router-dom';
 import NoRouteFoundPage from '@pages/status/404Page';
+import ProviderOverviewPage from '@pages/provider/ProviderOverviewPage';
+import ProviderTeamPage from '@pages/provider/ProviderTeamPage';
+import ProviderEstablishmentsPage from '@pages/provider/ProviderEstablishmentsPage';
+import ProviderAppointmentsPage from '@pages/provider/ProviderAppointmentsPage';
+import EstablishmentOverviewPage from '@pages/provider/EstablishmentOverviewPage';
+import EstablishmentTeamPage from '@pages/provider/EstablishmentTeamPage';
+import EstablishmentAppointmentsPage from '@pages/provider/EstablishmentAppointmentsPage';
+import EstablishmentSettingsPage from '@pages/provider/EstablishmentSettingsPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -135,12 +141,11 @@ const customerRoutes = [
     },
 ];
 
-const providerRoutes = [
-    /* Private routes */
+const proRoutes = [
     ...applyProtectedRoutes([
         {
             path: 'pro',
-            element: <ProviderLayout />,
+            element: <ProLayout />,
             children: [
                 {
                     path: '',
@@ -148,13 +153,49 @@ const providerRoutes = [
                 },
                 {
                     path: 'overview',
-                    element: <DashboardPage />,
+                    element: <ProviderOverviewPage />,
                     roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                 },
                 {
                     path: 'team',
-                    element: <TeamPage />,
+                    element: <ProviderTeamPage />,
                     roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'establishments',
+                    element: <ProviderEstablishmentsPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'appointments',
+                    element: <ProviderAppointmentsPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                /* ESTABLISHMENT */
+                {
+                    path: 'establishment/:establishmentId',
+                    children: [
+                        {
+                            path: '',
+                            element: <Navigate to="overview" />,
+                        },
+                        {
+                            path: 'overview',
+                            element: <EstablishmentOverviewPage />,
+                        },
+                        {
+                            path: 'team',
+                            element: <EstablishmentTeamPage />,
+                        },
+                        {
+                            path: 'appointments',
+                            element: <EstablishmentAppointmentsPage />,
+                        },
+                        {
+                            path: 'settings',
+                            element: <EstablishmentSettingsPage />,
+                        },
+                    ],
                 },
             ],
         },
@@ -163,6 +204,6 @@ const providerRoutes = [
 
 const adminRoutes = applyProtectedRoutes([]);
 
-const routes = [...customerRoutes, ...providerRoutes, ...adminRoutes];
+const routes = [...customerRoutes, ...proRoutes, ...adminRoutes];
 
 export default routes;
