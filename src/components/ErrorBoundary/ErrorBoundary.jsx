@@ -46,6 +46,7 @@ const TitleWrapper = styled.div`
 const Video = styled.video`
     width: 100%;
     max-width: 500px;
+    border-radius: var(--r-m);
 `;
 const Title = styled.h1`
     font-size: 1.25rem;

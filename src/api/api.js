@@ -4,10 +4,14 @@ import { callApi } from './callApi';
 export const login = (credentials) => callApi('/login', { method: 'POST', data: credentials });
 export const register = (user) => callApi('/users', { method: 'POST', data: user });
 export const getUser = () => callApi('/auth/user');
+export const resetPassword = (email) => callApi('/reset_password', { method: 'POST', data: email });
 
 /* Users */
 export const updateUser = (userId, user) =>
     callApi(`/users/${userId}`, { method: 'PATCH', data: user });
+export const updateUserPassword = (userId, data) =>
+    callApi(`/users/${userId}/password`, { method: 'PATCH', data });
+export const getResetPasswordTokens = (token) => callApi(`/reset_password_tokens?token=${token}`);
 
 export const getEstablishmentsSearch = ({ page, perPage, ...q }) =>
     callApi('/establishments/search', {

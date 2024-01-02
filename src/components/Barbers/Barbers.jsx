@@ -59,7 +59,7 @@ const Barbers = () => {
             </InputSearchWrapper>
             {!isLoading ? (
                 <>
-                    <BarbersTable barbers={data.data} />
+                    <BarbersTable items={data.data} />
                     <Pagination
                         pagination={data.pagination}
                         onPageChange={handlePageChange}
