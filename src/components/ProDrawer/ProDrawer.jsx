@@ -70,7 +70,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/team`}>
+                            <NavLink to={`/pro/establishment/${establishmentId}/team?page=1`}>
                                 <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
                                 Équipe
                             </NavLink>
@@ -113,7 +113,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to="team">
+                                <NavLink to="team?page=1">
                                     <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
                                     Mon équipe
                                 </NavLink>

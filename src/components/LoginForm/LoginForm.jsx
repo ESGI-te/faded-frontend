@@ -6,6 +6,7 @@ import Button from '@components/Button';
 import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
 import { FormattedMessage } from 'react-intl';
+import Link from '@components/Link';
 
 const LoginForm = ({ onSubmit, isLoading }) => {
     const { control, handleSubmit, formState } = useForm({
@@ -30,6 +31,9 @@ const LoginForm = ({ onSubmit, isLoading }) => {
                 label={<FormattedMessage defaultMessage="Mot de passe" />}
                 placeholder="******"
             />
+            <Link to="/password-forgotten">
+                <FormattedMessage defaultMessage="Mot de passe oublié ?" />
+            </Link>
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
                 <FormattedMessage defaultMessage="Se connecter" />
             </SubmitButton>

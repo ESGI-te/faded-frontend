@@ -16,7 +16,7 @@ const RegisterForm = ({ onSubmit, isLoading }) => {
             email: '',
             firstName: '',
             lastName: '',
-            password: '',
+            plainPassword: '',
             password_confirmation: '',
         },
     });
@@ -47,7 +47,7 @@ const RegisterForm = ({ onSubmit, isLoading }) => {
             />
             <InputTextController
                 control={control}
-                name="password"
+                name="plainPassword"
                 placeholder="******"
                 label={<FormattedMessage defaultMessage="Mot de passe" />}
                 type="password"

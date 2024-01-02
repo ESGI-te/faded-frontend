@@ -1,40 +1,21 @@
-import PasswordSetForm from '@components/PasswordSetForm';
-import ProviderRequestPasswordSet from '@components/ProviderRequestPasswordSet';
-import Stack from '@components/Stack';
-import { useLocation } from 'react-router-dom';
+import ResetPassword from '@components/ResetPassword';
 import styled from 'styled-components';
 import Text from '@components/Text';
 
-
-const ProviderRequestPasswordSetPage = () => {
-
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token');
-
-    if (!token) {
-        return (
-            <div>
-                <h1>404 NOT FOUND !!</h1>
-            </div>)
-    }
-
-
-
-
-
+const ResetPasswordPage = () => {
     return (
         <Page>
             <PageInnerWrapper>
-
                 <Title>Ajouter un mot de passe : </Title>
-                <Text variant="bodyL"> Pour garantir la sécurité de votre compte, veuillez définir un nouveau mot de passe personnel. </Text>
-                <ProviderRequestPasswordSet token={token} />
+                <Text variant="bodyL">
+                    Pour garantir la sécurité de votre compte, veuillez définir un nouveau mot de
+                    passe personnel.
+                </Text>
+                <ResetPassword />
             </PageInnerWrapper>
         </Page>
     );
 };
-
 
 const Page = styled.section`
     min-height: 100%;
@@ -68,4 +49,4 @@ const Title = styled(Text)`
     text-align: left;
 `;
 
-export default ProviderRequestPasswordSetPage;
+export default ResetPasswordPage;
