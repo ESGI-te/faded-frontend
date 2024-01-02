@@ -19,7 +19,7 @@ const Login = () => {
             },
         });
     };
-    return <LoginForm onSubmit={onSubmit} IsLoading={login.isLoading} />;
+    return <LoginForm onSubmit={onSubmit} isLoading={login.isLoading} />;
 };
 
 export default Login;

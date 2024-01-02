@@ -4,9 +4,9 @@ export const registerFormSchema = yup.object({
     email: yup.string().email().required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    password: yup.string().min(6).required(),
+    plainPassword: yup.string().min(6).required(),
     password_confirmation: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .oneOf([yup.ref('plainPassword'), null], 'Passwords must match')
         .required(),
 });

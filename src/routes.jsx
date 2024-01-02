@@ -1,11 +1,13 @@
+import { Navigate } from 'react-router-dom';
 import ProtectedRoute from '@components/ProtectedRoute';
+import { USER_ROLES } from '@utils/constants';
+
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from './layouts/DefaultLayout';
 import ProLayout from './layouts/ProLayout';
-import { USER_ROLES } from '@utils/constants';
 import AuthenticationLayout from './layouts/AuthenticationLayout';
 import EstablishmentPage from '@pages/EstablishmentPage';
 import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
@@ -14,10 +16,8 @@ import EstablishmentAppointmentProvider from '@contexts/EstablishmentAppointment
 import AppointmentSummaryPage from '@pages/AppointmentSummaryPage';
 import UserAppointmentsPage from '@pages/UserAppointmentsPage';
 import ProfilePage from '@pages/ProfilePage';
-import ProfileInformationPage from '@pages/ProfileInformationPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
-import ProviderRequestPasswordSetPage from '@pages/ProviderRequestPasswordSetPage';
-import { Navigate } from 'react-router-dom';
+import ProfileInformationPage from '@pages/ProfileInformationPage';
 import NoRouteFoundPage from '@pages/status/404Page';
 import ProviderOverviewPage from '@pages/provider/ProviderOverviewPage';
 import ProviderTeamPage from '@pages/provider/ProviderTeamPage';
@@ -25,8 +25,10 @@ import ProviderEstablishmentsPage from '@pages/provider/ProviderEstablishmentsPa
 import ProviderAppointmentsPage from '@pages/provider/ProviderAppointmentsPage';
 import EstablishmentOverviewPage from '@pages/provider/EstablishmentOverviewPage';
 import EstablishmentTeamPage from '@pages/provider/EstablishmentTeamPage';
-import EstablishmentAppointmentsPage from '@pages/provider/EstablishmentAppointmentsPage';
 import EstablishmentSettingsPage from '@pages/provider/EstablishmentSettingsPage';
+import EstablishmentAppointmentsPage from '@pages/provider/EstablishmentAppointmentsPage';
+import PasswordForgottenPage from '@pages/PasswordForgottenPage';
+import ResetPasswordPage from '@pages/ResetPasswordPage';
 
 const applyProtectedRoutes = (routes) => {
     return routes.map((route) => {
@@ -56,6 +58,16 @@ const customerRoutes = [
                 path: '/register',
                 name: 'register',
                 element: <RegisterPage />,
+            },
+            {
+                path: '/password-forgotten',
+                name: 'password-forgotten',
+                element: <PasswordForgottenPage />,
+            },
+            {
+                path: 'reset-password',
+                name: 'reset-password',
+                element: <ResetPasswordPage />,
             },
         ],
     },
@@ -96,10 +108,6 @@ const customerRoutes = [
                     {
                         path: 'success',
                         element: <ProviderRequestSuccessPage />,
-                    },
-                    {
-                        path: 'password-set/',
-                        element: <ProviderRequestPasswordSetPage />,
                     },
                 ],
             },
@@ -192,8 +200,8 @@ const proRoutes = [
                             element: <EstablishmentAppointmentsPage />,
                         },
                         {
-                            path: 'settings',
                             element: <EstablishmentSettingsPage />,
+                            path: 'settings',
                         },
                     ],
                 },
