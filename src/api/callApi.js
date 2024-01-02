@@ -24,8 +24,8 @@ export const callApi = async (url, options) => {
         method: options?.method || 'GET',
         headers: {
             'Content-Type': 'application/json',
-            ...options?.headers,
             ...authHeader(),
+            ...options?.headers,
         },
     };
 
@@ -68,6 +68,7 @@ const refreshToken = async () => {
         const response = await callApi('/token/refresh', {
             method: 'POST',
             data: { refreshToken: localStorage.getItem('refreshToken') },
+            headers: {},
         });
         localStorage.setItem('accessToken', response.token);
         localStorage.setItem('refreshToken', response.refreshToken);

@@ -1,20 +1,20 @@
 import { useForm } from 'react-hook-form';
-import { passwordSetSchema } from './PasswordSetForm.schema';
+import useResetPasswordFormSchema from './useResetPasswordFormSchema.hook';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { InputTextController } from '@components/InputText';
 import Button from '@components/Button';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-const RegisterForm = ({ onSubmit, isLoading }) => {
-    const intl = useIntl();
+const ResetPasswordForm = ({ onSubmit, isLoading }) => {
+    const schema = useResetPasswordFormSchema();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
-        resolver: yupResolver(passwordSetSchema),
+        resolver: yupResolver(schema),
         defaultValues: {
-            password: '',
-            password_confirmation: '',
+            plainPassword: '',
+            passwordConfirmation: '',
         },
     });
     const { isDirty } = formState;
@@ -23,14 +23,14 @@ const RegisterForm = ({ onSubmit, isLoading }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
             <InputTextController
                 control={control}
-                name="password"
+                name="plainPassword"
                 placeholder="******"
                 label={<FormattedMessage defaultMessage="Mot de passe" />}
                 type="password"
             />
             <InputTextController
                 control={control}
-                name="password_confirmation"
+                name="passwordConfirmation"
                 placeholder="******"
                 label={<FormattedMessage defaultMessage="Confirmation de mot de passe" />}
                 type="password"
@@ -51,30 +51,20 @@ const Form = styled.form`
         row-gap: 2rem;
     }
 `;
-const ResponsiveWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        flex-direction: row;
-        column-gap: 1rem;
-    }
-`;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
     align-self: stretch;
     background-color: var(--black);
 `;
 
-RegisterForm.propTypes = {
+ResetPasswordForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
 };
 
-RegisterForm.defaultProps = {
+ResetPasswordForm.defaultProps = {
     onSubmit: () => {},
     isLoading: false,
 };
 
-export default RegisterForm;
+export default ResetPasswordForm;

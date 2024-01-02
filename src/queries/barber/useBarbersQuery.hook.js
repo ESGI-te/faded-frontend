@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBarbers } from '@/api/api';
 import barberKeys from '@/queries/barber/barberKeys';
 
-const queryFn = async ({ queryKey: [{ page, perPage, ...q }] }) => {
+const queryFn = async ({ queryKey: [{ page, perPage, entity, scope, ...q }] }) => {
     const data = await getBarbers({ page, perPage, ...q });
     return data;
 };

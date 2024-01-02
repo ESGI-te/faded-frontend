@@ -16,16 +16,19 @@ import useDeleteBarberMutation from '@queries/barber/useDeleteBarberMutation.hoo
 import TableColumn from '@components/TableColumn';
 import TableHeader from '@components/TableHeader';
 import TableRow from '@components/TableRow';
+import useUserQuery from '@queries/user/useUserQuery.hook';
+import { USER_ROLES } from '@utils/constants';
 
-const BarbersTable = ({ barbers }) => {
+const BarbersTable = ({ items }) => {
     const intl = useIntl();
     const [selectedItems, setSelectedItems] = useState([]);
-    const items = barbers.map((barber) => ({
-        id: barber.id,
-        lastName: barber.lastName,
-        firstName: barber.firstName,
-    }));
-    const columns = [
+    // const items = barbers.map((barber) => ({
+    //     id: barber.id,
+    //     lastName: barber.lastName,
+    //     firstName: barber.firstName,
+    // }));
+    const { data: user } = useUserQuery();
+    const baseColumns = [
         {
             key: 'lastName',
             isRowHeader: true,
@@ -37,6 +40,17 @@ const BarbersTable = ({ barbers }) => {
             allowsSorting: true,
             name: intl.formatMessage({ defaultMessage: 'Prénom' }),
         },
+    ];
+    const providerColumns = [
+        {
+            key: 'establishment',
+            allowsSorting: true,
+            name: intl.formatMessage({ defaultMessage: 'Établissement' }),
+        },
+    ];
+    const columns = [
+        ...baseColumns,
+        ...(user?.roles.includes(USER_ROLES.PROVIDER) ? providerColumns : []),
         {
             key: 'actions',
             name: null,
@@ -104,13 +118,14 @@ const BarbersTable = ({ barbers }) => {
                     <TableRow id={barber.id}>
                         <Cell>{barber.lastName}</Cell>
                         <Cell>{barber.firstName}</Cell>
+                        <Cell>{barber?.establishment?.name}</Cell>
                         <ActionCell>
                             <DialogTrigger>
                                 <EditButton
                                     variant="ghost"
                                     icon={<Icon icon={icon({ name: 'pen', style: 'solid' })} />}
                                 />
-                                <EditBarberModal barber={barbers.find((b) => b.id === barber.id)} />
+                                <EditBarberModal barber={items.find((b) => b.id === barber.id)} />
                             </DialogTrigger>
                         </ActionCell>
                     </TableRow>
