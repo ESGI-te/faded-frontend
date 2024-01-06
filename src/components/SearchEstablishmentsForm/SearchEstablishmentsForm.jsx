@@ -16,9 +16,8 @@ const SearchEstablishmentsForm = ({ onSubmit, defaultValues }) => {
         mode: 'onBlur',
         resolver: yupResolver(schema),
         defaultValues: {
-            categoryId: '' || defaultValues?.categoryId,
+            serviceCategories: '' || defaultValues?.serviceCategories,
             address: '' || defaultValues?.address,
-            radius: 250000 || defaultValues?.radius,
         },
     });
 
@@ -35,7 +34,7 @@ const SearchEstablishmentsForm = ({ onSubmit, defaultValues }) => {
                 placeholder={intl.formatMessage({ defaultMessage: 'Que cherchez-vous ?' })}
                 control={control}
                 startIcon={<Icon icon={icon({ name: 'magnifying-glass', style: 'solid' })} />}
-                name="categoryId"
+                name="serviceCategories"
             />
             <InputSearchPlaces
                 placeholder={intl.formatMessage({ defaultMessage: 'Où' })}
@@ -71,7 +70,7 @@ SearchEstablishmentsForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     defaultValues: PropTypes.shape({
-        categoryId: PropTypes.string,
+        serviceCategories: PropTypes.string,
         address: PropTypes.string,
         radius: PropTypes.number,
     }),
