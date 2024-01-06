@@ -19,6 +19,7 @@ const Login = () => {
             },
         });
     };
+
     return <LoginForm onSubmit={onSubmit} isLoading={login.isLoading} />;
 };
 

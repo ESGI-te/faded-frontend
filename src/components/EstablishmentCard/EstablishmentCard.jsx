@@ -6,36 +6,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
 import { Link } from 'react-router-dom';
 
-const EstablishmentCard = ({ establishment }) => {
-    return (
-        <Card>
-            <ImgWrapper />
-            <InfoWrapper>
-                <Text variant="headingS">{establishment.name} </Text>
-                <InfoText>
-                    <InfoIcon icon={icon({ name: 'shoe-prints', style: 'solid' })} />
-                    <span>{establishment.distance.toFixed(2)} km</span>
-                </InfoText>
-                <InfoText>
-                    <InfoIcon icon={icon({ name: 'location-dot', style: 'solid' })} />
-                    {establishment.address}
-                </InfoText>
-                <InfoText>
-                    <InfoIcon icon={icon({ name: 'star', style: 'regular' })} />
-                    <span>{establishment.note.toFixed(1)}</span>
-                    <span>({establishment.noteCount} avis)</span>
-                </InfoText>
-                <AppointmentButton
-                    forwardedAs={Link}
-                    to={`/establishments/${establishment.id}`}
-                    variant="primary"
-                >
-                    Réserver
-                </AppointmentButton>
-            </InfoWrapper>
-        </Card>
-    );
-};
+const EstablishmentCard = ({ establishment }) => (
+    <Card>
+        <ImgWrapper />
+        <InfoWrapper>
+            <Text variant="headingS">{establishment.name} </Text>
+            <InfoText>
+                <InfoIcon icon={icon({ name: 'shoe-prints', style: 'solid' })} />
+                <span>{Number(establishment.distance).toFixed(2)} km</span>
+            </InfoText>
+            <InfoText>
+                <InfoIcon icon={icon({ name: 'location-dot', style: 'solid' })} />
+                {establishment.address}
+            </InfoText>
+            <InfoText>
+                <InfoIcon icon={icon({ name: 'star', style: 'regular' })} />
+                <span>{Number(establishment.note).toFixed(1)}</span>
+                <span>({establishment.noteCount} avis)</span>
+            </InfoText>
+            <AppointmentButton
+                forwardedAs={Link}
+                to={`/establishments/${establishment.id}`}
+                variant="primary"
+            >
+                Réserver
+            </AppointmentButton>
+        </InfoWrapper>
+    </Card>
+);
 
 const Card = styled.li`
     width: 100%;

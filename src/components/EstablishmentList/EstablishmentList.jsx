@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import EstablishmentCard from '@components/EstablishmentCard';
 
 const EstablishmentList = ({ establishments }) => {
+    if (!establishments) return null;
     return (
         <List>
             {establishments.map((establishment) => (
