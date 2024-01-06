@@ -29,8 +29,10 @@ const EstablishmentsMap = ({ establishments }) => {
     const onLoad = React.useCallback(
         (mapInstance) => {
             const bounds = new window.google.maps.LatLngBounds();
-            establishments.forEach((office) => {
-                bounds.extend(new window.google.maps.LatLng(office.lat, office.lng));
+            establishments.forEach((establishment) => {
+                bounds.extend(
+                    new window.google.maps.LatLng(establishment.latitude, establishment.longitude),
+                );
             });
             mapRef.current = mapInstance;
             mapInstance.fitBounds(bounds);
@@ -57,16 +59,16 @@ const EstablishmentsMap = ({ establishments }) => {
                     key={establishment.id}
                     onClick={() => onClickMarker(establishment.id)}
                     position={{
-                        lat: establishment.lat,
-                        lng: establishment.lng,
+                        lat: establishment.latitude,
+                        lng: establishment.longitude,
                     }}
                 />
             ))}
             {selectedEstablishment && (
                 <InfoWindow
                     position={{
-                        lat: selectedEstablishment.lat,
-                        lng: selectedEstablishment.lng,
+                        lat: selectedEstablishment.latitude,
+                        lng: selectedEstablishment.longitude,
                     }}
                     onCloseClick={() => setSelectedEstablishment(null)}
                 >

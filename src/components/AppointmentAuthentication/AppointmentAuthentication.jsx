@@ -17,8 +17,8 @@ const AppointmentAuthentication = () => {
 
     const handleLogin = (data) => {
         login.mutate(data, {
-            onSuccess: ({ token }) => {
-                onAuthenticate(token);
+            onSuccess: async ({ token, refreshToken }) => {
+                await onAuthenticate({ accessToken: token, refreshToken });
             },
         });
     };
