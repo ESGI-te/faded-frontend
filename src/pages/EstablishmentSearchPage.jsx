@@ -58,7 +58,7 @@ const EstablishmentSearchPage = () => {
             </SearchEstablishmentWrapper>
             <EstablishmentResultsWrapper>
                 <EstablishmentResults
-                    establishments={establishments}
+                    establishments={establishments?.data}
                     isLoading={isLoading}
                     isMapVisible={isMapVisible}
                 />

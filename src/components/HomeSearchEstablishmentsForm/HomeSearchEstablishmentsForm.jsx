@@ -14,9 +14,8 @@ const HomeSearchEstablishmentsForm = ({ onSubmit }) => {
         mode: 'onBlur',
         resolver: yupResolver(HomeSearchEstablishmentsFormSchema),
         defaultValues: {
-            categoryId: '',
+            serviceCategories: '',
             address: '',
-            radius: 250000,
         },
     });
     const { isDirty } = formState;
@@ -26,7 +25,7 @@ const HomeSearchEstablishmentsForm = ({ onSubmit }) => {
             <InputSearchServiceOrProvider
                 label={<FormattedMessage defaultMessage="Que cherchez-vous ?" />}
                 control={control}
-                name="categoryId"
+                name="serviceCategories"
             />
             <InputSearchPlaces
                 label={<FormattedMessage defaultMessage="Où" />}
