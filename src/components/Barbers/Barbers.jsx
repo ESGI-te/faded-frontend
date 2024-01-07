@@ -21,14 +21,6 @@ const Barbers = () => {
         lastName: params.lastName,
     });
 
-    const handlePageChange = (page) => {
-        setSearchParams(
-            createSearchParams({
-                page,
-            }),
-        );
-    };
-
     const handleSearchByLastName = (data) => {
         setSearchParams(
             createSearchParams({
@@ -60,11 +52,7 @@ const Barbers = () => {
             {!isLoading ? (
                 <>
                     <BarbersTable items={data.data} />
-                    <Pagination
-                        pagination={data.pagination}
-                        onPageChange={handlePageChange}
-                        pagesRange={5}
-                    />
+                    <Pagination pagination={data.pagination} pagesRange={5} />
                 </>
             ) : (
                 <TableSkeleton />
