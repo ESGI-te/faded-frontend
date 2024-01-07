@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import EstablishmentResultsSkeleton from './EstablishmentResultsSkeleton';
 
-const EstablishmentResults = ({ establishments, isLoading, isMapVisible }) => {
+const EstablishmentResults = ({ establishments, isLoading, isMapVisible, pagination }) => {
     if (isLoading) return <EstablishmentResultsSkeleton />;
 
     if (establishments.length === 0) return <div>Aucun résultat</div>;
@@ -22,7 +22,7 @@ const EstablishmentResults = ({ establishments, isLoading, isMapVisible }) => {
                         <FormattedMessage defaultMessage="Les meilleurs salons de coiffure et barbers autour de chez vous" />
                     </Text>
                 </TitleWrapper>
-                <EstablishmentList establishments={establishments} />
+                <EstablishmentList establishments={establishments} pagination={pagination} />
             </EstablishmentsWrapper>
             <MapWrapper isMapVisible={isMapVisible}>
                 <EstablishmentsMap establishments={establishments} />
@@ -44,7 +44,6 @@ const Wrapper = styled.div`
 const EstablishmentsWrapper = styled.div`
     width: 100%;
     padding-inline: var(--container-padding-mobile);
-    padding-bottom: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.mobile} {
         ${({ isMapVisible }) => isMapVisible && 'display: none;'}
@@ -54,7 +53,6 @@ const EstablishmentsWrapper = styled.div`
         max-width: 750px;
         height: 100%;
         padding-inline: var(--container-padding);
-        padding-bottom: var(--container-padding);
     }
 `;
 const MapWrapper = styled.div`
@@ -92,6 +90,11 @@ EstablishmentResults.propTypes = {
     ),
     isLoading: PropTypes.bool.isRequired,
     isMapVisible: PropTypes.bool.isRequired,
+    pagination: PropTypes.shape({
+        page: PropTypes.number.isRequired,
+        perPage: PropTypes.number.isRequired,
+        total: PropTypes.number.isRequired,
+    }),
 };
 
 export default EstablishmentResults;

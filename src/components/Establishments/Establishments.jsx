@@ -19,14 +19,6 @@ const Establishments = () => {
         name: searchParams.get('lastName'),
     });
 
-    const handlePageChange = (page) => {
-        setSearchParams(
-            createSearchParams({
-                page,
-            }),
-        );
-    };
-
     const handleSearchByLastName = (name) => {
         setSearchParams(
             createSearchParams({
@@ -58,11 +50,7 @@ const Establishments = () => {
             {!isLoading ? (
                 <>
                     <EstablishmentsTable establishments={data.data} />
-                    <Pagination
-                        pagination={data.pagination}
-                        onPageChange={handlePageChange}
-                        pagesRange={5}
-                    />
+                    <Pagination pagination={data.pagination} pagesRange={5} />
                 </>
             ) : (
                 <TableSkeleton />

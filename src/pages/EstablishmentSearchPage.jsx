@@ -59,6 +59,7 @@ const EstablishmentSearchPage = () => {
             <EstablishmentResultsWrapper>
                 <EstablishmentResults
                     establishments={establishments?.data}
+                    pagination={establishments?.pagination}
                     isLoading={isLoading}
                     isMapVisible={isMapVisible}
                 />
