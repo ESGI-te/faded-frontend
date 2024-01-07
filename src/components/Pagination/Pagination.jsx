@@ -5,9 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@components/Button';
 import Text from '@components/Text';
 import { FormattedMessage } from 'react-intl';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
     const { first, current, last, previous, next, totalItems, perPage } = pagination;
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    const handlePageChange = (page) => {
+        setSearchParams(
+            createSearchParams({
+                ...Object.fromEntries(searchParams),
+                page,
+            }),
+        );
+        onPageChange && onPageChange(page);
+    };
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
@@ -20,7 +32,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
                         <PageButton
                             $isCurrent={i === current}
                             variant="ghost"
-                            onPress={() => onPageChange(i)}
+                            onPress={() => handlePageChange(i)}
                         >
                             {i}
                         </PageButton>
@@ -37,7 +49,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
                         <PageButton
                             $isCurrent={i === current}
                             variant="ghost"
-                            onPress={() => onPageChange(i)}
+                            onPress={() => handlePageChange(i)}
                         >
                             {i}
                         </PageButton>
@@ -56,7 +68,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
                         <PageButton
                             $isCurrent={last === current}
                             variant="ghost"
-                            onPress={() => onPageChange(last)}
+                            onPress={() => handlePageChange(last)}
                         >
                             {last}
                         </PageButton>
@@ -74,7 +86,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
                 {previous && (
                     <PageButtonWrapper>
                         <PageControlButton
-                            onPress={() => onPageChange(previous)}
+                            onPress={() => handlePageChange(previous)}
                             variant="ghost"
                             icon={<Icon icon={icon({ name: 'chevron-left', style: 'solid' })} />}
                         />
@@ -86,7 +98,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
                 {next && (
                     <PageButtonWrapper>
                         <PageControlButton
-                            onPress={() => onPageChange(next)}
+                            onPress={() => handlePageChange(next)}
                             variant="ghost"
                             icon={<Icon icon={icon({ name: 'chevron-right', style: 'solid' })} />}
                         />
@@ -96,10 +108,8 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
 
             <Text>
                 <FormattedMessage
-                    defaultMessage="Page {current} sur {last}, Total des éléments : {totalItems}, Éléments par page : {perPage}"
+                    defaultMessage="Total des éléments : {totalItems}, Éléments par page : {perPage}"
                     values={{
-                        current,
-                        last,
                         totalItems,
                         perPage,
                     }}

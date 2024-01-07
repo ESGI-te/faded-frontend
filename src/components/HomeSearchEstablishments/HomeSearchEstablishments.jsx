@@ -5,9 +5,11 @@ const HomeSearchEstablishments = () => {
     const navigate = useNavigate();
 
     const handleSearchService = (data) => {
+        const searchData = { ...data, page: 1, perPage: 20 };
+
         navigate({
             pathname: '/establishments/',
-            search: createSearchParams(data).toString(),
+            search: createSearchParams(searchData).toString(),
         });
     };
 
