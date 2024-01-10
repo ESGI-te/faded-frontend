@@ -42,14 +42,16 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                     onSelectionChange={handleSelectEstablishment}
                     items={items}
                     defaultSelectedKey={establishmentId || ''}
-                    placeholder="Votre établissement"
+                    placeholder="Établissement"
                 >
                     {(item) => (
                         <EstablishmentSelectListItem id={item.id}>
-                            <Cluster gap="0.5rem" align="center">
+                            <EstablishmentSelectListItemInnerWrapper>
                                 <EstablishmentImage src={item.image} />
-                                <Text slot="label">{item.name}</Text>
-                            </Cluster>
+                                <EstablishmentListItemName slot="label">
+                                    {item.name}
+                                </EstablishmentListItemName>
+                            </EstablishmentSelectListItemInnerWrapper>
                         </EstablishmentSelectListItem>
                     )}
                 </InputSelect>
@@ -76,7 +78,9 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/appointments`}>
+                            <NavLink
+                                to={`/pro/establishment/${establishmentId}/appointments?page=1`}
+                            >
                                 <NavItemIcon
                                     icon={icon({ name: 'calendar-check', style: 'solid' })}
                                 />
@@ -125,7 +129,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to="appointments">
+                                <NavLink to="appointments?page=1">
                                     <NavItemIcon
                                         icon={icon({ name: 'calendar-check', style: 'solid' })}
                                     />
@@ -252,6 +256,7 @@ const EstablishmentSelectListItem = styled(ListBoxItem)`
     border-radius: var(--r-xs);
     padding: 0.25rem;
     cursor: pointer;
+    min-width: 0;
 
     &[data-selected] {
         background-color: var(--primary400);
@@ -274,10 +279,24 @@ const EstablishmentSelectListItem = styled(ListBoxItem)`
         outline: 2px solid var(--primary500);
     }
 `;
+const EstablishmentSelectListItemInnerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    min-width: 0;
+`;
+const EstablishmentListItemName = styled(Text)`
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+`;
 const EstablishmentImage = styled.img`
     width: 2rem;
     height: 2rem;
     border-radius: var(--r-s);
+    flex-basis: 2rem;
 `;
 const DrawerIcon = styled(FontAwesomeIcon)`
     width: 1.25rem;
