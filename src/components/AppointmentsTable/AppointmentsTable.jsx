@@ -11,14 +11,17 @@ import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteBarberModal from '@components/DeleteBarberModal';
-import EditBarberModal from '@components/EditBarberModal';
 import TableColumn from '@components/TableColumn';
 import TableHeader from '@components/TableHeader';
 import TableRow from '@components/TableRow';
 import AppointmentStatusBadge from '@components/AppointmentStatusBadge';
 import CompleteAppointmentModal from '@components/CompleteAppointmentModal';
+import useUserQuery from '@queries/user/useUserQuery.hook';
+import { USER_ROLES } from '@utils/constants';
+import { useParams } from 'react-router-dom';
 
-const ProviderAppointmentsTable = ({ items }) => {
+const AppointmentsTable = ({ items }) => {
+    const { establishmentId } = useParams();
     const intl = useIntl();
     const [selectedItems, setSelectedItems] = useState([]);
     // const items = barbers.map((appointment) => ({
@@ -26,7 +29,9 @@ const ProviderAppointmentsTable = ({ items }) => {
     //     lastName: appointment.lastName,
     //     firstName: appointment.firstName,
     // }));
-    const columns = [
+    const { data: user } = useUserQuery();
+    const isProvider = user?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId;
+    const baseColumns = [
         {
             key: 'name',
             isRowHeader: true,
@@ -53,6 +58,7 @@ const ProviderAppointmentsTable = ({ items }) => {
             name: null,
         },
     ];
+    const columns = baseColumns.filter((column) => isProvider || column.key !== 'establishment');
     let [sortDescriptor, setSortDescriptor] = useState({
         column: 'lastName',
         direction: 'ascending',
@@ -119,7 +125,7 @@ const ProviderAppointmentsTable = ({ items }) => {
                         <Cell>
                             {appointment.barber.firstName} {appointment.barber.lastName}
                         </Cell>
-                        <Cell>{appointment.establishment.name}</Cell>
+                        {isProvider && <Cell>{appointment.establishment.name}</Cell>}
                         <Cell>
                             <AppointmentStatusBadge status={appointment.status} />
                         </Cell>
@@ -184,4 +190,4 @@ const CompleteAppointmentButton = styled(TableIconButton)`
     }
 `;
 
-export default ProviderAppointmentsTable;
+export default AppointmentsTable;
