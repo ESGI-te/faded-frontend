@@ -156,7 +156,7 @@ const Aside = styled.aside`
     transform: translateX(-100%);
     transition: transform 0.25s ease-in-out;
     padding-inline: var(--container-padding-mobile);
-    padding-bottom: var(--container-padding-mobile);
+    /* padding-block: var(--container-padding-mobile); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -173,7 +173,7 @@ const Aside = styled.aside`
         transform: translateX(0);
         position: initial;
         padding-inline: var(--container-padding);
-        padding-bottom: var(--container-padding);
+        /* padding-block: var(--container-padding); */
         border-right: 1px solid var(--neutral100);
 
         ${({ $isOpen }) =>

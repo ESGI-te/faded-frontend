@@ -46,9 +46,18 @@ export const getEstablishmentAppointments = (establishmentId, { page, perPage } 
         query: { establishment: establishmentId, page, perPage },
     });
 export const getAppointment = (appointmentId) => callApi(`/appointments/${appointmentId}`);
-export const getAppointments = () => callApi('/appointments');
+export const getAppointments = (query) =>
+    callApi('/appointments', {
+        query,
+    });
 export const cancelAppointment = (appointmentId, appointment) =>
     callApi(`/appointments/${appointmentId}/cancel`, { method: 'PATCH', data: appointment });
+export const updateAppointment = ({ appointmentId, appointment }, query) =>
+    callApi(`/appointments/${appointmentId}/complete`, {
+        method: 'PATCH',
+        data: appointment,
+        query,
+    });
 
 export const getServiceCategories = () => callApi('/service_categories');
 
