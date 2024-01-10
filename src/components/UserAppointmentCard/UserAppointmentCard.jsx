@@ -6,23 +6,12 @@ import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { Separator } from 'react-aria-components';
 import Button from '@components/Button';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import useCancelAppointmentMutation from '@queries/appointment/useCancelAppointmentMutation.hook';
 import { APPOINTMENT_STATUS } from '@utils/constants';
 import Link from '@components/Link';
 import useGoogleCalendarEventLink from '@hooks/useGoogleCalendarEventLink.hook';
-
-const statusColorLookup = {
-    [APPOINTMENT_STATUS.PLANNED]: '--info',
-    [APPOINTMENT_STATUS.CANCELED]: '--alert',
-    [APPOINTMENT_STATUS.FINISHED]: '--success',
-};
-
-const statusLabelLookup = defineMessages({
-    [APPOINTMENT_STATUS.PLANNED]: { defaultMessage: 'À venir' },
-    [APPOINTMENT_STATUS.CANCELED]: { defaultMessage: 'Annulé' },
-    [APPOINTMENT_STATUS.FINISHED]: { defaultMessage: 'Terminé' },
-});
+import AppointmentStatusBadge from '@components/AppointmentStatusBadge';
 
 const UserAppointmentCard = ({ appointment }) => {
     const cancelAppointment = useCancelAppointmentMutation();
@@ -39,9 +28,7 @@ const UserAppointmentCard = ({ appointment }) => {
                 <Text variant="bodyL" fontWeight="--fw-semibold">
                     {dayjs(appointment.dateTime).format('dddd DD MMMM YYYY HH:mm')}
                 </Text>
-                <StatusBadge status={appointment.status}>
-                    <FormattedMessage {...statusLabelLookup[appointment.status]} />
-                </StatusBadge>
+                <AppointmentStatusBadge status={appointment.status} />
             </Cluster>
             <Cluster gap="1rem" align="center">
                 <ImageWrapper>
@@ -169,15 +156,6 @@ const ResponsiveWrapper = styled.div`
         flex-direction: row;
         column-gap: 1rem;
     }
-`;
-const StatusBadge = styled.div`
-    background-color: var(${({ status }) => statusColorLookup[status]}50);
-    color: var(${({ status }) => statusColorLookup[status]}500);
-    border-radius: var(--r-s);
-    padding-inline: 0.5rem;
-    padding-block: 0.25rem;
-    font-size: var(--fs-body-s);
-    font-weight: var(--fw-semibold);
 `;
 
 export default UserAppointmentCard;
