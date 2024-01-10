@@ -122,10 +122,14 @@ InputSearch.propTypes = {
     label: PropTypes.string,
     startIcon: PropTypes.element,
     errorMessage: PropTypes.string,
+    type: PropTypes.string,
+    inputMode: PropTypes.string,
 };
 
 InputSearch.defaultProps = {
     value: '',
+    type: 'search',
+    inputMode: 'search',
     results: [],
     onChange: () => {},
     onSelect: () => {},
