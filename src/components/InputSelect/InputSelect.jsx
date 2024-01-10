@@ -81,6 +81,13 @@ const InputWrapper = styled(Select)`
     width: 100%;
     height: 3rem;
     position: relative;
+
+    .react-aria-SelectValue {
+        min-width: 0;
+        &[data-placeholder] {
+            color: var(--neutral200);
+        }
+    }
 `;
 const List = styled(ListBox)`
     list-style: none;
