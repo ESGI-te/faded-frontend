@@ -1,6 +1,6 @@
 import Text from '@components/Text';
 import styled from 'styled-components';
-import ProviderAppointments from '@components/ProviderAppointments';
+import Appointments from '@components/Appointments';
 
 const ProviderAppointmentsPage = () => (
     <Page>
@@ -13,7 +13,7 @@ const ProviderAppointmentsPage = () => (
                     Ajoutez, modifiez ou supprimez des membres de votre équipe
                 </Text>
             </TitleWrapper>
-            <ProviderAppointments />
+            <Appointments />
         </PageInnerWrapper>
     </Page>
 );

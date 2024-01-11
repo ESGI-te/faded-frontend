@@ -38,13 +38,10 @@ const ModalHeader = styled.div`
 `;
 
 EditBarberModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onOpenChange: PropTypes.func.isRequired,
     barber: PropTypes.object.isRequired,
 };
 
 EditBarberModal.defaultProps = {
-    isOpen: false,
     onOpenChange: () => {},
 };
 
