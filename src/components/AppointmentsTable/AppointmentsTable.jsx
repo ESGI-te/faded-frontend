@@ -6,7 +6,7 @@ import TableHeader from '@components/TableHeader';
 import TableRow from '@components/TableRow';
 import AppointmentStatusBadge from '@components/AppointmentStatusBadge';
 import useUserQuery from '@queries/user/useUserQuery.hook';
-import { USER_ROLES } from '@utils/constants';
+import { APPOINTMENT_STATUS, USER_ROLES } from '@utils/constants';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import AppointmentsTableMenu from './AppointmentsTableMenu';
@@ -60,7 +60,7 @@ const AppointmentsTable = ({ items }) => {
             // onSortChange={(data) => {
             //     console.log(data);
             // }}
-            aria-label="Users"
+            aria-label="Appointments"
         >
             <TableHeader columns={columns}>
                 {({ key, ...column }) => (
@@ -84,7 +84,9 @@ const AppointmentsTable = ({ items }) => {
                             <AppointmentStatusBadge status={appointment.status} />
                         </Cell>
                         <ActionCell>
-                            <AppointmentsTableMenu appointment={appointment} />
+                            {appointment.status === APPOINTMENT_STATUS.PLANNED && (
+                                <AppointmentsTableMenu appointment={appointment} />
+                            )}
                         </ActionCell>
                     </TableRow>
                 )}

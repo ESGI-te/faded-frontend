@@ -15,8 +15,15 @@ const animationProps = {
 };
 
 const Modal = ({ className, children, size, ...props }) => {
+    const overlayProps = props.onOpenChange
+        ? props
+        : {
+              isDismissable: props.isDismissable,
+              isKeyboardDismissDisabled: props.isKeyboardDismissDisabled,
+          };
+
     return (
-        <Overlay {...props}>
+        <Overlay {...overlayProps}>
             <AnimatePresence>
                 <ModalWrapper {...animationProps} size={size}>
                     <ModalStyled {...props} className={className}>
@@ -75,6 +82,7 @@ Modal.propTypes = {
     className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     style: PropTypes.object,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
+    onOpenChange: PropTypes.func,
 };
 
 Modal.defaultProps = {
