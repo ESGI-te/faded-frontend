@@ -2,7 +2,7 @@ import useBarbersQuery from '@queries/barber/useBarbersQuery.hook';
 import BarbersTable from '@components/BarbersTable';
 import Stack from '@components/Stack';
 import Pagination from '@components/Pagination';
-import { createSearchParams, useSearchParams, useParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import InputSearch from '@components/InputSearch';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
@@ -12,15 +12,16 @@ import CreateBarberModal from '@components/CreateBarberModal';
 import Button from '@components/Button';
 import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from '@components/TableSkeleton';
+import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 
 const Barbers = () => {
-    const { establishmentId } = useParams();
+    const { establishment } = useSelectedEstablishment();
     let [searchParams, setSearchParams] = useSearchParams();
     const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
     const { data, isLoading } = useBarbersQuery({
         page: params.page || 1,
         lastName: params.lastName,
-        establishment: establishmentId,
+        establishment,
     });
 
     const handleSearchByLastName = (data) => {

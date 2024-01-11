@@ -22,13 +22,7 @@ const Header = ({ onToggleDrawer }) => {
 const ProLayout = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState();
 
-    const handleToggleDrawer = () =>
-        setIsDrawerOpen((isOpen) => {
-            if (isOpen === undefined) {
-                return true;
-            }
-            return !isOpen;
-        });
+    const handleToggleDrawer = () => setIsDrawerOpen((isOpen) => !isOpen);
 
     return (
         <Container>
@@ -84,6 +78,10 @@ const DrawerIcon = styled(FontAwesomeIcon)`
 `;
 const DrawerButton = styled(IconButton)`
     padding: 0;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        display: none;
+    }
 `;
 
 ProLayout.propTypes = {};

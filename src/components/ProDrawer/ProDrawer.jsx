@@ -2,59 +2,30 @@ import PropTypes from 'prop-types';
 import IconButton from '@components/IconButton';
 import Link from '@components/Link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useEstablishmentsQuery from '@queries/establishment/useEstablishmentsQuery.hook';
-import { ListBoxItem, Separator } from 'react-aria-components';
+import { Separator } from 'react-aria-components';
 import styled, { css } from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import Cluster from '@components/Cluster';
-import InputSelect from '@components/InputSelect';
 import Text from '@components/Text';
 import Button from '@components/Button';
 import { FormattedMessage } from 'react-intl';
 import { useAuth } from '@contexts/AuthProvider';
-import { useParams, useNavigate } from 'react-router-dom';
 import useUserQuery from '@queries/user/useUserQuery.hook';
 import { USER_ROLES } from '@utils/constants';
+import usePreventBodyScroll from '@hooks/usePreventBodyScroll.hook';
+import SelectEstablishment from '@components/SelectEstablishment';
+import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 
 const ProDrawer = ({ isOpen, onToggleDrawer }) => {
     const { data: user } = useUserQuery();
-    const { data: establishments } = useEstablishmentsQuery();
     const { logout } = useAuth();
-    const { establishmentId } = useParams();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
-    const navigate = useNavigate();
-
-    const items = establishments?.data?.map((establishment) => ({
-        id: establishment.id,
-        name: establishment.name,
-        image: 'https://cdn1.treatwell.net/images/view/v2.i3867704.w720.h480.xB88E4050/',
-    }));
-
-    const handleSelectEstablishment = (selectedEstablishmentId) => {
-        if (!selectedEstablishmentId) return;
-        navigate(`/pro/establishment/${selectedEstablishmentId}`);
-    };
+    const { establishment } = useSelectedEstablishment();
+    usePreventBodyScroll(isOpen);
 
     return (
         <Aside $isOpen={isOpen}>
             <DrawerHeader>
-                <InputSelect
-                    onSelectionChange={handleSelectEstablishment}
-                    items={items}
-                    defaultSelectedKey={establishmentId || ''}
-                    placeholder="Établissement"
-                >
-                    {(item) => (
-                        <EstablishmentSelectListItem id={item.id}>
-                            <EstablishmentSelectListItemInnerWrapper>
-                                <EstablishmentImage src={item.image} />
-                                <EstablishmentListItemName slot="label">
-                                    {item.name}
-                                </EstablishmentListItemName>
-                            </EstablishmentSelectListItemInnerWrapper>
-                        </EstablishmentSelectListItem>
-                    )}
-                </InputSelect>
+                <SelectEstablishment />
                 <DrawerButtonPanel
                     variant="ghost"
                     icon={<DrawerIcon icon={icon({ name: 'table-columns', style: 'solid' })} />}
@@ -62,25 +33,23 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                 />
             </DrawerHeader>
             <Nav>
-                <NavListWrapper isDisabled={!establishmentId}>
+                <NavListWrapper isDisabled={!establishment}>
                     <NavTitle>Mon établissement</NavTitle>
                     <NavList>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/overview`}>
+                            <NavLink to={`/pro/establishment/overview`}>
                                 <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />
                                 Overview
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/team?page=1`}>
+                            <NavLink to={`/pro/establishment/team?page=1`}>
                                 <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
                                 Équipe
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink
-                                to={`/pro/establishment/${establishmentId}/appointments?page=1`}
-                            >
+                            <NavLink to={`/pro/establishment/appointments?page=1`}>
                                 <NavItemIcon
                                     icon={icon({ name: 'calendar-check', style: 'solid' })}
                                 />
@@ -88,7 +57,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/planning`}>
+                            <NavLink to={`/pro/establishment/planning`}>
                                 <NavItemIcon
                                     icon={icon({ name: 'calendar-days', style: 'solid' })}
                                 />
@@ -96,7 +65,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/${establishmentId}/settings`}>
+                            <NavLink to={`/pro/establishment/settings`}>
                                 <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
                                 Paramètres
                             </NavLink>
@@ -152,8 +121,9 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
 };
 
 const Aside = styled.aside`
-    width: 280px;
+    width: 100vw;
     height: 100%;
+    overflow-y: auto;
     background-color: var(--white);
     position: fixed;
     top: 0;
@@ -179,13 +149,7 @@ const Aside = styled.aside`
         padding-inline: var(--container-padding);
         /* padding-block: var(--container-padding); */
         border-right: 1px solid var(--neutral100);
-
-        ${({ $isOpen }) =>
-            $isOpen === false &&
-            css`
-                position: fixed;
-                transform: translateX(-100%);
-            `}
+        max-width: 280px;
     }
 `;
 const DrawerHeader = styled.div`
@@ -251,52 +215,6 @@ const NavLink = styled(Link)`
             text-decoration: none;
         }
     }
-`;
-const EstablishmentSelectListItem = styled(ListBoxItem)`
-    border-radius: var(--r-xs);
-    padding: 0.25rem;
-    cursor: pointer;
-    min-width: 0;
-
-    &[data-selected] {
-        background-color: var(--primary400);
-
-        [slot='label'] {
-            color: var(--white);
-            font-weight: var(--fw-semibold);
-        }
-    }
-
-    &:hover:not([data-selected]) {
-        background-color: var(--primary50);
-    }
-
-    &[data-focused] {
-        outline: none;
-    }
-
-    &[data-focus-visible] {
-        outline: 2px solid var(--primary500);
-    }
-`;
-const EstablishmentSelectListItemInnerWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    column-gap: 0.5rem;
-    min-width: 0;
-`;
-const EstablishmentListItemName = styled(Text)`
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-`;
-const EstablishmentImage = styled.img`
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--r-s);
-    flex-basis: 2rem;
 `;
 const DrawerIcon = styled(FontAwesomeIcon)`
     width: 1.25rem;

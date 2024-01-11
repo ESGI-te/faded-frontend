@@ -1,4 +1,4 @@
-import { createSearchParams, useSearchParams, useParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from '@components/Pagination';
@@ -8,14 +8,15 @@ import InputSearch from '@components/InputSearch';
 import Stack from '@components/Stack';
 import AppointmentsTable from '@components/AppointmentsTable';
 import useAppointmentsQuery from '@queries/appointment/useAppointementsQuery.hook';
+import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 
-const EstablishmentAppointments = () => {
-    const { establishmentId } = useParams();
+const Appointments = () => {
+    const { establishment } = useSelectedEstablishment();
     let [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get('page') || 1;
     const search = searchParams.get('search');
     const { data, isLoading } = useAppointmentsQuery({
-        establishment: establishmentId,
+        establishment,
         page,
         search,
     });
@@ -52,6 +53,6 @@ const InputSearchStyled = styled(InputSearch)`
     max-width: 30rem;
 `;
 
-EstablishmentAppointments.propTypes = {};
+Appointments.propTypes = {};
 
-export default EstablishmentAppointments;
+export default Appointments;
