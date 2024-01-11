@@ -80,6 +80,7 @@ export const Theme = createGlobalStyle`
         --success300: #81C7BF;
         --success400: #56ABA3;
         --success500: #3D8F89;
+        --success600: #2f726e;
 
         --info50: #F0F4FD;
         --info100: #E5EBFA;
