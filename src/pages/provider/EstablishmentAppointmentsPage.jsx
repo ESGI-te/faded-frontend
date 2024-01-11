@@ -1,6 +1,6 @@
 import Text from '@components/Text';
 import styled from 'styled-components';
-import EstablishmentAppointments from '@components/EstablishmentAppointments';
+import Appointments from '@components/Appointments';
 
 const EstablishmentAppointmentsPage = () => (
     <Page>
@@ -13,7 +13,7 @@ const EstablishmentAppointmentsPage = () => (
                     Ajoutez, modifiez ou supprimez des membres de votre équipe
                 </Text>
             </TitleWrapper>
-            <EstablishmentAppointments />
+            <Appointments />
         </PageInnerWrapper>
     </Page>
 );

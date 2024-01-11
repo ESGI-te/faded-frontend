@@ -1,14 +1,14 @@
 import { Navigate } from 'react-router-dom';
-import ProtectedRoute from '@components/ProtectedRoute';
 import { USER_ROLES } from '@utils/constants';
+import { ProtectedRoute, SelectedEstablishmentRoute } from './guards';
 
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import RegisterPage from '@pages/RegisterPage';
-import DefaultLayout from './layouts/DefaultLayout';
-import ProLayout from './layouts/ProLayout';
-import AuthenticationLayout from './layouts/AuthenticationLayout';
+import DefaultLayout from '../layouts/DefaultLayout';
+import ProLayout from '../layouts/ProLayout';
+import AuthenticationLayout from '../layouts/AuthenticationLayout';
 import EstablishmentPage from '@pages/EstablishmentPage';
 import EstablishmentSearchPage from '@pages/EstablishmentSearchPage';
 import AppointmentPage from '@pages/AppointmentPage';
@@ -29,9 +29,10 @@ import EstablishmentSettingsPage from '@pages/provider/EstablishmentSettingsPage
 import EstablishmentAppointmentsPage from '@pages/provider/EstablishmentAppointmentsPage';
 import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
+import SelectedEstablishmentProvider from '@contexts/SelectedEstablishmentProvider';
 
-const applyProtectedRoutes = (routes) => {
-    return routes.map((route) => {
+const applyProtectedRoutes = (routes) =>
+    routes.map((route) => {
         if (route.children) {
             route.children = applyProtectedRoutes(route.children);
         }
@@ -42,7 +43,6 @@ const applyProtectedRoutes = (routes) => {
 
         return route;
     });
-};
 
 const customerRoutes = [
     /* Authentication routes */
@@ -153,35 +153,10 @@ const proRoutes = [
     ...applyProtectedRoutes([
         {
             path: 'pro',
-            element: <ProLayout />,
+            element: <SelectedEstablishmentProvider />,
             children: [
                 {
-                    path: '',
-                    element: <Navigate to="overview" />,
-                },
-                {
-                    path: 'overview',
-                    element: <ProviderOverviewPage />,
-                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                },
-                {
-                    path: 'team',
-                    element: <ProviderTeamPage />,
-                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                },
-                {
-                    path: 'establishments',
-                    element: <ProviderEstablishmentsPage />,
-                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                },
-                {
-                    path: 'appointments',
-                    element: <ProviderAppointmentsPage />,
-                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                },
-                /* ESTABLISHMENT */
-                {
-                    path: 'establishment/:establishmentId',
+                    element: <ProLayout />,
                     children: [
                         {
                             path: '',
@@ -189,19 +164,65 @@ const proRoutes = [
                         },
                         {
                             path: 'overview',
-                            element: <EstablishmentOverviewPage />,
+                            element: <ProviderOverviewPage />,
+                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                         },
                         {
                             path: 'team',
-                            element: <EstablishmentTeamPage />,
+                            element: <ProviderTeamPage />,
+                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                        },
+                        {
+                            path: 'establishments',
+                            element: <ProviderEstablishmentsPage />,
+                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                         },
                         {
                             path: 'appointments',
-                            element: <EstablishmentAppointmentsPage />,
+                            element: <ProviderAppointmentsPage />,
+                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                         },
+                        /* ESTABLISHMENT */
                         {
-                            element: <EstablishmentSettingsPage />,
-                            path: 'settings',
+                            path: 'establishment',
+                            children: [
+                                {
+                                    path: '',
+                                    element: <Navigate to="overview" />,
+                                },
+                                {
+                                    path: 'overview',
+                                    element: (
+                                        <SelectedEstablishmentRoute>
+                                            <EstablishmentOverviewPage />
+                                        </SelectedEstablishmentRoute>
+                                    ),
+                                },
+                                {
+                                    path: 'team',
+                                    element: (
+                                        <SelectedEstablishmentRoute>
+                                            <EstablishmentTeamPage />
+                                        </SelectedEstablishmentRoute>
+                                    ),
+                                },
+                                {
+                                    path: 'appointments',
+                                    element: (
+                                        <SelectedEstablishmentRoute>
+                                            <EstablishmentAppointmentsPage />
+                                        </SelectedEstablishmentRoute>
+                                    ),
+                                },
+                                {
+                                    element: (
+                                        <SelectedEstablishmentRoute>
+                                            <EstablishmentSettingsPage />
+                                        </SelectedEstablishmentRoute>
+                                    ),
+                                    path: 'settings',
+                                },
+                            ],
                         },
                     ],
                 },
