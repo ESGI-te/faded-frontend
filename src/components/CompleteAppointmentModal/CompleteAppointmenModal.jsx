@@ -7,25 +7,25 @@ import Stack from '@components/Stack';
 import { FormattedMessage } from 'react-intl';
 import CompleteAppointment from '@components/CompleteAppointment';
 
-const CompleteBarberModal = ({ appointment }) => {
+const CompleteBarberModal = ({ appointment, isOpen, onOpenChange }) => {
+    const handleClose = () => onOpenChange(false);
+
     return (
-        <Modal>
-            {({ close }) => (
-                <Stack gap="1.5rem">
-                    <ModalHeader>
-                        <Stack gap="0.25rem">
-                            <Text variant="headingM" fontWeight="--fw-bold">
-                                <FormattedMessage defaultMessage="Valider le rendez-vous" />
-                            </Text>
-                            <Text color="--neutral500">
-                                <FormattedMessage defaultMessage="Veuillez rentrer le code de validation du client pour valider le rendez-vous." />
-                            </Text>
-                        </Stack>
-                        <ModalCloseButton onPress={close} />
-                    </ModalHeader>
-                    <CompleteAppointment appointment={appointment} onCloseModal={close} />
-                </Stack>
-            )}
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Stack gap="1.5rem">
+                <ModalHeader>
+                    <Stack gap="0.25rem">
+                        <Text variant="headingM" fontWeight="--fw-bold">
+                            <FormattedMessage defaultMessage="Valider le rendez-vous" />
+                        </Text>
+                        <Text color="--neutral500">
+                            <FormattedMessage defaultMessage="Veuillez rentrer le code de validation du client pour valider le rendez-vous." />
+                        </Text>
+                    </Stack>
+                    <ModalCloseButton onPress={handleClose} />
+                </ModalHeader>
+                <CompleteAppointment appointment={appointment} onCloseModal={handleClose} />
+            </Stack>
         </Modal>
     );
 };
@@ -39,6 +39,8 @@ const ModalHeader = styled.div`
 
 CompleteBarberModal.propTypes = {
     appointment: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onOpenChange: PropTypes.func.isRequired,
 };
 
 export default CompleteBarberModal;
