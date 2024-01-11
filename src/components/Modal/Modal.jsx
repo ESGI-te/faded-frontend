@@ -16,7 +16,7 @@ const animationProps = {
 
 const Modal = ({ className, children, size, ...props }) => {
     return (
-        <Overlay>
+        <Overlay {...props}>
             <AnimatePresence>
                 <ModalWrapper {...animationProps} size={size}>
                     <ModalStyled {...props} className={className}>
