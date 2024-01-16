@@ -9,23 +9,19 @@ import Text from 'shared/src/components/Text';
 import Button from 'shared/src/components/Button';
 import { FormattedMessage } from 'react-intl';
 import { useAuth } from '@contexts/AuthProvider';
-import useUserQuery from '@queries/user/useUserQuery.hook';
+import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import usePreventBodyScroll from 'shared/src/hooks/usePreventBodyScroll.hook';
-import SelectEstablishment from '@components/SelectEstablishment';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 
-const ProDrawer = ({ isOpen, onToggleDrawer }) => {
+const Drawer = ({ isOpen, onToggleDrawer }) => {
     const { data: user } = useUserQuery();
     const { logout } = useAuth();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
-    const { establishment } = useSelectedEstablishment();
     usePreventBodyScroll(isOpen);
 
     return (
         <Aside $isOpen={isOpen}>
             <DrawerHeader>
-                <SelectEstablishment />
                 <DrawerButtonPanel
                     variant="ghost"
                     icon={<DrawerIcon icon={icon({ name: 'table-columns', style: 'solid' })} />}
@@ -33,23 +29,23 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                 />
             </DrawerHeader>
             <Nav>
-                <NavListWrapper isDisabled={!establishment}>
+                <NavListWrapper>
                     <NavTitle>Mon établissement</NavTitle>
                     <NavList>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/overview`}>
+                            <NavLink to={`/establishment/overview`}>
                                 <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />
                                 Overview
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/team?page=1`}>
+                            <NavLink to={`/establishment/team?page=1`}>
                                 <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
                                 Équipe
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/appointments?page=1`}>
+                            <NavLink to={`/establishment/appointments?page=1`}>
                                 <NavItemIcon
                                     icon={icon({ name: 'calendar-check', style: 'solid' })}
                                 />
@@ -57,7 +53,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/planning`}>
+                            <NavLink to={`/establishment/planning`}>
                                 <NavItemIcon
                                     icon={icon({ name: 'calendar-days', style: 'solid' })}
                                 />
@@ -65,7 +61,7 @@ const ProDrawer = ({ isOpen, onToggleDrawer }) => {
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink to={`/pro/establishment/settings`}>
+                            <NavLink to={`/establishment/settings`}>
                                 <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
                                 Paramètres
                             </NavLink>
@@ -260,13 +256,13 @@ const LogoutButton = styled(Button)`
     }
 `;
 
-ProDrawer.propTypes = {
+Drawer.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onToggleDrawer: PropTypes.func.isRequired,
 };
-ProDrawer.defaultProps = {
+Drawer.defaultProps = {
     isOpen: false,
     onToggleDrawer: () => {},
 };
 
-export default ProDrawer;
+export default Drawer;
