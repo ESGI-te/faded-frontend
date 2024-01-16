@@ -53,6 +53,7 @@ export const callApi = async (url, options) => {
 };
 
 const authHeader = () => {
+	if (isRefreshing) return {};
 	const token = localStorage.getItem("accessToken");
 	if (!token) return {};
 	return { Authorization: "Bearer " + token };
@@ -67,7 +68,7 @@ const refreshToken = async () => {
 	try {
 		const response = await callApi("/token/refresh", {
 			method: "POST",
-			data: { refreshToken: localStorage.getItem("refreshToken") },
+			data: { refresh_token: localStorage.getItem("refreshToken") },
 			headers: {},
 		});
 		localStorage.setItem("accessToken", response.token);
