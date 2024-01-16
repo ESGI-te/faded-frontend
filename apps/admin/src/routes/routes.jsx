@@ -2,7 +2,6 @@ import { ProtectedRoute } from './guards';
 
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
-import RegisterPage from '@pages/RegisterPage';
 import DefaultLayout from '../layouts/DefaultLayout';
 import AuthenticationLayout from '../layouts/AuthenticationLayout';
 import NoRouteFoundPage from '@pages/status/404Page';
@@ -31,11 +30,6 @@ const routes = [
                 path: '/login',
                 name: 'login',
                 element: <LoginPage />,
-            },
-            {
-                path: '/register',
-                name: 'register',
-                element: <RegisterPage />,
             },
             {
                 path: '/password-forgotten',

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconButton from 'shared/src/components/IconButton';
 import { useState } from 'react';
 import ErrorBoundary from '@components/ErrorBoundary';
-import ProDrawer from '@components/ProDrawer';
+import Drawer from '@components/Drawer';
 
 const Header = ({ onToggleDrawer }) => {
     return (
@@ -26,7 +26,7 @@ const DefaultLayout = () => {
 
     return (
         <Container>
-            <ProDrawer isOpen={isDrawerOpen} onToggleDrawer={handleToggleDrawer} />
+            <Drawer isOpen={isDrawerOpen} onToggleDrawer={handleToggleDrawer} />
             <InnerWrapper>
                 <Header onToggleDrawer={handleToggleDrawer} />
                 <Main>
