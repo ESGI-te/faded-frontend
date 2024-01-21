@@ -78,6 +78,7 @@ const refreshToken = async () => {
 		localStorage.removeItem("accessToken");
 		localStorage.removeItem("refreshToken");
 		isRefreshing = false;
+		window.location.href = "/login";
 		throw error;
 	}
 };

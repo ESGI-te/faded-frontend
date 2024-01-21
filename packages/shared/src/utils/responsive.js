@@ -6,6 +6,9 @@ export const BREAKPOINTS = {
 
 export const MEDIA_QUERIES = {
 	MOBILE: `@media (max-width: ${BREAKPOINTS.TABLET_MIN / 16}rem)`,
+	MOBILE_AND_TABLET: `@media (max-width: ${
+		BREAKPOINTS.DESKTOP_MIN / 16 - 1
+	}rem)`,
 	TABLET_AND_UP: `@media (min-width: ${BREAKPOINTS.TABLET_MIN / 16}rem)`,
 	DESKTOP_AND_UP: `@media (min-width: ${BREAKPOINTS.DESKTOP_MIN / 16}rem)`,
 	DESKTOP_LARGE_AND_UP: `@media (min-width: ${

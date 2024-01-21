@@ -36,8 +36,8 @@ export const SelectedEstablishmentRoute = ({ children }) => {
     const { establishment, onSelectEstablishment } = useSelectedEstablishment();
     const isBarber = user && user.roles.includes(USER_ROLES.BARBER);
     const defaultEstablishment = isBarber
-        ? user.barber.establishment.id
-        : establishments?.data[0]?.id;
+        ? establishments?.data.find((e) => e.id === user.barber.establishment.id)
+        : establishments?.data[0];
 
     if (!establishment) {
         onSelectEstablishment(defaultEstablishment);
