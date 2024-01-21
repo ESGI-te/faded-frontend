@@ -23,7 +23,7 @@ const Barbers = () => {
     const { data, isLoading } = useBarbersQuery({
         page: params.page || 1,
         lastName: params.lastName,
-        establishment,
+        establishment: establishment?.id,
     });
     const { data: user } = useUserQuery();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);

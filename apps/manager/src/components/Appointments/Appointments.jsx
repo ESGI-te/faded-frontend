@@ -16,7 +16,7 @@ const Appointments = () => {
     const page = searchParams.get('page') || 1;
     const search = searchParams.get('search');
     const { data, isLoading } = useAppointmentsQuery({
-        establishment,
+        establishment: establishment.id,
         page,
         search,
     });
