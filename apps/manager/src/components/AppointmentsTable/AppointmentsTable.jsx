@@ -10,12 +10,13 @@ import { APPOINTMENT_STATUS, USER_ROLES } from 'shared/src/utils/constants';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import AppointmentsTableMenu from './AppointmentsTableMenu';
+import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 
 const AppointmentsTable = ({ items }) => {
-    const { establishmentId } = useParams();
+    const { establishment } = useSelectedEstablishment();
     const intl = useIntl();
     const { data: user } = useUserQuery();
-    const isProvider = user?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId;
+    const isProvider = user?.roles.includes(USER_ROLES.PROVIDER) && !establishment;
     const baseColumns = [
         {
             key: 'customer',

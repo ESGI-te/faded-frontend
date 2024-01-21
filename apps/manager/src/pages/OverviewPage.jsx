@@ -5,7 +5,6 @@ const ProviderOverviewPage = (props) => {
 };
 
 const Page = styled.section`
-    align-self: stretch;
     display: flex;
     align-items: start;
     background-color: var(--background);
