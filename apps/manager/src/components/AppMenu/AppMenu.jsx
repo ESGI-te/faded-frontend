@@ -1,47 +1,46 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'shared/src/components/Link';
 import { USER_ROLES } from 'shared/src/utils/constants';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 import { useMemo } from 'react';
 import AppMenuSkeleton from './AppMenuSkeleton';
+import { useParams } from 'react-router-dom';
 
-const BARBER_NAVIGATION = [
+const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
     {
         name: 'Overview',
         icon: icon({ name: 'chart-line', style: 'solid' }),
-        url: '/establishment/overview',
+        url: `/${establishmentId}`,
     },
     {
         name: 'Équipe',
         icon: icon({ name: 'users', style: 'solid' }),
-        url: '/establishment/team?page=1',
+        url: `/${establishmentId}/team?page=1`,
     },
     {
         name: 'Gestion de RDV',
         icon: icon({ name: 'calendar-check', style: 'solid' }),
-        url: '/establishment/appointments?page=1',
+        url: `/${establishmentId}/appointments?page=1`,
     },
     {
         name: 'Planning',
         icon: icon({ name: 'calendar-days', style: 'solid' }),
-        url: '/establishment/planning',
+        url: `/${establishmentId}/planning`,
     },
     {
         name: 'Paramètres',
         icon: icon({ name: 'gear', style: 'solid' }),
-        url: '/establishment/settings',
+        url: `/${establishmentId}/settings`,
     },
 ];
 
-const PROVIDER_NAVIGATION = [
+const PROVIDER_NAVIGATION_ITEMS = [
     {
         name: 'Overview',
         icon: icon({ name: 'chart-line', style: 'solid' }),
-        url: '/overview',
+        url: '/',
     },
     {
         name: 'Équipe',
@@ -65,24 +64,24 @@ const PROVIDER_NAVIGATION = [
     },
 ];
 
-const AppMenu = (props) => {
+const AppMenu = () => {
     const user = useUserQuery();
-    const { establishment } = useSelectedEstablishment();
+    const { establishmentId } = useParams();
     const navItems = useMemo(() => {
-        if (user.data?.roles.includes(USER_ROLES.PROVIDER) && !establishment) {
-            return PROVIDER_NAVIGATION;
+        if (user.data?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId) {
+            return PROVIDER_NAVIGATION_ITEMS;
         }
 
         if (
             (user.data?.roles.includes(USER_ROLES.BARBER) ||
                 user.data?.roles.includes(USER_ROLES.PROVIDER)) &&
-            establishment
+            establishmentId
         ) {
-            return BARBER_NAVIGATION;
+            return BARBER_NAVIGATION_ITEMS(establishmentId);
         }
 
         return [];
-    }, [user.data, establishment]);
+    }, [user.data, establishmentId]);
 
     if (user.isLoading || !navItems) return <AppMenuSkeleton />;
 
@@ -194,7 +193,5 @@ const NavLink = styled(Link)`
         }
     }
 `;
-
-AppMenu.propTypes = {};
 
 export default AppMenu;

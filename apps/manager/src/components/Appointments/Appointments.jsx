@@ -8,15 +8,15 @@ import InputSearch from 'shared/src/components/InputSearch';
 import Stack from 'shared/src/components/Stack';
 import AppointmentsTable from '@components/AppointmentsTable';
 import useAppointmentsQuery from 'shared/src/queries/appointment/useAppointmentsQuery.hook';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
+import { useParams } from 'react-router-dom';
 
 const Appointments = () => {
-    const { establishment } = useSelectedEstablishment();
+    const { establishmentId } = useParams();
     let [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get('page') || 1;
     const search = searchParams.get('search');
     const { data, isLoading } = useAppointmentsQuery({
-        establishment: establishment.id,
+        establishment: establishmentId,
         page,
         search,
     });

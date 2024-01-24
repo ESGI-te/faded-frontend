@@ -1,6 +1,5 @@
-import { Navigate } from 'react-router-dom';
 import { USER_ROLES } from 'shared/src/utils/constants';
-import { ProtectedRoute, SelectedEstablishmentRoute } from './guards';
+import { ProtectedRoute } from './guards';
 
 import LoginPage from '@pages/LoginPage';
 import RegisterPage from '@pages/RegisterPage';
@@ -17,9 +16,11 @@ import EstablishmentSettingsPage from '@pages/EstablishmentSettingsPage';
 import EstablishmentAppointmentsPage from '@pages/EstablishmentAppointmentsPage';
 import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
-import SelectedEstablishmentProvider from '@contexts/SelectedEstablishmentProvider';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
+import FullPageLayout from '../layouts/FullPageLayout';
+import EstablishmentFormPage from '@pages/EstablishmentFormPage/EstablishmentFormPage';
+import EstablishmentNameFormPage from '@pages/EstablishmentNameFormPage';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -77,80 +78,62 @@ const routes = [
     },
     ...applyProtectedRoutes([
         {
-            element: <SelectedEstablishmentProvider />,
+            element: <DefaultLayout />,
             children: [
                 {
-                    element: <DefaultLayout />,
-                    children: [
-                        {
-                            path: '',
-                            element: <Navigate to="overview" />,
-                        },
-                        {
-                            path: 'overview',
-                            element: <ProviderOverviewPage />,
-                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                        },
-                        {
-                            path: 'team',
-                            element: <ProviderTeamPage />,
-                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                        },
-                        {
-                            path: 'establishments',
-                            element: <ProviderEstablishmentsPage />,
-                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                        },
-                        {
-                            path: 'appointments',
-                            element: <ProviderAppointmentsPage />,
-                            roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
-                        },
-                        /* ESTABLISHMENT */
-                        {
-                            path: 'establishment',
-                            children: [
-                                {
-                                    path: '',
-                                    element: <Navigate to="overview" />,
-                                },
-                                {
-                                    path: 'overview',
-                                    element: (
-                                        <SelectedEstablishmentRoute>
-                                            <EstablishmentOverviewPage />
-                                        </SelectedEstablishmentRoute>
-                                    ),
-                                },
-                                {
-                                    path: 'team',
-                                    element: (
-                                        <SelectedEstablishmentRoute>
-                                            <EstablishmentTeamPage />
-                                        </SelectedEstablishmentRoute>
-                                    ),
-                                },
-                                {
-                                    path: 'appointments',
-                                    element: (
-                                        <SelectedEstablishmentRoute>
-                                            <EstablishmentAppointmentsPage />
-                                        </SelectedEstablishmentRoute>
-                                    ),
-                                },
-                                {
-                                    element: (
-                                        <SelectedEstablishmentRoute>
-                                            <EstablishmentSettingsPage />
-                                        </SelectedEstablishmentRoute>
-                                    ),
-                                    path: 'settings',
-                                },
-                            ],
-                        },
-                    ],
+                    path: '',
+                    element: <ProviderOverviewPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'team',
+                    element: <ProviderTeamPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'establishments',
+                    element: <ProviderEstablishmentsPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'appointments',
+                    element: <ProviderAppointmentsPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                /* ESTABLISHMENT */
+                {
+                    path: ':establishmentId',
+                    element: <EstablishmentOverviewPage />,
+                },
+                {
+                    path: ':establishmentId/team',
+                    element: <EstablishmentTeamPage />,
+                },
+                {
+                    path: ':establishmentId/appointments',
+                    element: <EstablishmentAppointmentsPage />,
+                },
+                {
+                    path: ':establishmentId/settings',
+                    element: <EstablishmentSettingsPage />,
                 },
             ],
+        },
+        {
+            path: 'new',
+            element: (
+                <FullPageLayout>
+                    <EstablishmentNameFormPage />
+                </FullPageLayout>
+            ),
+        },
+        {
+            path: ':establishmentId/edit',
+            element: (
+                <FullPageLayout>
+                    <EstablishmentFormPage />
+                </FullPageLayout>
+            ),
         },
     ]),
     {
