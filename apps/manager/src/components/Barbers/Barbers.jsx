@@ -12,18 +12,18 @@ import CreateBarberModal from '@components/CreateBarberModal';
 import Button from 'shared/src/components/Button';
 import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from 'shared/src/components/TableSkeleton';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
+import { useParams } from 'react-router-dom';
 
 const Barbers = () => {
-    const { establishment } = useSelectedEstablishment();
+    const { establishmentId } = useParams();
     let [searchParams, setSearchParams] = useSearchParams();
     const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
     const { data, isLoading } = useBarbersQuery({
         page: params.page || 1,
         lastName: params.lastName,
-        establishment: establishment?.id,
+        establishment: establishmentId,
     });
     const { data: user } = useUserQuery();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);

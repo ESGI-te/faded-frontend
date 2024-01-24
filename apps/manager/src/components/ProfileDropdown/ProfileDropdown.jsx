@@ -6,19 +6,24 @@ import { FormattedMessage } from 'react-intl';
 import Text from 'shared/src/components/Text';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 
 const ProfileDropdown = (props) => {
+    const { data: user } = useUserQuery();
+
     return (
         <ProfileDropdownStyled placement="bottom right" offset={8}>
             <MobileHandle />
             <ProfileInfo>
-                <ProfileImage />
+                <ProfileImagePlaceholder>
+                    <ImagePlaceholderIcon icon={icon({ name: 'user', style: 'solid' })} />
+                </ProfileImagePlaceholder>
                 <ProfileInfoInnerWrapper>
                     <TextEllipsis fontWeight="--fw-semibold" variant="bodyL" numberOfLines={1}>
-                        John Doe
+                        {user?.firstName} {user?.lastName}
                     </TextEllipsis>
                     <TextEllipsis color="--neutral500" numberOfLines={1}>
-                        email@email.com
+                        {user?.email}
                     </TextEllipsis>
                 </ProfileInfoInnerWrapper>
             </ProfileInfo>
@@ -78,7 +83,7 @@ const Menu = styled(AriaMenu)`
 const MenuItemIcon = styled(FontAwesomeIcon)`
     width: 0.75rem;
     height: 0.75rem;
-    color: var(--black);
+    color: var(--neutral500);
 `;
 const MenuItem = styled(AriaMenuItem)`
     padding-inline: 1rem;
@@ -87,11 +92,11 @@ const MenuItem = styled(AriaMenuItem)`
     cursor: pointer;
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
-    font-weight: var(--fw-semibold);
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
     transition-duration: 0.2s;
+    color: var(--neutral500);
 
     &[data-hovered] {
         background-color: var(--neutral50);
@@ -117,11 +122,14 @@ const ProfileInfo = styled.div`
     min-width: 0;
     padding-inline: 1rem;
 `;
-const ProfileImage = styled.div`
+const ProfileImagePlaceholder = styled.div`
     width: 2.5rem;
     height: 2.5rem;
     border-radius: var(--r-full);
-    background-color: var(--neutral200);
+    background-color: var(--neutral100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 const TextEllipsis = styled(Text)`
     min-width: 0;
@@ -140,6 +148,11 @@ const Divider = styled(Separator)`
 `;
 const MenuDivider = styled(Divider)`
     width: 100%;
+`;
+const ImagePlaceholderIcon = styled(FontAwesomeIcon)`
+    width: 1rem;
+    height: 1rem;
+    color: var(--neutral500);
 `;
 
 ProfileDropdown.propTypes = {};

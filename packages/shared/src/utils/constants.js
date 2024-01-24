@@ -10,3 +10,17 @@ export const APPOINTMENT_STATUS = {
 	PLANNED: "planned",
 	CANCELED: "canceled",
 };
+
+export const ESTABLISHMENT_STATUS = {
+	ACTIVE: "active",
+	DRAFT: "draft",
+};
+
+export const UI_VARIANTS = {
+	PRIMARY: "--primary",
+	SUCCESS: "--success",
+	ALERT: "--alert",
+	WARNING: "--warning",
+	INFO: "--info",
+	NEUTRAL: "--neutral",
+};
