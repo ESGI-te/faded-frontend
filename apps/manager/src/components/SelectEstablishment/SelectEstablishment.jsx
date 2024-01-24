@@ -1,6 +1,5 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Text from 'shared/src/components/Text';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 import useEstablishmentsQuery from 'shared/src/queries/establishment/useEstablishmentsQuery.hook';
 import {
     Button as AriaButton,
@@ -8,7 +7,6 @@ import {
     ListBox,
     ListBoxItem,
     SearchField,
-    Link,
 } from 'react-aria-components';
 import styled from 'styled-components';
 import { USER_ROLES } from 'shared/src/utils/constants';
@@ -17,43 +15,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useIntl, FormattedMessage } from 'react-intl';
 import useDebounce from 'shared/src/hooks/useDebounce.hook';
-import Button from 'shared/src/components/Button';
-
-const CreateEstablishmentButton = () => (
-    <CreateEstablishmentLink to="/establishment/create">
-        <CreateIcon icon={icon({ name: 'circle-plus', style: 'solid' })} />
-        <FormattedMessage defaultMessage="Ajouter un établissement" />
-    </CreateEstablishmentLink>
-);
+import { useParams, useNavigate } from 'react-router-dom';
+import Link from 'shared/src/components/Link';
+import EstablishmentStatusBadge from '@components/EstablishmentStatusBadge';
 
 const SelectEstablishment = ({ onClose }) => {
     const intl = useIntl();
     const { data: user } = useUserQuery();
     const { data: establishments } = useEstablishmentsQuery();
-    const { establishment, onSelectEstablishment } = useSelectedEstablishment();
+    const { establishmentId } = useParams();
     const isBarber = user && user.roles.includes(USER_ROLES.BARBER);
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery);
+    const navigate = useNavigate();
 
     const items = useMemo(() => {
         let items = establishments?.data;
 
         if (!items) return [];
 
-        if (!establishment && debouncedSearchQuery < 1) return [];
+        if (!establishmentId && debouncedSearchQuery < 1) return [];
 
         if (debouncedSearchQuery.length > 1) {
             items = items.filter((e) => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
         }
 
-        if (establishment && debouncedSearchQuery.length < 1) {
-            items = establishments.data.filter((e) => e.id === establishment.id);
+        if (establishmentId && debouncedSearchQuery.length < 1) {
+            items = establishments.data.filter((e) => e.id === establishmentId);
         }
 
         return items.map((e) => ({
             id: e.id,
             name: e.name,
             image: 'https://cdn1.treatwell.net/images/view/v2.i3867704.w720.h480.xB88E4050/',
+            status: e.status,
         }));
     }, [establishments, debouncedSearchQuery]);
 
@@ -63,7 +58,7 @@ const SelectEstablishment = ({ onClose }) => {
             (establishment) => establishment.id === currentKey,
         );
         if (!establishmentFull) return;
-        onSelectEstablishment(establishmentFull);
+        navigate(`/${currentKey}`);
         onClose();
     };
 
@@ -99,7 +94,7 @@ const SelectEstablishment = ({ onClose }) => {
             </InputWrapper>
             <ListWrapper>
                 <List
-                    selectedKeys={[establishment?.id]}
+                    selectedKeys={[establishmentId]}
                     onSelectionChange={handleSelectEstablishment}
                     selectionMode="single"
                     items={items}
@@ -112,13 +107,17 @@ const SelectEstablishment = ({ onClose }) => {
                                 <EstablishmentListItemName slot="label">
                                     {item.name}
                                 </EstablishmentListItemName>
+                                <EstablishmentStatusBadge status={item.status} />
                                 <SelectedIcon icon={icon({ name: 'check', style: 'solid' })} />
                             </EstablishmentSelectListItemInnerWrapper>
                         </EstablishmentSelectListItem>
                     )}
                 </List>
                 {debouncedSearchQuery.length < 1 && items.length <= 1 && (
-                    <CreateEstablishmentButton />
+                    <CreateEstablishmentLink to="/new">
+                        <CreateIcon icon={icon({ name: 'circle-plus', style: 'solid' })} />
+                        <FormattedMessage defaultMessage="Ajouter un établissement" />
+                    </CreateEstablishmentLink>
                 )}
             </ListWrapper>
         </SelectEstablishmentWrapper>
@@ -212,11 +211,6 @@ const SearchIcon = styled(FontAwesomeIcon)`
     font-size: 1rem;
     color: var(--neutral500);
 `;
-const CreateIcon = styled(FontAwesomeIcon)`
-    width: 1rem;
-    height: 1rem;
-    color: var(--primary);
-`;
 const Escape = styled.div`
     padding: 0.25rem;
     border-radius: var(--r-s);
@@ -224,6 +218,16 @@ const Escape = styled.div`
     color: var(--neutral500);
     font-size: var(--fs-body-s);
     line-height: var(--lh-body-s);
+`;
+const ListWrapper = styled.div`
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+`;
+const EmptyStateText = styled(Text)`
+    padding: 0.5rem;
 `;
 const CreateEstablishmentLink = styled(Link)`
     display: flex;
@@ -235,17 +239,13 @@ const CreateEstablishmentLink = styled(Link)`
 
     &:hover {
         background-color: var(--neutral50);
+        text-decoration: none;
     }
 `;
-const ListWrapper = styled.div`
-    padding-block: 0.5rem;
-    padding-inline: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.25rem;
-`;
-const EmptyStateText = styled(Text)`
-    padding: 0.5rem;
+const CreateIcon = styled(FontAwesomeIcon)`
+    width: 1rem;
+    height: 1rem;
+    color: var(--primary);
 `;
 
 export default SelectEstablishment;

@@ -4,18 +4,23 @@ import Text from 'shared/src/components/Text';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogTrigger } from 'react-aria-components';
-import { useSelectedEstablishment } from '@contexts/SelectedEstablishmentProvider';
 import { useIntl } from 'react-intl';
 import { useState } from 'react';
 import ProfileDropdown from '@components/ProfileDropdown';
 import EstablishmentDropdown from '@components/EstablishmentDropdown';
 import { shimmering } from 'shared/src/styles/animations';
+import { useParams } from 'react-router-dom';
+import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
+import { USER_ROLES } from 'shared/src/utils/constants';
+import Link from 'shared/src/components/Link';
 
 const Header = () => {
+    const { establishmentId } = useParams();
     const user = useUserQuery();
-    const { establishment } = useSelectedEstablishment();
+    const establishment = useEstablishmentQuery(establishmentId);
     const intl = useIntl();
     const [isEstablishmentDropdownOpen, setIsEstablishmentDropdownOpen] = useState(false);
+    const isBarber = user.data && user.data.roles.includes(USER_ROLES.BARBER);
 
     return (
         <Wrapper>
@@ -25,15 +30,16 @@ const Header = () => {
                 {user.isLoading ? (
                     <OrganizationSkeleton />
                 ) : (
-                    <Organization>
+                    <Organization to="/">
                         <RoundedImage />
                         <TextEllipsis numberOfLines={1}>
-                            {user.data?.provider?.name || 'Organization'}
+                            {user.data.provider.name ||
+                                user.data.barber.establishment.provider.name}
                         </TextEllipsis>
                     </Organization>
                 )}
                 <Divider>/</Divider>
-                {user.isLoading ? (
+                {user.isLoading || establishment.isFetching ? (
                     <EstablishmentSkeleton />
                 ) : (
                     <DialogTrigger
@@ -41,11 +47,12 @@ const Header = () => {
                         onOpenChange={setIsEstablishmentDropdownOpen}
                     >
                         <EstablishmentDropdownButton
+                            isDisabled={isBarber}
                             onPress={() => setIsEstablishmentDropdownOpen(true)}
                         >
                             <RoundedImage />
                             <TextEllipsis numberOfLines={1}>
-                                {establishment?.name ||
+                                {establishment.data?.name ||
                                     intl.formatMessage({
                                         defaultMessage: 'Sélectionner un établissement',
                                     })}
@@ -60,10 +67,22 @@ const Header = () => {
                     </DialogTrigger>
                 )}
             </LeftWrapper>
-            <DialogTrigger>
-                <ProfileButton />
-                <ProfileDropdown />
-            </DialogTrigger>
+            {user.isLoading ? (
+                <ProfileButtonSkeleton />
+            ) : (
+                <DialogTrigger>
+                    <ProfileButton>
+                        {user.data?.provider?.image ? (
+                            <ProfileImage src={user.data?.provider?.image} />
+                        ) : (
+                            <ProfileImagePlaceholder>
+                                {user?.data?.firstName?.[0]}
+                            </ProfileImagePlaceholder>
+                        )}
+                    </ProfileButton>
+                    <ProfileDropdown />
+                </DialogTrigger>
+            )}
         </Wrapper>
     );
 };
@@ -92,12 +111,39 @@ const RoundedImage = styled.div`
 const ProfileButton = styled(Button)`
     width: 2rem;
     height: 2rem;
-    border-radius: var(--r-full);
-    background-color: var(--info);
+    background: none;
     border: none;
     flex-shrink: 0;
     flex-grow: 0;
+    padding: 0;
     cursor: pointer;
+
+    &[data-focused] {
+        outline: none;
+    }
+`;
+const ProfileButtonSkeleton = styled.div`
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--r-full);
+    background-color: var(--neutral200);
+    ${shimmering}
+`;
+const ProfileImagePlaceholder = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--black);
+    color: var(--white);
+    font-weight: var(--fw-semibold);
+    border-radius: var(--r-full);
+`;
+const ProfileImage = styled.img`
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-full);
 `;
 const EstablishmentDropdownButton = styled(Button)`
     display: flex;
@@ -159,13 +205,15 @@ const Logo = styled.div`
         }
     }
 `;
-const Organization = styled.div`
+const Organization = styled(Link)`
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0;
+    cursor: pointer;
+    text-decoration: none !important;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         min-width: unset;

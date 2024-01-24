@@ -8,3 +8,6 @@ export const deleteBarber = (barberId) => callApi(`/barbers/${barberId}`, { meth
 
 export const createProviderRequest = (formData) =>
     callApi('/provider_requests', { method: 'POST', data: formData });
+
+export const createEstablishment = (establishment) =>
+    callApi('/establishments', { method: 'POST', data: establishment });
