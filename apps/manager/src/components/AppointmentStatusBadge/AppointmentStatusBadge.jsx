@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { APPOINTMENT_STATUS } from 'shared/src/utils/constants';
+import { APPOINTMENT_STATUS, UI_VARIANTS } from 'shared/src/utils/constants';
 import { defineMessages, FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
+import Badge from 'shared/src/components/Badge';
 
-const statusColorLookup = {
-    [APPOINTMENT_STATUS.PLANNED]: '--info',
-    [APPOINTMENT_STATUS.CANCELED]: '--alert',
-    [APPOINTMENT_STATUS.FINISHED]: '--success',
+const statusVariantLookup = {
+    [APPOINTMENT_STATUS.PLANNED]: UI_VARIANTS.INFO,
+    [APPOINTMENT_STATUS.CANCELED]: UI_VARIANTS.ALERT,
+    [APPOINTMENT_STATUS.FINISHED]: UI_VARIANTS.SUCCESS,
 };
 
 const statusLabelLookup = defineMessages({
@@ -16,21 +16,10 @@ const statusLabelLookup = defineMessages({
 });
 
 const AppointmentStatusBadge = ({ status }) => (
-    <StatusBadge $status={status}>
+    <Badge variant={statusVariantLookup[status]}>
         <FormattedMessage {...statusLabelLookup[status]} />
-    </StatusBadge>
+    </Badge>
 );
-
-const StatusBadge = styled.div`
-    background-color: var(${({ $status }) => statusColorLookup[$status]}50);
-    color: var(${({ $status }) => statusColorLookup[$status]}500);
-    border-radius: var(--r-s);
-    padding-inline: 0.5rem;
-    padding-block: 0.25rem;
-    font-size: var(--fs-body-s);
-    font-weight: var(--fw-semibold);
-    width: fit-content;
-`;
 
 AppointmentStatusBadge.propTypes = {
     status: PropTypes.oneOf(Object.values(APPOINTMENT_STATUS)).isRequired,
