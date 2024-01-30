@@ -27,7 +27,7 @@ const Header = () => {
             <LeftWrapper>
                 <Logo>logo</Logo>
                 <Divider>/</Divider>
-                {user.isLoading ? (
+                {user.isLoading || user.isError ? (
                     <OrganizationSkeleton />
                 ) : (
                     <Organization to="/">
@@ -39,7 +39,7 @@ const Header = () => {
                     </Organization>
                 )}
                 <Divider>/</Divider>
-                {user.isLoading || establishment.isFetching ? (
+                {user.isLoading || user.isError || establishment.isFetching ? (
                     <EstablishmentSkeleton />
                 ) : (
                     <DialogTrigger

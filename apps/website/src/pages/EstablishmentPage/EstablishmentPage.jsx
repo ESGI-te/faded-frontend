@@ -6,7 +6,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import EstablishmentCarousel from '@components/EstablishmentCarousel';
 import { useEffect, useState } from 'react';
 import EstablishmentServicesAccordion from '@components/EstablishmentServicesAccordion';
-import EstablishmentOpeningHours from '@components/EstablishmentOpeningHours';
+import EstablishmentPlanning from '@components/EstablishmentPlanning';
 import Stack from 'shared/src/components/Stack';
 import EstablishmentMap from '@components/EstablishmentMap';
 import EstablishmentBarbers from '@components/EstablishmentBarbers';
@@ -116,12 +116,12 @@ const EstablishmentPage = () => {
                             note={establishment.note}
                             noteCount={establishment.noteCount}
                         />
-                        <EstablishmentOpeningHoursWrapper>
+                        <EstablishmentPlanningWrapper>
                             <Text as="h2" variant="headingM" fontWeight="--fw-semibold">
                                 <FormattedMessage defaultMessage="Les horaires d'ouverture" />
                             </Text>
-                            <EstablishmentOpeningHours planning={establishment.planning} />
-                        </EstablishmentOpeningHoursWrapper>
+                            <EstablishmentPlanning planning={establishment.planning} />
+                        </EstablishmentPlanningWrapper>
                     </Stack>
                 </ResponsiveContentWrapper>
             </PageInnerWrapper>
@@ -208,7 +208,7 @@ const InformationTitleWrapper = styled.div`
     }
 `;
 const EstablishmentServicesWrapper = Wrapper;
-const EstablishmentOpeningHoursWrapper = Wrapper;
+const EstablishmentPlanningWrapper = Wrapper;
 const EstablishmentMapWrapper = Wrapper;
 const EstablishmentBarbersWrapper = Wrapper;
 const ResponsiveContentWrapper = styled.div`

@@ -1,7 +1,7 @@
-import { AccordionContext } from '@ui/atoms/Accordion';
-import { useContext } from 'react';
+import { AccordionContext } from "../Accordion";
+import { useContext } from "react";
 
 export const useAccordion = () => {
-    const accordionContext = useContext(AccordionContext);
-    return accordionContext;
+	const accordionContext = useContext(AccordionContext);
+	return accordionContext;
 };
