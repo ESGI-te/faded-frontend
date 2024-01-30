@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import InputSearchPlaces from '@components/InputSearchPlaces';
+import InputSearchPlaces from 'shared/src/components/InputSearchPlaces';
 import InputSearchServiceOrProvider from '@components/InputSearchServiceOrProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';

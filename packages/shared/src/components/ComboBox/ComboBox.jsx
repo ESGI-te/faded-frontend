@@ -1,101 +1,193 @@
-import {
-	ComboBox as AriaComboBox,
-	Popover,
-	ListBox,
-} from "react-aria-components";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import Label from "../Label";
-import Input from "shared/src/components/Input";
-import IconButton from "shared/src/components/IconButton";
 import { useRef } from "react";
+import PropTypes from "prop-types";
+import {
+	Button as AriaButton,
+	ComboBox as AriaComboBox,
+	Input as AriaInput,
+	ListBox as AriaListBox,
+} from "react-aria-components";
+import Label from "../Label";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { icon as iconFA } from "@fortawesome/fontawesome-svg-core/import.macro";
+import styled, { css } from "styled-components";
+import Spinner from "../Spinner";
+import Dropdown from "../Dropdown";
+import { FormattedMessage } from "react-intl";
 
 const ComboBox = ({
+	isOptional,
+	isRequired,
+	tooltip,
+	description,
 	label,
-	endIcon,
-	startIcon,
-	errorMessage,
 	children,
+	icon,
+	isValid,
 	isLoading,
+	onLoadMore,
+	loadMoreEnabled,
+	inputHasImage,
 	...props
 }) => {
-	const hasError = !!errorMessage;
 	const triggerRef = useRef(null);
 
 	return (
-		<InputWrapper {...props} selectedKey={props.value} ref={triggerRef}>
-			{label && <Label>{label}</Label>}
-			<Input
-				endIcon={
-					hasError ? (
-						<ErrorIcon
-							icon={icon({ name: "circle-exclamation", style: "solid" })}
+		<Combo menuTrigger="focus" {...props} $isValid={isValid} ref={triggerRef}>
+			<Label
+				isOptional={isOptional}
+				isRequired={isRequired}
+				tooltip={tooltip}
+				description={description}
+			>
+				{label}
+			</Label>
+			<InputWrapper $hasImage={inputHasImage}>
+				{icon}
+				<Input />
+				{isLoading ? (
+					<Spinner color="--primary" size="0.75rem" />
+				) : (
+					<IconButton>
+						<ChevronIcon
+							icon={iconFA({ name: "chevron-down", style: "solid" })}
 						/>
-					) : (
-						endIcon
-					)
-				}
-				startIcon={startIcon}
-				customButton={
-					<TriggerButton
-						variant="ghost"
-						icon={
-							<ErrorIcon icon={icon({ name: "caret-down", style: "solid" })} />
-						}
-					/>
-				}
-				isLoading={isLoading}
-			/>
-			<PopoverStyled>
-				<List>{children}</List>
-			</PopoverStyled>
-		</InputWrapper>
+					</IconButton>
+				)}
+			</InputWrapper>
+			<Dropdown
+				shouldFlip={false}
+				placement="bottom"
+				offset={4}
+				triggerRef={triggerRef}
+			>
+				<ListBox>{children}</ListBox>
+				{loadMoreEnabled && (
+					<FetchMoreButton onClick={onLoadMore}>
+						<FormattedMessage defaultMessage="Charger plus" />
+					</FetchMoreButton>
+				)}
+			</Dropdown>
+		</Combo>
 	);
 };
 
-const PopoverStyled = styled(Popover)`
-	width: 100%;
-	max-width: var(--trigger-width);
-	max-height: 10rem;
-	overflow-y: scroll;
-	background-color: var(--white);
+const InputWrapper = styled.div`
 	border-radius: var(--r-s);
-	padding: 0.5rem;
-	border: 1px solid var(--neutral500);
+	border: 1px solid var(--neutral200);
+	background-color: var(--white);
+	padding: 0.625rem 0.75rem;
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+	height: 2.5rem;
+
+	&:hover {
+		border-color: var(--neutral300);
+	}
+
+	&:focus-within {
+		outline: 0.125rem var(--primary50) solid;
+	}
+
+	${({ $hasImage }) =>
+		$hasImage &&
+		css`
+			padding: 0.75rem;
+			height: 4rem;
+		`}
 `;
-const InputWrapper = styled(AriaComboBox)`
+const Combo = styled(AriaComboBox)`
+	width: 100%;
+	max-width: 320px;
 	display: flex;
 	flex-direction: column;
 	row-gap: 0.5rem;
-	width: 100%;
-	position: relative;
+
+	&[data-disabled] > ${InputWrapper} {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&[data-invalid] > ${InputWrapper} {
+		border-color: var(--alert);
+
+		&:focus-within {
+			outline: 0.125rem var(--alert50) solid;
+		}
+	}
+
+	${({ $isValid }) =>
+		$isValid &&
+		css`
+			& > ${InputWrapper} {
+				border-color: var(--success);
+
+				&:focus-within {
+					outline: 0.125rem var(--success50) solid;
+				}
+			}
+		`}
 `;
-const List = styled(ListBox)`
-	list-style: none;
-	padding: 0;
+const ChevronIcon = styled(FontAwesomeIcon)`
+	width: 0.75rem;
+	height: 0.75rem;
+	color: var(--neutral500);
 `;
 
-const ErrorIcon = styled(FontAwesomeIcon)`
-	font-size: 1.5rem;
-	color: var(--black);
-`;
-const TriggerButton = styled(IconButton)`
+const IconButton = styled(AriaButton)`
 	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+`;
+const Input = styled(AriaInput)`
+	flex: 1;
+	border: none;
+
+	&[data-focused] {
+		outline: none;
+	}
+`;
+const ListBox = styled(AriaListBox)`
+	display: flex;
+	flex-direction: column;
+`;
+const FetchMoreButton = styled.button`
+	border: none;
+	background: none;
+	color: var(--primary);
+	font-size: var(--fs-body-m);
+	line-height: var(--lh-body-m);
+	font-weight: var(--fw-semibold);
+	padding: 0.5rem 0.75rem;
+	cursor: pointer;
 `;
 
+/* 
+     cf. react-aria-components/ComboBox props
+     (https://react-spectrum.adobe.com/react-spectrum/ComboBox.html#props)      
+*/
 ComboBox.propTypes = {
-	items: PropTypes.arrayOf(PropTypes.object),
-	onSelectionChange: PropTypes.func,
-	onInputChange: PropTypes.func,
-	label: PropTypes.string,
-	endIcon: PropTypes.node,
-	startIcon: PropTypes.node,
-	errorMessage: PropTypes.string,
-	isLoading: PropTypes.bool,
+	label: PropTypes.string.isRequired,
+	isOptional: PropTypes.bool,
+	isRequired: PropTypes.bool,
+	tooltip: PropTypes.string,
+	description: PropTypes.string,
 	children: PropTypes.node,
-	value: PropTypes.string,
+	icon: PropTypes.func,
+	isValid: PropTypes.bool,
+	isLoading: PropTypes.bool,
+	onLoadMore: PropTypes.func,
+	loadMoreEnabled: PropTypes.bool,
+	inputHasImage: PropTypes.bool,
+};
+
+ComboBox.defaultProps = {
+	isOptional: false,
+	isRequired: false,
+	isLoading: false,
+	loadMoreEnabled: false,
+	inputHasImage: false,
 };
 
 export default ComboBox;

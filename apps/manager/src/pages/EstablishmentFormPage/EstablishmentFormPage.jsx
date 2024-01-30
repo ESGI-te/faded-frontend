@@ -20,6 +20,17 @@ const EstablishmentFormPage = () => {
     );
 };
 
-const Page = styled.section``;
+const Page = styled.section`
+    background-color: var(--neutral50);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: inherit;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        background-color: var(--white);
+    }
+`;
 
 export default EstablishmentFormPage;
