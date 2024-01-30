@@ -5,7 +5,6 @@ import { dayjs } from '@utils/dayjs';
 import { useLocale } from 'react-aria';
 import { LOCALES } from '@contexts/IntlProvider';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
 
 const daysLookup = {
     monday: 'lundi',
@@ -17,7 +16,7 @@ const daysLookup = {
     sunday: 'dimanche',
 };
 
-const EstablishmentOpeningHours = ({ planning }) => {
+const EstablishmentPlanning = ({ planning }) => {
     const today = dayjs().format('dddd').toLowerCase();
     const { locale } = useLocale();
 
@@ -27,7 +26,7 @@ const EstablishmentOpeningHours = ({ planning }) => {
                 <Day key={day} isToday={today === day}>
                     <DayName>{locale === LOCALES.FR ? daysLookup[day] : day}</DayName>
                     <Text>
-                        {isEmpty(hours) ? (
+                        {!hours.isOpen ? (
                             <FormattedMessage defaultMessage="Fermé" />
                         ) : (
                             `${dayjs(hours.open).format('HH:mm')} - ${dayjs(hours.close).format(
@@ -79,37 +78,44 @@ const DayName = styled(Text)`
     text-transform: capitalize;
 `;
 
-EstablishmentOpeningHours.propTypes = {
+EstablishmentPlanning.propTypes = {
     planning: PropTypes.shape({
         monday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         tuesday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         wednesday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         thursday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         friday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         saturday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
         sunday: PropTypes.shape({
             open: PropTypes.string.isRequired,
             close: PropTypes.string.isRequired,
+            isOpen: PropTypes.bool.isRequired,
         }).isRequired,
     }).isRequired,
 };
 
-export default EstablishmentOpeningHours;
+export default EstablishmentPlanning;

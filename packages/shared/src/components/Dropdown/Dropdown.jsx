@@ -8,8 +8,11 @@ const Dropdown = (props) => {
 	const { isMobileOrTablet } = useResponsive();
 	const state = useContext(ComboBoxStateContext);
 	// usePreventBodyScroll(state?.isOpen && isMobileOrTablet);
+	const trriggerWidth = props.triggerRef?.current
+		? props.triggerRef.current.getBoundingClientRect().width
+		: undefined;
 
-	return <DropdownStyled {...props} />;
+	return <DropdownStyled {...props} $triggerWidth={trriggerWidth} />;
 };
 
 const mobileAnimationIn = keyframes`
@@ -79,9 +82,10 @@ const DropdownStyled = styled(Popover)`
 
 	${({ theme }) => theme.mediaQueries.desktopAndUp} {
 		padding-block: 0.25rem;
-		max-width: var(--trigger-width);
 		border-radius: var(--r-xs);
 		max-height: 14rem !important;
+		max-width: ${({ $triggerWidth }) =>
+			$triggerWidth ? `${$triggerWidth}px` : "var(--trigger-width)"};
 
 		&[data-entering] {
 			animation: ${desktopAnimationIn} 0.25s ease-in-out;

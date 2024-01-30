@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from 'shared/src/components/Button';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import InputSearchPlaces from '@components/InputSearchPlaces';
+import InputSearchPlaces from 'shared/src/components/InputSearchPlaces';
 import InputSearchServiceOrProvider from '@components/InputSearchServiceOrProvider';
 
 const HomeSearchEstablishmentsForm = ({ onSubmit }) => {
