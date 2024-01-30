@@ -43,7 +43,6 @@
         "shared": "*",
         "styled-components": "^6.0.7",
         "swiper": "^11.0.3",
-        "use-places-autocomplete": "^4.0.1",
         "vite-plugin-svgr": "^4.1.0",
         "yup": "^1.2.0"
     },

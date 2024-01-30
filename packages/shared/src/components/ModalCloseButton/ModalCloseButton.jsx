@@ -16,6 +16,7 @@ const ModalCloseButton = (props) => {
 
 const IconButtonStyled = styled(IconButton)`
 	padding: 0;
+	flex-shrink: 0;
 `;
 const CloseIcon = styled(FontAwesomeIcon)`
 	width: 1rem;
