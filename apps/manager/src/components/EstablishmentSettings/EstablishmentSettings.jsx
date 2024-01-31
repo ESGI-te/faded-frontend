@@ -1,7 +1,7 @@
 import EstablishmentSettingsForm from '@components/EstablishmentSettingsForm';
-import useUpdateEstablishmentMutation from '@components/EstablishmentForm/useUpdateEstablishmentMutation.hook';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
 import { useParams } from 'react-router-dom';
+import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
 
 const EstablishmentSettings = () => {
     const { establishmentId } = useParams();

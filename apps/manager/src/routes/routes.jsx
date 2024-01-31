@@ -19,7 +19,6 @@ import ResetPasswordPage from '@pages/ResetPasswordPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import FullPageLayout from '../layouts/FullPageLayout';
-import EstablishmentFormPage from '@pages/EstablishmentFormPage/EstablishmentFormPage';
 import EstablishmentNameFormPage from '@pages/EstablishmentNameFormPage';
 import EstablishmentSchedulesPage from '@pages/EstablishmentSchedulesPage';
 import EstablishmentServicesPage from '@pages/EstablishmentServicesPage';
@@ -142,14 +141,6 @@ const routes = [
             element: (
                 <FullPageLayout>
                     <EstablishmentNameFormPage />
-                </FullPageLayout>
-            ),
-        },
-        {
-            path: ':establishmentId/edit',
-            element: (
-                <FullPageLayout>
-                    <EstablishmentFormPage />
                 </FullPageLayout>
             ),
         },
