@@ -23,6 +23,7 @@ import EstablishmentFormPage from '@pages/EstablishmentFormPage/EstablishmentFor
 import EstablishmentNameFormPage from '@pages/EstablishmentNameFormPage';
 import EstablishmentSchedulesPage from '@pages/EstablishmentSchedulesPage';
 import EstablishmentServicesPage from '@pages/EstablishmentServicesPage';
+import ServicesPage from '@pages/ServicesPage';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -101,6 +102,11 @@ const routes = [
                 {
                     path: 'appointments',
                     element: <ProviderAppointmentsPage />,
+                    roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
+                },
+                {
+                    path: 'services',
+                    element: <ServicesPage />,
                     roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                 },
                 /* ESTABLISHMENT */

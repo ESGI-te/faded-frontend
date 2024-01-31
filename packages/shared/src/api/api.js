@@ -23,7 +23,8 @@ export const getEstablishments = ({ page, perPage, ...q }) =>
 	});
 export const getEstablishment = (establishmentId) =>
 	callApi(`/establishments/${establishmentId}`);
-export const getServices = (query) => callApi(`/services`, query);
+export const getServices = (query) => callApi(`/services`, { query });
+
 export const getEstablishmentSuggestions = ({ page, perPage, name }) =>
 	callApi("/establishments/suggestions", {
 		query: { name, page, perPage },
@@ -56,3 +57,6 @@ export const updateAppointment = ({ appointmentId, appointment }, query) =>
 	});
 
 export const getServiceCategories = () => callApi("/service_categories");
+
+export const deleteService = (serviceId) =>
+	callApi(`/services/${serviceId}`, { method: "DELETE" });
