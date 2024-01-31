@@ -92,34 +92,32 @@ const SelectEstablishment = ({ onClose }) => {
                 <Input />
                 <Escape>Esc</Escape>
             </InputWrapper>
-            <ListWrapper>
-                <List
-                    selectedKeys={[establishmentId]}
-                    onSelectionChange={handleSelectEstablishment}
-                    selectionMode="single"
-                    items={items}
-                    renderEmptyState={renderEmptyState}
-                >
-                    {(item) => (
-                        <EstablishmentSelectListItem id={item.id}>
-                            <EstablishmentSelectListItemInnerWrapper>
-                                <EstablishmentImage src={item.image} />
-                                <EstablishmentListItemName slot="label">
-                                    {item.name}
-                                </EstablishmentListItemName>
-                                <EstablishmentStatusBadge status={item.status} />
-                                <SelectedIcon icon={icon({ name: 'check', style: 'solid' })} />
-                            </EstablishmentSelectListItemInnerWrapper>
-                        </EstablishmentSelectListItem>
-                    )}
-                </List>
-                {debouncedSearchQuery.length < 1 && items.length <= 1 && (
+            <List
+                selectedKeys={[establishmentId]}
+                onSelectionChange={handleSelectEstablishment}
+                selectionMode="single"
+                items={items}
+                renderEmptyState={renderEmptyState}
+            >
+                {(item) => (
+                    <EstablishmentSelectListItem id={item.id}>
+                        <EstablishmentSelectListItemInnerWrapper>
+                            <EstablishmentImage src={item.image} />
+                            <EstablishmentListItemName slot="label">
+                                {item.name}
+                            </EstablishmentListItemName>
+                            <EstablishmentStatusBadge status={item.status} />
+                            <SelectedIcon icon={icon({ name: 'check', style: 'solid' })} />
+                        </EstablishmentSelectListItemInnerWrapper>
+                    </EstablishmentSelectListItem>
+                )}
+            </List>
+            {/* {debouncedSearchQuery.length < 1 && items.length <= 1 && (
                     <CreateEstablishmentLink to="/new">
                         <CreateIcon icon={icon({ name: 'circle-plus', style: 'solid' })} />
                         <FormattedMessage defaultMessage="Ajouter un établissement" />
                     </CreateEstablishmentLink>
-                )}
-            </ListWrapper>
+                )} */}
         </SelectEstablishmentWrapper>
     );
 };
@@ -204,7 +202,8 @@ const List = styled(ListBox)`
     display: flex;
     flex-direction: column;
     row-gap: 0.25rem;
-    max-height: 250px;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
 `;
 const SearchIcon = styled(FontAwesomeIcon)`
@@ -218,13 +217,6 @@ const Escape = styled.div`
     color: var(--neutral500);
     font-size: var(--fs-body-s);
     line-height: var(--lh-body-s);
-`;
-const ListWrapper = styled.div`
-    padding-block: 0.5rem;
-    padding-inline: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.25rem;
 `;
 const EmptyStateText = styled(Text)`
     padding: 0.5rem;

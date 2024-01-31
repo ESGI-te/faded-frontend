@@ -11,3 +11,5 @@ export const createProviderRequest = (formData) =>
 
 export const createEstablishment = (establishment) =>
     callApi('/establishments', { method: 'POST', data: establishment });
+export const updateEstablishment = ({ establishmentId, establishment }) =>
+    callApi(`/establishments/${establishmentId}`, { method: 'PATCH', data: establishment });

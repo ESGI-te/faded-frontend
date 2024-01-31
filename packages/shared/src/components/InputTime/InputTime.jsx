@@ -7,14 +7,30 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Label from "../Label";
 import Stack from "../Stack";
 import { parseTime } from "@internationalized/date";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
-const InputTime = ({ label, value, ...props }) => {
-	const parsedValue = parseTime(value);
+dayjs.extend(customParseFormat);
+
+const InputTime = ({ label, value, onChange, ...props }) => {
+	const parsedValue = typeof value === "string" ? parseTime(value) : value;
+
+	const handleChange = (time) => {
+		const format =
+			props.granularity === "hour"
+				? "HH"
+				: props.granularity === "minute"
+				? "HH:mm"
+				: "HH:mm:ss";
+		const formattedTime = dayjs(time.toString(), format).format(format);
+
+		onChange(formattedTime);
+	};
 
 	return (
 		<Stack gap="0.5rem" align="start">
 			<Label>{label}</Label>
-			<Input {...props} value={parsedValue}>
+			<Input {...props} onChange={handleChange} value={parsedValue}>
 				<ClockIcon
 					icon={icon({ name: "clock", style: "regular" })}
 					color="var(--neutral500)"
@@ -68,6 +84,12 @@ const ClockIcon = styled(FontAwesomeIcon)`
 	color: var(--neutral500);
 `;
 
-InputTime.propTypes = {};
+InputTime.propTypes = {
+	granularity: PropTypes.oneOf(["hour", "minute", "second"]),
+};
+
+InputTime.defaultProps = {
+	granularity: "minute",
+};
 
 export default InputTime;
