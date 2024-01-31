@@ -21,6 +21,8 @@ import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import FullPageLayout from '../layouts/FullPageLayout';
 import EstablishmentFormPage from '@pages/EstablishmentFormPage/EstablishmentFormPage';
 import EstablishmentNameFormPage from '@pages/EstablishmentNameFormPage';
+import EstablishmentSchedulesPage from '@pages/EstablishmentSchedulesPage';
+import EstablishmentServicesPage from '@pages/EstablishmentServicesPage';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -82,6 +84,7 @@ const routes = [
             children: [
                 {
                     path: '',
+                    exact: true,
                     element: <ProviderOverviewPage />,
                     roles: [USER_ROLES.ADMIN, USER_ROLES.PROVIDER],
                 },
@@ -103,6 +106,7 @@ const routes = [
                 /* ESTABLISHMENT */
                 {
                     path: ':establishmentId',
+                    exact: true,
                     element: <EstablishmentOverviewPage />,
                 },
                 {
@@ -116,6 +120,14 @@ const routes = [
                 {
                     path: ':establishmentId/settings',
                     element: <EstablishmentSettingsPage />,
+                },
+                {
+                    path: ':establishmentId/schedules',
+                    element: <EstablishmentSchedulesPage />,
+                },
+                {
+                    path: ':establishmentId/services',
+                    element: <EstablishmentServicesPage />,
                 },
             ],
         },

@@ -17,7 +17,7 @@ const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
     {
         name: 'Équipe',
         icon: icon({ name: 'users', style: 'solid' }),
-        url: `/${establishmentId}/team?page=1`,
+        url: `/${establishmentId}/team`,
     },
     {
         name: 'Gestion de RDV',
@@ -25,9 +25,14 @@ const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
         url: `/${establishmentId}/appointments?page=1`,
     },
     {
-        name: 'Planning',
+        name: 'Horaires',
         icon: icon({ name: 'calendar-days', style: 'solid' }),
-        url: `/${establishmentId}/planning`,
+        url: `/${establishmentId}/schedules`,
+    },
+    {
+        name: 'Prestations',
+        icon: icon({ name: 'calendar-days', style: 'solid' }),
+        url: `/${establishmentId}/services`,
     },
     {
         name: 'Paramètres',

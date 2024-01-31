@@ -9,9 +9,9 @@ const queryFn = async ({
 	return data;
 };
 
-const useBarbersQuery = ({ page = 1, perPage = 10, ...q } = {}) => {
+const useBarbersQuery = ({ ...q } = {}) => {
 	return useQuery({
-		queryKey: barberKeys.list({ page, perPage, ...q }),
+		queryKey: barberKeys.list({ ...q }),
 		queryFn,
 	});
 };
