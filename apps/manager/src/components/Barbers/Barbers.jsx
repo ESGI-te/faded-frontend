@@ -2,7 +2,7 @@ import useBarbersQuery from 'shared/src/queries/barber/useBarbersQuery.hook';
 import BarbersTable from '@components/BarbersTable';
 import Stack from 'shared/src/components/Stack';
 import Pagination from 'shared/src/components/Pagination';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import InputSearch from 'shared/src/components/InputSearch';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
@@ -14,7 +14,6 @@ import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from 'shared/src/components/TableSkeleton';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
-import { useParams } from 'react-router-dom';
 
 const Barbers = () => {
     const { establishmentId } = useParams();

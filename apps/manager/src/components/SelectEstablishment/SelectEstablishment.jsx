@@ -112,12 +112,12 @@ const SelectEstablishment = ({ onClose }) => {
                     </EstablishmentSelectListItem>
                 )}
             </List>
-            {/* {debouncedSearchQuery.length < 1 && items.length <= 1 && (
-                    <CreateEstablishmentLink to="/new">
-                        <CreateIcon icon={icon({ name: 'circle-plus', style: 'solid' })} />
-                        <FormattedMessage defaultMessage="Ajouter un établissement" />
-                    </CreateEstablishmentLink>
-                )} */}
+            {debouncedSearchQuery.length < 1 && items.length <= 1 && (
+                <CreateEstablishmentLink to="/new">
+                    <CreateIcon icon={icon({ name: 'circle-plus', style: 'solid' })} />
+                    <FormattedMessage defaultMessage="Ajouter un établissement" />
+                </CreateEstablishmentLink>
+            )}
         </SelectEstablishmentWrapper>
     );
 };
