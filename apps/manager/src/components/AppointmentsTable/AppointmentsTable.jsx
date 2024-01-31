@@ -97,7 +97,7 @@ const AppointmentsTable = ({ items }) => {
 
 const Table = styled(AriaTable)`
     width: 100%;
-    border-radius: var(--r-m);
+    border-radius: var(--r-l);
     background-color: var(--white);
     box-shadow: var(--shadow-xs);
     padding: 1rem;

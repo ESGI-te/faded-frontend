@@ -6,42 +6,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useIntl, FormattedMessage } from 'react-intl';
 import useDebounce from 'shared/src/hooks/useDebounce.hook';
-import Link from 'shared/src/components/Link';
-import useBarbersQuery from 'shared/src/queries/barber/useBarbersQuery.hook';
+import useServicesQuery from 'shared/src/queries/service/useServicesQuery.hook';
 import IconButton from 'shared/src/components/IconButton';
 import { useParams } from 'react-router-dom';
-import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hook';
+import useUpdateServiceMutation from '@queries/service/useUpdateServiceMutation.hook';
+import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
+import { USER_ROLES } from 'shared/src/utils/constants';
+import ServicesSkeleton from './ServicesSkeleton';
 
-const AvailableBarbers = () => {
+const SelectedServices = () => {
+    const { data: user } = useUserQuery();
+    const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
     const { establishmentId } = useParams();
     const intl = useIntl();
-    const { data: barbers, isLoading } = useBarbersQuery();
+    const { data: services, isLoading } = useServicesQuery({ establishment: establishmentId });
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery);
-    const updateBarber = useUpdateBarberMutation();
+    const updateService = useUpdateServiceMutation();
+
     const items = useMemo(() => {
-        let items = barbers?.filter((barber) => !barber.establishment);
+        let items = services;
 
         if (!items) return [];
 
         if (debouncedSearchQuery.length > 1) {
-            items = items.filter((e) => {
-                const name = `${e.firstName} ${e.lastName}`;
-                return name.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+            items = items.filter((service) => {
+                return service.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+                // || service.category.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
             });
         }
 
-        return items.map((b) => ({
-            id: b.id,
-            name: `${b.firstName} ${b.lastName}`,
-        }));
-    }, [barbers, debouncedSearchQuery]);
+        return items;
+    }, [services, debouncedSearchQuery, establishmentId]);
 
-    const handleAddBarber = (barberId) => {
-        updateBarber.mutate({
-            barberId,
-            barber: {
-                establishment: establishmentId,
+    const handleRemoveService = (service) => {
+        const establishments = service.establishment.map((e) => e.id);
+        updateService.mutate({
+            serviceId: service.id,
+            service: {
+                establishment: establishments.filter((e) => e !== establishmentId),
             },
         });
     };
@@ -57,28 +60,25 @@ const AvailableBarbers = () => {
         return (
             <EmptyStateWrapper>
                 <Text fontWeight="semibold">
-                    <FormattedMessage defaultMessage="Nous n'avons pas trouvé de coiffeurs disponibles dans votre organisation" />
+                    <FormattedMessage defaultMessage="Oups... Il semble que vous n'ayez aucune prestation !" />
                 </Text>
                 <Text color="--neutral500">
-                    <FormattedMessage defaultMessage="Pas de souci, c'est l'occasion parfaite pour inviter de nouveaux talents à rejoindre votre équipe !" />
+                    <FormattedMessage defaultMessage="C'est le moment parfait pour ajouter des prestations à votre établissement." />
                 </Text>
                 <Text color="--neutral500">
-                    <FormattedMessage
-                        defaultMessage="🌟 Ajoutez un coiffeur : C'est simple et rapide ! <link>Cliquez ici pour commencer.</link>"
-                        values={{
-                            link: (chunks) => <BarbersLink>{chunks}</BarbersLink>,
-                        }}
-                    />
+                    <FormattedMessage defaultMessage="✨ Ajoutez votre première prestation depuis la colonne de droite." />
                 </Text>
             </EmptyStateWrapper>
         );
     };
 
+    if (isLoading) return <ServicesSkeleton />;
+
     return (
-        <AvailableBarbersWrapper>
+        <SelectedServicesWrapper>
             <InputWrapper
                 onChange={setSearchQuery}
-                placeholder={intl.formatMessage({ defaultMessage: 'Chercher un coiffeur...' })}
+                placeholder={intl.formatMessage({ defaultMessage: 'Chercher une prestation...' })}
             >
                 <SearchIcon icon={icon({ name: 'magnifying-glass', style: 'solid' })} />
                 <Input />
@@ -87,19 +87,21 @@ const AvailableBarbers = () => {
                 {(item) => (
                     <ListItem id={item.id}>
                         <ListItemName slot="label">{item.name}</ListItemName>
-                        <AddButton
-                            isLoading={updateBarber.isLoading}
-                            onPress={() => handleAddBarber(item.id)}
-                            icon={<AddIcon icon={icon({ name: 'add', style: 'solid' })} />}
-                        />
+                        {isProvider && (
+                            <AddButton
+                                isLoading={updateService.isLoading}
+                                onPress={() => handleRemoveService(item)}
+                                icon={<AddIcon icon={icon({ name: 'minus', style: 'solid' })} />}
+                            />
+                        )}
                     </ListItem>
                 )}
             </List>
-        </AvailableBarbersWrapper>
+        </SelectedServicesWrapper>
     );
 };
 
-const AvailableBarbersWrapper = styled.div`
+const SelectedServicesWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
@@ -112,9 +114,8 @@ const ListItem = styled(ListBoxItem)`
     column-gap: 1rem;
     border-radius: var(--r-m);
     padding: 0.75rem;
-    background-color: var(--white);
+    background-color: var(--neutral50);
     min-width: 0;
-    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 
     &[data-focused] {
         outline: none;
@@ -150,7 +151,7 @@ const List = styled(ListBox)`
     display: flex;
     flex-direction: column;
     row-gap: 0.75rem;
-    flex-grow: 1;
+    flex: 1;
     min-height: 0;
     overflow-y: auto;
 `;
@@ -181,10 +182,5 @@ const EmptyStateWrapper = styled(Text)`
 const EmptyStateText = styled(Text)`
     padding: 1rem;
 `;
-const BarbersLink = styled(Link)`
-    color: var(--primary500);
-    font-weight: var(--fw-semibold);
-    cursor: pointer;
-`;
 
-export default AvailableBarbers;
+export default SelectedServices;
