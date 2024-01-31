@@ -1,5 +1,5 @@
 import EstablishmentSchedulesForm from '@components/EstablishmentSchedulesForm';
-import useUpdateEstablishmentMutation from '@components/EstablishmentForm/useUpdateEstablishmentMutation.hook';
+import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
 import { useParams } from 'react-router-dom';
 
