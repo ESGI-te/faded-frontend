@@ -63,6 +63,11 @@ const PROVIDER_NAVIGATION_ITEMS = [
         url: '/establishments',
     },
     {
+        name: 'Prestations',
+        icon: icon({ name: 'wand-magic-sparkles', style: 'solid' }),
+        url: '/services',
+    },
+    {
         name: 'Paramètres',
         icon: icon({ name: 'gear', style: 'solid' }),
         url: '/settings',

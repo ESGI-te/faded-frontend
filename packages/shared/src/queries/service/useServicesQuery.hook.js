@@ -10,7 +10,7 @@ const queryFn = async ({
 	return data;
 };
 
-const useServicesQuery = ({ ...q }) => {
+const useServicesQuery = ({ ...q } = {}) => {
 	return useQuery({
 		queryKey: serviceKeys.list({ ...q }),
 		queryFn,

@@ -29,7 +29,7 @@ const BarbersTable = ({ items }) => {
     // }));
     const { data: user } = useUserQuery();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
-    const baseColumns = [
+    const columns = [
         {
             key: 'lastName',
             isRowHeader: true,
@@ -41,9 +41,6 @@ const BarbersTable = ({ items }) => {
             allowsSorting: true,
             name: intl.formatMessage({ defaultMessage: 'Prénom' }),
         },
-    ];
-    const providerColumns = [
-        ...baseColumns,
         {
             key: 'establishment',
             allowsSorting: true,
@@ -54,7 +51,6 @@ const BarbersTable = ({ items }) => {
             name: null,
         },
     ];
-    const columns = isProvider ? providerColumns : baseColumns;
     let [sortDescriptor, setSortDescriptor] = useState({
         column: 'lastName',
         direction: 'ascending',
