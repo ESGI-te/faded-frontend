@@ -42,7 +42,7 @@ const Pagination = ({ pagination, onPageChange, pagesRange = 1 }) => {
 			}
 		} else {
 			// Sinon, affiche les pages jusqu'à la valeur spécifiée dans pagesRange,
-			// puis ajoute un point de suspension avant la dernière page.
+			// puis ajoute des points de suspension avant la dernière page.
 			const endPage = Math.min(current + Math.floor(pagesRange / 2), last);
 			for (let i = first; i <= endPage; i++) {
 				pageNumbers.push(

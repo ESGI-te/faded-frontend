@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import EstablishmentServices from '@components/EstablishmentServices';
+import EstablishmentServicesForm from '@components/EstablishmentServicesForm';
 
 const EstablishmentServicesPage = () => (
     <Page>
         <PageInnerWrapper>
-            <EstablishmentServices />
+            <EstablishmentServicesForm />
         </PageInnerWrapper>
     </Page>
 );
