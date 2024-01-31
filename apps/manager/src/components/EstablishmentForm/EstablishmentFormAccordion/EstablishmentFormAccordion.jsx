@@ -2,7 +2,6 @@ import Accordion from 'shared/src/components/Accordion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import styled from 'styled-components';
-import Text from 'shared/src/components/Text';
 import { FormattedMessage } from 'react-intl';
 import EstablishmentFormAccordionItem from './EstablishmentFormAccordionItem';
 import EstablishmentFormInformation from '../EstablishmentFormInformation';
@@ -36,12 +35,6 @@ const EstablishmentFormAccordion = () => {
                 icon={<ItemIcon icon={icon({ name: 'people-group', style: 'solid' })} />}
             >
                 <EstablishmentFormBarbers />
-            </EstablishmentFormAccordionItem>
-            <EstablishmentFormAccordionItem
-                label={<FormattedMessage defaultMessage="Photos" />}
-                icon={<ItemIcon icon={icon({ name: 'image', style: 'solid' })} />}
-            >
-                <Text>test</Text>
             </EstablishmentFormAccordionItem>
         </EstablishmentAccordion>
     );

@@ -7,19 +7,25 @@ import Stack from 'shared/src/components/Stack';
 import Cluster from 'shared/src/components/Cluster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { useFormContext } from 'react-hook-form';
 
-const EstablishmentFormResume = (props) => {
+const EstablishmentFormResume = () => {
     const establishment = useEstablishmentBeingEdited();
+    const { watch } = useFormContext();
+    const address = watch('information.address');
+    const name = watch('information.name');
+    const nbBarbers = watch('barbers').length;
+    const nbServices = watch('services').length;
 
     return (
         <Container>
             <EstablishmentStatusBadge status={establishment.status} />
             <Stack>
                 <Text nbOfLines={1} variant="bodyL" fontWeight="--fw-bold">
-                    {establishment.name}
+                    {name}
                 </Text>
                 <Text nbOfLines={1} variant="bodyM" color="--neutral500">
-                    {establishment.address || <FormattedMessage defaultMessage="Aucune adresse" />}
+                    {address || <FormattedMessage defaultMessage="Aucune adresse" />}
                 </Text>
             </Stack>
             <Cluster gap="0.5rem" align="center">
@@ -33,7 +39,7 @@ const EstablishmentFormResume = (props) => {
                             =1 {# coiffeur}
                             other {# coiffeurs}
                         }"
-                        values={{ nbBarbers: establishment.barbers.length }}
+                        values={{ nbBarbers }}
                     />
                 </Text>
             </Cluster>
@@ -48,7 +54,7 @@ const EstablishmentFormResume = (props) => {
                             =1 {# prestation}
                             other {# prestations}
                         }"
-                        values={{ nbServices: establishment.services.length }}
+                        values={{ nbServices }}
                     />
                 </Text>
             </Cluster>
@@ -64,23 +70,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-`;
-const IndicatorWrapper = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    border-radius: var(--r-m);
-    background-color: var(--primary100);
-`;
-const Indicator = styled(Text)`
-    font-weight: var(--fw-semibold);
-    font-size: var(--fs-body-m);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    row-gap: 0.25rem;
 `;
 
 EstablishmentFormResume.propTypes = {};

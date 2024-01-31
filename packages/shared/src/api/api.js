@@ -23,8 +23,7 @@ export const getEstablishments = ({ page, perPage, ...q }) =>
 	});
 export const getEstablishment = (establishmentId) =>
 	callApi(`/establishments/${establishmentId}`);
-export const getEstablishmentServices = (establishmentId, query) =>
-	callApi(`/services/establishment/${establishmentId}`, query);
+export const getServices = (query) => callApi(`/services`, query);
 export const getEstablishmentSuggestions = ({ page, perPage, name }) =>
 	callApi("/establishments/suggestions", {
 		query: { name, page, perPage },

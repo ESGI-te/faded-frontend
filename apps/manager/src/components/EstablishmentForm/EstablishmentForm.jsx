@@ -34,7 +34,6 @@ const EstablishmentForm = () => {
             planning: establishment?.planning,
             services: establishment?.services,
             barbers: establishment?.barbers,
-            images: establishment?.images,
         },
         resolver: yupResolver(schema),
     });

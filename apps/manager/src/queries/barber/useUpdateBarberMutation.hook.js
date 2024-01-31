@@ -11,10 +11,9 @@ const useUpdateBarberMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn,
-        onSuccess: (data, { barberId }) =>
-            queryClient.invalidateQueries({
-                queryKey: barberKeys.list(),
-            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: barberKeys.list() });
+        },
     });
 };
 
