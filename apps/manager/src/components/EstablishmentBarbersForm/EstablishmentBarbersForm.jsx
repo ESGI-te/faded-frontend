@@ -33,28 +33,46 @@ const EstablishmentBarbersForm = (props) => {
 
 const Wrapper = styled.div`
     display: flex;
-    column-gap: 1rem;
+    flex-direction: column;
+    row-gap: 1rem;
+
     background-color: var(--white);
     border-radius: var(--r-l);
     padding: 1rem;
-    height: 500px;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        flex-direction: row;
+        column-gap: 1rem;
+        height: 500px;
+    }
 `;
 const SelectedBarbersWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
-    padding-inline: 2rem;
-    padding-block: 2rem 0;
+    max-height: 500px;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding-inline: 2rem;
+        padding-block: 2rem 0;
+        max-height: none;
+    }
 `;
 const AvailableBarbersWrapper = styled.div`
     display: flex;
     flex-direction: column;
     background-color: var(--neutral50);
     border-radius: var(--r-l);
-    padding: 2rem;
+    padding: 0.75rem;
     flex: 1;
     min-height: 0;
+    max-height: 500px;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        max-height: none;
+        padding: 2rem;
+    }
 `;
 
 EstablishmentBarbersForm.propTypes = {};

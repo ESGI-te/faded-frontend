@@ -15,7 +15,6 @@ export const callApi = async (url, options) => {
 		const pageParam = queryParams.get("page");
 		const pagination = queryParams.get("pagination");
 		pagination ?? queryParams.append("pagination", !!pageParam);
-
 		const queryString = queryParams.toString();
 		URL = `${URL}?${queryString}`;
 	}
