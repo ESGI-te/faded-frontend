@@ -16,7 +16,7 @@ const getDefaultValues = (service) => {
             name: '',
             category: '',
             duration: 30,
-            price: 0,
+            price: 5,
         };
     }
 
@@ -39,8 +39,16 @@ const EstablishmentFormServicesAdd = ({ onSubmit, service, onClose, isLoading })
     });
     const { isDirty } = formState;
 
+    const submit = (data) => {
+        if (service) {
+            onSubmit(service.id, data);
+            return;
+        }
+        onSubmit(data);
+    };
+
     return (
-        <Form onSubmit={handleSubmit((data) => onSubmit(service.id, data))}>
+        <Form onSubmit={handleSubmit(submit)}>
             <ResponsiveWrapper>
                 <InputTextController
                     name="name"
@@ -70,6 +78,7 @@ const EstablishmentFormServicesAdd = ({ onSubmit, service, onClose, isLoading })
                         defaultMessage: 'Durée de la prestation',
                     })}
                     type="number"
+                    min="1"
                     isRequired
                 />
                 <InputTextController
@@ -80,6 +89,8 @@ const EstablishmentFormServicesAdd = ({ onSubmit, service, onClose, isLoading })
                         defaultMessage: 'Prix de la prestation',
                     })}
                     type="number"
+                    step="0.01"
+                    min="1"
                     isRequired
                 />
             </ResponsiveWrapper>
