@@ -3,7 +3,6 @@ import useServicesQuery from 'shared/src/queries/service/useServicesQuery.hook';
 import ServicesTable from '@components/ServicesTable';
 import Stack from 'shared/src/components/Stack';
 import Pagination from 'shared/src/components/Pagination';
-import { createSearchParams, useSearchParams, useParams } from 'react-router-dom';
 import InputSearch from 'shared/src/components/InputSearch';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,25 +13,33 @@ import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import AddServiceModal from './AddServiceModal';
 import useCreateServiceMutation from '@queries/service/useCreateServiceMutation.hook';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import useDebounce from 'shared/src/hooks/useDebounce.hook';
 
 const Services = () => {
-    const { establishmentId } = useParams();
-    // let [searchParams, setSearchParams] = useSearchParams();
-    // const params = useMemo(() => Object.fromEntries([...searchParams]), [searchParams]);
     const { data: services, isLoading } = useServicesQuery({ pagination: false });
     const { data: user } = useUserQuery();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
     const createService = useCreateServiceMutation();
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const debouncedSearchQuery = useDebounce(searchQuery);
+    const items = useMemo(() => {
+        let items = services;
 
-    const handleSearchByLastName = (data) => {
-        // setSearchParams(
-        //     createSearchParams({
-        //         lastName: data,
-        //     }),
-        // );
-    };
+        if (!items) return [];
+
+        if (debouncedSearchQuery.length > 1) {
+            items = items.filter((service) => {
+                return (
+                    service.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+                    service.category.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+                );
+            });
+        }
+
+        return items;
+    }, [services, debouncedSearchQuery]);
 
     const handleAddService = (service) => {
         createService.mutate(service, {
@@ -51,7 +58,7 @@ const Services = () => {
                         startIcon={
                             <SearchIcon icon={icon({ name: 'magnifying-glass', style: 'solid' })} />
                         }
-                        onSubmit={handleSearchByLastName}
+                        onChange={setSearchQuery}
                     />
                     {isProvider && (
                         <Button
@@ -65,7 +72,7 @@ const Services = () => {
                 </InputSearchWrapper>
                 {!isLoading ? (
                     <>
-                        <ServicesTable items={services} />
+                        <ServicesTable items={items} />
                         {/* <Pagination pagination={data.pagination} pagesRange={5} /> */}
                     </>
                 ) : (
