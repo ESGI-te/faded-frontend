@@ -1,6 +1,6 @@
 import Text from 'shared/src/components/Text';
 import styled from 'styled-components';
-import Barbers from '@components/Barbers';
+import EstablishmentBarbersForm from '@components/EstablishmentBarbersForm';
 
 const EstablishmentTeamPage = () => (
     <Page>
@@ -13,7 +13,7 @@ const EstablishmentTeamPage = () => (
                     Ajoutez, modifiez ou supprimez des membres de votre équipe
                 </Text>
             </TitleWrapper>
-            <Barbers />
+            <EstablishmentBarbersForm />
         </PageInnerWrapper>
     </Page>
 );

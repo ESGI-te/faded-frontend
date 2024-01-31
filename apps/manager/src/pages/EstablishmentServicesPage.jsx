@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import EstablishmentSettings from '@components/EstablishmentSettings';
+import EstablishmentServices from '@components/EstablishmentServices';
 
-const EstablishmentSettingsPage = () => (
+const EstablishmentServicesPage = () => (
     <Page>
         <PageInnerWrapper>
-            <EstablishmentSettings />
+            <EstablishmentServices />
         </PageInnerWrapper>
     </Page>
 );
@@ -17,7 +17,6 @@ const PageInnerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-    background-color: var(--background);
     padding: var(--container-padding-mobile);
     max-width: var(--container-width);
 
@@ -26,4 +25,4 @@ const PageInnerWrapper = styled.div`
     }
 `;
 
-export default EstablishmentSettingsPage;
+export default EstablishmentServicesPage;
