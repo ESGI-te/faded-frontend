@@ -1,8 +1,6 @@
 import {
 	Select,
-	Popover,
-	ListBox,
-	ListBoxItem,
+	ListBox as AriaListBox,
 	Button,
 	SelectValue,
 } from "react-aria-components";
@@ -12,50 +10,66 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Label from "../Label";
 import { useRef } from "react";
+import ListBoxItem from "../ListBoxItem";
+import Dropdown from "../Dropdown";
 
 const InputSelect = ({
+	isOptional,
+	isRequired,
+	tooltip,
+	description,
 	label,
 	endIcon,
 	startIcon,
 	errorMessage,
 	children,
 	items,
+	loadMoreEnabled,
+	noBorder,
 	...props
 }) => {
 	const triggerRef = useRef(null);
 
 	return (
 		<InputWrapper {...props} ref={triggerRef}>
-			{label && <Label>{label}</Label>}
-			<InputButton>
+			<Label
+				isOptional={isOptional}
+				isRequired={isRequired}
+				tooltip={tooltip}
+				description={description}
+			>
+				{label}
+			</Label>
+			<InputButton $noBorder={noBorder}>
 				<SelectValue />
 				<span>
-					<CarretIcon icon={icon({ name: "caret-down", style: "solid" })} />
+					<ChevronIcon icon={icon({ name: "chevron-down", style: "solid" })} />
 				</span>
 			</InputButton>
-			<PopoverStyled>
-				<List items={items}>
-					{children || ((item) => <ListItem>{item.name}</ListItem>)}
-				</List>
-			</PopoverStyled>
+			<Dropdown
+				shouldFlip={false}
+				placement="bottom"
+				offset={4}
+				triggerRef={triggerRef}
+			>
+				<ListBox items={items}>
+					{children ||
+						((item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>)}
+				</ListBox>
+				{loadMoreEnabled && (
+					<FetchMoreButton onClick={onLoadMore}>
+						<FormattedMessage defaultMessage="Charger plus" />
+					</FetchMoreButton>
+				)}
+			</Dropdown>
 		</InputWrapper>
 	);
 };
 
-const PopoverStyled = styled(Popover)`
-	width: 100%;
-	max-width: var(--trigger-width);
-	max-height: 10rem;
-	overflow-y: scroll;
-	background-color: var(--white);
-	border-radius: var(--r-s);
-	padding: 0.5rem;
-	border: 1px solid var(--neutral500);
-`;
 const InputButton = styled(Button)`
-	height: 3rem;
+	height: 2.5rem;
 	padding: 1rem;
-	border: solid var(--black) 1px;
+	border: solid var(--neutral300) 1px;
 	border-radius: var(--r-s);
 	width: 100%;
 	background-color: var(--white);
@@ -64,6 +78,8 @@ const InputButton = styled(Button)`
 	justify-content: space-between;
 	column-gap: 0.5rem;
 	cursor: pointer;
+
+	${({ $noBorder }) => $noBorder && "border: none;"}
 
 	&[data-disabled] {
 		cursor: not-allowed;
@@ -103,38 +119,13 @@ const InputWrapper = styled(Select)`
 		}
 	}
 `;
-const List = styled(ListBox)`
-	list-style: none;
-	padding: 0;
+const ListBox = styled(AriaListBox)`
 	display: flex;
 	flex-direction: column;
-	row-gap: 0.25rem;
 `;
-const ListItem = styled(ListBoxItem)`
-	display: flex;
-	align-items: center;
-	column-gap: 0.5rem;
-	padding-block: 0.25rem;
-	padding-inline: 0.5rem;
-	border-radius: var(--r-xs);
-	cursor: pointer;
-
-	&:hover {
-		background-color: var(--primary50);
-	}
-
-	&[data-selected] {
-		background-color: var(--primary400);
-		color: var(--white);
-		font-weight: var(--fw-semibold);
-	}
-	&[data-focused] {
-		outline: 2px solid var(--primary500);
-	}
-`;
-const CarretIcon = styled(FontAwesomeIcon)`
-	font-size: 1.5rem;
-	color: var(--black);
+const ChevronIcon = styled(FontAwesomeIcon)`
+	font-size: 0.75rem;
+	color: var(--neutral500);
 `;
 
 InputSelect.propTypes = {
@@ -146,6 +137,11 @@ InputSelect.propTypes = {
 	errorMessage: PropTypes.string,
 	children: PropTypes.node,
 	value: PropTypes.string,
+	noBorder: PropTypes.bool,
+};
+
+InputSelect.defaultProps = {
+	noBorder: false,
 };
 
 export default InputSelect;

@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         setIsAuthenticated(false);
+        window.location.href = '/login';
     };
 
     const onAuthenticate = async ({ accessToken, refreshToken }) => {

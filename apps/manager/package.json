@@ -4,7 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "intl-extract": "formatjs extract 'src/**/*.jsx' --out-file lang/fr.json --flatten --format simple --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+        "intl-extract-fr": "formatjs extract 'src/**/*.{js,jsx,ts,tsx}' --out-file lang/fr.json --flatten --format simple",
+        "intl-extract-en": "formatjs extract 'src/**/*.{js,jsx,ts,tsx}' --out-file lang/en.json --flatten --format formatjs-formatter-en",
+        "intl-extract": "npm run intl-extract-fr && npm run intl-extract-en",
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
