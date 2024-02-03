@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import Link from 'shared/src/components/Link';
+import SelectLanguage from '@components/SelectLanguage';
 
 const Header = () => {
     const { establishmentId } = useParams();
@@ -67,26 +68,36 @@ const Header = () => {
                     </DialogTrigger>
                 )}
             </LeftWrapper>
-            {user.isLoading ? (
-                <ProfileButtonSkeleton />
-            ) : (
-                <DialogTrigger>
-                    <ProfileButton>
-                        {user.data?.provider?.image ? (
-                            <ProfileImage src={user.data?.provider?.image} />
-                        ) : (
-                            <ProfileImagePlaceholder>
-                                {user?.data?.firstName?.[0]}
-                            </ProfileImagePlaceholder>
-                        )}
-                    </ProfileButton>
-                    <ProfileDropdown />
-                </DialogTrigger>
-            )}
+            <RightWrapper>
+                <SelectLanguage />
+                {user.isLoading ? (
+                    <ProfileButtonSkeleton />
+                ) : (
+                    <DialogTrigger>
+                        <ProfileButton>
+                            {user.data?.provider?.image ? (
+                                <ProfileImage src={user.data?.provider?.image} />
+                            ) : (
+                                <ProfileImagePlaceholder>
+                                    {user?.data?.firstName?.[0]}
+                                </ProfileImagePlaceholder>
+                            )}
+                        </ProfileButton>
+                        <ProfileDropdown />
+                    </DialogTrigger>
+                )}
+            </RightWrapper>
         </Wrapper>
     );
 };
 
+const RightWrapper = styled.div`
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+`;
 const Wrapper = styled.header`
     width: 100%;
     display: flex;
@@ -109,12 +120,11 @@ const RoundedImage = styled.div`
     flex-shrink: 0;
 `;
 const ProfileButton = styled(Button)`
+    flex-shrink: 0;
     width: 2rem;
     height: 2rem;
     background: none;
     border: none;
-    flex-shrink: 0;
-    flex-grow: 0;
     padding: 0;
     cursor: pointer;
 
@@ -123,6 +133,7 @@ const ProfileButton = styled(Button)`
     }
 `;
 const ProfileButtonSkeleton = styled.div`
+    flex-shrink: 0;
     width: 2rem;
     height: 2rem;
     border-radius: var(--r-full);

@@ -168,12 +168,12 @@ const FetchMoreButton = styled.button`
      (https://react-spectrum.adobe.com/react-spectrum/ComboBox.html#props)      
 */
 ComboBox.propTypes = {
-	label: PropTypes.string.isRequired,
+	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	isOptional: PropTypes.bool,
 	isRequired: PropTypes.bool,
 	tooltip: PropTypes.string,
 	description: PropTypes.string,
-	children: PropTypes.node,
+	children: PropTypes.func,
 	icon: PropTypes.func,
 	isValid: PropTypes.bool,
 	isLoading: PropTypes.bool,

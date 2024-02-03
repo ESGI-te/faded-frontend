@@ -63,11 +63,17 @@ const transformResponse = (response) => {
 };
 
 const refreshToken = async () => {
+	const refreshToken = localStorage.getItem("refreshToken");
+
+	if (!refreshToken) {
+		return;
+	}
+
 	isRefreshing = true;
 	try {
 		const response = await callApi("/token/refresh", {
 			method: "POST",
-			data: { refresh_token: localStorage.getItem("refreshToken") },
+			data: { refresh_token: refreshToken },
 			headers: {},
 		});
 		localStorage.setItem("accessToken", response.token);
