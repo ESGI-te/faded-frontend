@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Menu as AriaMenu, MenuItem as AriaMenuItem, Separator } from 'react-aria-components';
 import Dropdown from 'shared/src/components/Dropdown';
 import styled from 'styled-components';
@@ -7,9 +6,25 @@ import Text from 'shared/src/components/Text';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
+import { useAuth } from '@contexts/AuthProvider';
 
-const ProfileDropdown = (props) => {
+const ProfileDropdown = () => {
     const { data: user } = useUserQuery();
+    const { logout } = useAuth();
+
+    const menuHandler = (key) => {
+        switch (key) {
+            case 'profile':
+                break;
+            case 'settings':
+                break;
+            case 'logout':
+                logout();
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <ProfileDropdownStyled placement="bottom right" offset={8}>
@@ -28,8 +43,8 @@ const ProfileDropdown = (props) => {
                 </ProfileInfoInnerWrapper>
             </ProfileInfo>
             <Divider />
-            <Menu>
-                <MenuItem id="profile">
+            <Menu onAction={menuHandler}>
+                <MenuItem href="/profile" id="profile">
                     <MenuItemIcon icon={icon({ name: 'user', style: 'solid' })} />
                     <FormattedMessage defaultMessage="Profil" />
                 </MenuItem>
@@ -97,6 +112,7 @@ const MenuItem = styled(AriaMenuItem)`
     column-gap: 0.5rem;
     transition-duration: 0.2s;
     color: var(--neutral500);
+    text-decoration: none;
 
     &[data-hovered] {
         background-color: var(--neutral50);
@@ -154,7 +170,5 @@ const ImagePlaceholderIcon = styled(FontAwesomeIcon)`
     height: 1rem;
     color: var(--neutral500);
 `;
-
-ProfileDropdown.propTypes = {};
 
 export default ProfileDropdown;

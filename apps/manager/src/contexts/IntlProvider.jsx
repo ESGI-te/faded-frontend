@@ -18,8 +18,8 @@ const messagesLookup = {
 const ChangeLocaleContext = createContext({});
 
 const IntlProvider = ({ children }) => {
-    // const { data: user } = useUserQuery();
-    const defaultLocale = localStorage.getItem('locale') || LOCALES.FR;
+    const { data: user } = useUserQuery();
+    const defaultLocale = localStorage.getItem('locale') || user?.locale || LOCALES.FR;
     const [locale, setLocale] = useState(defaultLocale);
     const userLocale = locale;
 

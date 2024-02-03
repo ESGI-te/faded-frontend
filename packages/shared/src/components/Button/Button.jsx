@@ -97,8 +97,9 @@ const ButtonStyled = styled(AriaButton)`
 		pointer-events: none;
 	}
 
-	&[data-focused] {
-		outline: 2px solid var(--primary500);
+	&[data-focused],
+	&[data-focus-visible] {
+		outline: none;
 	}
 `;
 

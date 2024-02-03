@@ -97,6 +97,10 @@ const ListItem = styled(AriaListBoxItem)`
 	&[data-disabled] {
 		opacity: 0.5;
 	}
+	&[data-focused],
+	&[data-focus-visible] {
+		outline: none;
+	}
 `;
 const ListItemLabelWrapper = styled.div`
 	display: flex;

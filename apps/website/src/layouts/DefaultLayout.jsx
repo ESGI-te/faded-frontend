@@ -6,19 +6,12 @@ import Text from 'shared/src/components/Text';
 import { useAuth } from '@contexts/AuthProvider';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Link from 'shared/src/components/Link';
-import { FormattedMessage, useIntl } from 'react-intl';
-import InputSelect from 'shared/src/components/InputSelect';
-import { LOCALES, useChangeLocale } from '@contexts/IntlProvider';
+import { FormattedMessage } from 'react-intl';
 import ErrorBoundary from '@components/ErrorBoundary';
+import SelectLanguage from '@components/SelectLanguage';
 
 const Header = () => {
     const { isAuthenticated } = useAuth();
-    const { locale } = useIntl();
-    const localeItems = Object.values(LOCALES).map((locale) => ({
-        name: locale.toUpperCase(),
-        id: locale,
-    }));
-    const changeLocale = useChangeLocale();
 
     return (
         <HeaderStyled>
@@ -26,11 +19,7 @@ const Header = () => {
                 BARBERS
             </Text>
             <Cluster gap="2rem" align="center">
-                <LanguageSelect
-                    onSelectionChange={(locale) => changeLocale(locale)}
-                    defaultSelectedKey={locale}
-                    items={localeItems}
-                />
+                <SelectLanguage />
                 {isAuthenticated ? (
                     <ProfileLink to="/profile">
                         <ProfileIcon icon={icon({ name: 'circle-user', style: 'solid' })} />
@@ -121,14 +110,6 @@ const ProviderLink = styled(Link)`
 const LoginLink = styled(Link)`
     font-weight: var(--fw-semibold);
     color: var(--primary500);
-`;
-const LanguageSelect = styled(InputSelect)`
-    width: fit-content;
-
-    & > button {
-        padding: 0.5rem;
-        border: none;
-    }
 `;
 
 export default DefaultLayout;
