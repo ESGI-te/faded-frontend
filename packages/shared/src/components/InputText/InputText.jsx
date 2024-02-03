@@ -14,6 +14,7 @@ const InputText = ({
 	isInvalid,
 	startIcon,
 	endIcon,
+	customButton,
 	...props
 }) => {
 	const hasError = isInvalid || !!errorMessage;
@@ -25,7 +26,10 @@ const InputText = ({
 
 	return (
 		<InputWrapper {...props} isInvalid={hasError}>
-			{label && <Label>{label}</Label>}
+			<LabelWrapper>
+				<Label>{label}</Label>
+				{customButton}
+			</LabelWrapper>
 			<Input startIcon={startIcon} endIcon={icon} />
 			{description && (
 				<Description slot="description">{description}</Description>
@@ -37,6 +41,12 @@ const InputText = ({
 	);
 };
 
+const LabelWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	column-gap: 0.5rem;
+`;
 const InputWrapper = styled(TextField)`
 	display: flex;
 	flex-direction: column;

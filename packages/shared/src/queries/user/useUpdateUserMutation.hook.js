@@ -11,10 +11,14 @@ const useUpdateUserMutation = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn,
-		onSuccess: (data, { userId }) =>
-			queryClient.invalidateQueries({
-				queryKey: userKeys.detailById(userId),
-			}),
+		onSuccess: (data, { userId }) => {
+			// queryClient.invalidateQueries({
+			// 	queryKey: userKeys.detailById(userId),
+			// });
+			// queryClient.invalidateQueries({
+			// 	queryKey: userKeys.detail(),
+			// });
+		},
 	});
 };
 

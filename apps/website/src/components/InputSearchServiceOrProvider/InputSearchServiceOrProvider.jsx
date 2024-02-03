@@ -78,7 +78,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
     };
 
     return (
-        <ComboBoxController
+        <ComboBox
             {...props}
             onInputChange={handleInputChange}
             isLoading={establishments.isFetching}
@@ -86,7 +86,7 @@ const InputSearchServiceOrProvider = ({ onChange, onSelectionChange, ...props })
             items={suggestions}
         >
             {(item) => <ListItem item={item} />}
-        </ComboBoxController>
+        </ComboBox>
     );
 };
 
@@ -114,6 +114,9 @@ const ListItemIcon = styled(FontAwesomeIcon)`
 const ListItemIconCheck = styled(ListItemIcon)`
     color: var(--primary500);
     margin-left: auto;
+`;
+const ComboBox = styled(ComboBoxController)`
+    max-width: 100%;
 `;
 
 InputSearchServiceOrProvider.propTypes = {

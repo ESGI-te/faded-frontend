@@ -7,35 +7,36 @@ import { USER_ROLES } from 'shared/src/utils/constants';
 import { useMemo } from 'react';
 import AppMenuSkeleton from './AppMenuSkeleton';
 import { useParams } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
     {
-        name: 'Overview',
+        name: <FormattedMessage defaultMessage="Overview" />,
         icon: icon({ name: 'chart-line', style: 'solid' }),
         url: `/${establishmentId}`,
     },
     {
-        name: 'Équipe',
+        name: <FormattedMessage defaultMessage="Équipe" />,
         icon: icon({ name: 'users', style: 'solid' }),
         url: `/${establishmentId}/team`,
     },
     {
-        name: 'Gestion de RDV',
+        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
         icon: icon({ name: 'calendar-check', style: 'solid' }),
         url: `/${establishmentId}/appointments?page=1`,
     },
     {
-        name: 'Horaires',
+        name: <FormattedMessage defaultMessage="Horaires" />,
         icon: icon({ name: 'calendar-days', style: 'solid' }),
         url: `/${establishmentId}/schedules`,
     },
     {
-        name: 'Prestations',
+        name: <FormattedMessage defaultMessage="Prestations" />,
         icon: icon({ name: 'calendar-days', style: 'solid' }),
         url: `/${establishmentId}/services`,
     },
     {
-        name: 'Paramètres',
+        name: <FormattedMessage defaultMessage="Paramètres" />,
         icon: icon({ name: 'gear', style: 'solid' }),
         url: `/${establishmentId}/settings`,
     },
@@ -43,32 +44,32 @@ const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
 
 const PROVIDER_NAVIGATION_ITEMS = [
     {
-        name: 'Overview',
+        name: <FormattedMessage defaultMessage="Overview" />,
         icon: icon({ name: 'chart-line', style: 'solid' }),
         url: '/',
     },
     {
-        name: 'Équipe',
+        name: <FormattedMessage defaultMessage="Équipe" />,
         icon: icon({ name: 'users', style: 'solid' }),
         url: '/team?page=1',
     },
     {
-        name: 'Gestion de RDV',
+        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
         icon: icon({ name: 'calendar-check', style: 'solid' }),
         url: '/appointments?page=1',
     },
     {
-        name: 'Établissements',
+        name: <FormattedMessage defaultMessage="Établissements" />,
         icon: icon({ name: 'calendar-days', style: 'solid' }),
         url: '/establishments',
     },
     {
-        name: 'Prestations',
+        name: <FormattedMessage defaultMessage="Prestations" />,
         icon: icon({ name: 'wand-magic-sparkles', style: 'solid' }),
         url: '/services',
     },
     {
-        name: 'Paramètres',
+        name: <FormattedMessage defaultMessage="Paramètres" />,
         icon: icon({ name: 'gear', style: 'solid' }),
         url: '/settings',
     },
