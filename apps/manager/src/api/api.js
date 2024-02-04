@@ -17,3 +17,12 @@ export const updateEstablishment = ({ establishmentId, establishment }) =>
 export const createService = (service) => callApi('/services', { method: 'POST', data: service });
 export const updateService = (serviceId, service) =>
     callApi(`/services/${serviceId}`, { method: 'PATCH', data: service });
+
+export const getProvider = (providerId) => callApi(`/providers/${providerId}`);
+export const updateProvider = (providerId, provider) =>
+    callApi(`/providers/${providerId}`, { method: 'PATCH', data: provider });
+export const updateProviderImage = (providerId, image) =>
+    callApi(`/providers/${providerId}/image`, {
+        method: 'PATCH',
+        data: image,
+    });

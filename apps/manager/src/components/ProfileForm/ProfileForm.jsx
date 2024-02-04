@@ -13,7 +13,6 @@ import { icon as icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useState } from 'react';
 import EditEmailModal from './EditEmailModal';
 import EditPasswordModal from './EditPasswordModal';
-import Cluster from 'shared/src/components/Cluster';
 
 const EditButton = (props) => (
     <EditGhostButton
@@ -118,6 +117,10 @@ const SubmitButton = styled(Button)`
     margin-top: 1rem;
     align-self: stretch;
     background-color: var(--black);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        align-self: center;
+    }
 `;
 const EditIcon = styled(FontAwesomeIcon)`
     font-size: 0.75rem;
