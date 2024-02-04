@@ -26,3 +26,7 @@ export const updateProviderImage = (providerId, image) =>
         method: 'PATCH',
         data: image,
     });
+
+/* Statustics */
+export const getAppointmentRate = (query) =>
+    callApi('/statistics/appointments/rate', { method: 'GET', query });

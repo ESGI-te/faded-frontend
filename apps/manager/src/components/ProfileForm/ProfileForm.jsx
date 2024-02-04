@@ -9,7 +9,7 @@ import useProfileFormSchema from './useProfileFormSchema.hook';
 import { InputSelectController } from 'shared/src/components/InputSelect';
 import { LOCALES } from '@contexts/IntlProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon as icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useState } from 'react';
 import EditEmailModal from './EditEmailModal';
 import EditPasswordModal from './EditPasswordModal';
