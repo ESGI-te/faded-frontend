@@ -11,9 +11,16 @@ import EstablishmentDropdown from '@components/EstablishmentDropdown';
 import { shimmering } from 'shared/src/styles/animations';
 import { useParams } from 'react-router-dom';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
-import { USER_ROLES } from 'shared/src/utils/constants';
+import { ESTABLISHMENT_STATUS, USER_ROLES } from 'shared/src/utils/constants';
 import Link from 'shared/src/components/Link';
 import SelectLanguage from '@components/SelectLanguage';
+import placeholderIllustration from 'shared/src/assets/images/placeholder-img.png';
+import EstablishmentStatusBadge from '@components/EstablishmentStatusBadge';
+
+const establishmentStatuscolorLookup = {
+    [ESTABLISHMENT_STATUS.ACTIVE]: '--success',
+    [ESTABLISHMENT_STATUS.DRAFT]: '--neutral500',
+};
 
 const Header = () => {
     const { establishmentId } = useParams();
@@ -32,7 +39,7 @@ const Header = () => {
                     <OrganizationSkeleton />
                 ) : (
                     <Organization to="/">
-                        <RoundedImage />
+                        <RoundedImage src={placeholderIllustration} />
                         <TextEllipsis numberOfLines={1}>
                             {user.data.provider.name ||
                                 user.data.barber.establishment.provider.name}
@@ -43,29 +50,37 @@ const Header = () => {
                 {user.isLoading || user.isError || establishment.isFetching ? (
                     <EstablishmentSkeleton />
                 ) : (
-                    <DialogTrigger
-                        isOpen={isEstablishmentDropdownOpen}
-                        onOpenChange={setIsEstablishmentDropdownOpen}
-                    >
-                        <EstablishmentDropdownButton
-                            isDisabled={isBarber}
-                            onPress={() => setIsEstablishmentDropdownOpen(true)}
+                    <>
+                        <DialogTrigger
+                            isOpen={isEstablishmentDropdownOpen}
+                            onOpenChange={setIsEstablishmentDropdownOpen}
                         >
-                            <RoundedImage />
-                            <TextEllipsis numberOfLines={1}>
-                                {establishment.data?.name ||
-                                    intl.formatMessage({
-                                        defaultMessage: 'Sélectionner un établissement',
-                                    })}
-                            </TextEllipsis>
-                            <EstablishmentDropdownIcon
-                                icon={icon({ name: 'chevron-up', style: 'solid' })}
+                            <EstablishmentDropdownButton
+                                isDisabled={isBarber}
+                                onPress={() => setIsEstablishmentDropdownOpen(true)}
+                            >
+                                <RoundedImage
+                                    $borderColor={
+                                        establishmentStatuscolorLookup?.[establishment.data?.status]
+                                    }
+                                    src={placeholderIllustration}
+                                />
+                                <TextEllipsis numberOfLines={1}>
+                                    {establishment.data?.name ||
+                                        intl.formatMessage({
+                                            defaultMessage: 'Sélectionner un établissement',
+                                        })}
+                                </TextEllipsis>
+                                <EstablishmentDropdownIcon
+                                    icon={icon({ name: 'chevron-up', style: 'solid' })}
+                                />
+                            </EstablishmentDropdownButton>
+                            <EstablishmentDropdown
+                                onClose={() => setIsEstablishmentDropdownOpen(false)}
                             />
-                        </EstablishmentDropdownButton>
-                        <EstablishmentDropdown
-                            onClose={() => setIsEstablishmentDropdownOpen(false)}
-                        />
-                    </DialogTrigger>
+                        </DialogTrigger>
+                        {establishment.data && <StatusBadge status={establishment.data?.status} />}
+                    </>
                 )}
             </LeftWrapper>
             <RightWrapper>
@@ -112,12 +127,14 @@ const Wrapper = styled.header`
         padding-inline: var(--container-padding);
     }
 `;
-const RoundedImage = styled.div`
+const RoundedImage = styled.img`
     width: 1.25rem;
     height: 1.25rem;
     border-radius: var(--r-full);
-    background-color: var(--info);
     flex-shrink: 0;
+    object-fit: cover;
+
+    ${({ $borderColor }) => $borderColor && `border: 2px solid var(${$borderColor});`}
 `;
 const ProfileButton = styled(Button)`
     flex-shrink: 0;
@@ -255,6 +272,13 @@ const LeftWrapper = styled.div`
     flex: 1;
     max-width: max-content;
     min-width: 0;
+`;
+const StatusBadge = styled(EstablishmentStatusBadge)`
+    display: none;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        display: block;
+    }
 `;
 
 export default Header;
