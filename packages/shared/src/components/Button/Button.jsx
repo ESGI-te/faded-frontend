@@ -59,7 +59,7 @@ const variantLookup = {
 	secondary: css`
 		background-color: transparent;
 		color: var(--black);
-		border: 1px solid var(--black);
+		border: 1px solid var(--neutral300);
 	`,
 	ghost: css`
 		background: none;

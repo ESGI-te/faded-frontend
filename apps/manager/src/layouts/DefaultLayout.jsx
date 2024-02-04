@@ -23,7 +23,7 @@ const Container = styled.div`
     position: relative;
 `;
 const Main = styled.main`
-    min-height: calc(100vh - 105px); // 101px = header height
+    min-height: calc(100vh - 125px); // 101px = header height
     background-color: var(--white);
     overflow-x: hidden;
 
