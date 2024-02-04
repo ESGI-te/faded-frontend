@@ -9,109 +9,6 @@ import AppMenuSkeleton from './AppMenuSkeleton';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
-    {
-        name: <FormattedMessage defaultMessage="Overview" />,
-        icon: icon({ name: 'chart-line', style: 'solid' }),
-        url: `/${establishmentId}`,
-    },
-    {
-        name: <FormattedMessage defaultMessage="Équipe" />,
-        icon: icon({ name: 'users', style: 'solid' }),
-        url: `/${establishmentId}/team`,
-    },
-    {
-        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
-        icon: icon({ name: 'calendar-check', style: 'solid' }),
-        url: `/${establishmentId}/appointments?page=1`,
-    },
-    {
-        name: <FormattedMessage defaultMessage="Horaires" />,
-        icon: icon({ name: 'calendar-days', style: 'solid' }),
-        url: `/${establishmentId}/schedules`,
-    },
-    {
-        name: <FormattedMessage defaultMessage="Prestations" />,
-        icon: icon({ name: 'calendar-days', style: 'solid' }),
-        url: `/${establishmentId}/services`,
-    },
-    {
-        name: <FormattedMessage defaultMessage="Paramètres" />,
-        icon: icon({ name: 'gear', style: 'solid' }),
-        url: `/${establishmentId}/settings`,
-    },
-];
-
-const PROVIDER_NAVIGATION_ITEMS = [
-    {
-        name: <FormattedMessage defaultMessage="Overview" />,
-        icon: icon({ name: 'chart-line', style: 'solid' }),
-        url: '/',
-    },
-    {
-        name: <FormattedMessage defaultMessage="Équipe" />,
-        icon: icon({ name: 'users', style: 'solid' }),
-        url: '/team?page=1',
-    },
-    {
-        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
-        icon: icon({ name: 'calendar-check', style: 'solid' }),
-        url: '/appointments?page=1',
-    },
-    {
-        name: <FormattedMessage defaultMessage="Établissements" />,
-        icon: icon({ name: 'calendar-days', style: 'solid' }),
-        url: '/establishments',
-    },
-    {
-        name: <FormattedMessage defaultMessage="Prestations" />,
-        icon: icon({ name: 'wand-magic-sparkles', style: 'solid' }),
-        url: '/services',
-    },
-    {
-        name: <FormattedMessage defaultMessage="Paramètres" />,
-        icon: icon({ name: 'gear', style: 'solid' }),
-        url: '/settings',
-    },
-];
-
-const AppMenu = () => {
-    const user = useUserQuery();
-    const { establishmentId } = useParams();
-    const navItems = useMemo(() => {
-        if (user.data?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId) {
-            return PROVIDER_NAVIGATION_ITEMS;
-        }
-
-        if (
-            (user.data?.roles.includes(USER_ROLES.BARBER) ||
-                user.data?.roles.includes(USER_ROLES.PROVIDER)) &&
-            establishmentId
-        ) {
-            return BARBER_NAVIGATION_ITEMS(establishmentId);
-        }
-
-        return [];
-    }, [user.data, establishmentId]);
-
-    if (user.isLoading || !navItems) return <AppMenuSkeleton />;
-
-    return (
-        <Nav>
-            <NavList>
-                {navItems.map((navItem) => (
-                    <NavItem key={navItem.name}>
-                        <NavLink to={navItem.url}>
-                            {/* <NavItemIcon icon={navItem.icon} /> */}
-                            {navItem.name}
-                        </NavLink>
-                    </NavItem>
-                ))}
-            </NavList>
-        </Nav>
-    );
-};
-
 const Nav = styled.nav`
     width: 100%;
     display: flex;
@@ -204,5 +101,108 @@ const NavLink = styled(Link)`
         }
     }
 `;
+
+const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
+    {
+        name: <FormattedMessage defaultMessage="Overview" />,
+        icon: <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />,
+        url: `/${establishmentId}`,
+    },
+    {
+        name: <FormattedMessage defaultMessage="Équipe" />,
+        icon: <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />,
+        url: `/${establishmentId}/team`,
+    },
+    {
+        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
+        icon: <NavItemIcon icon={icon({ name: 'calendar-check', style: 'solid' })} />,
+        url: `/${establishmentId}/appointments?page=1`,
+    },
+    {
+        name: <FormattedMessage defaultMessage="Horaires" />,
+        icon: <NavItemIcon icon={icon({ name: 'calendar-days', style: 'solid' })} />,
+        url: `/${establishmentId}/schedules`,
+    },
+    {
+        name: <FormattedMessage defaultMessage="Prestations" />,
+        icon: <NavItemIcon icon={icon({ name: 'calendar-days', style: 'solid' })} />,
+        url: `/${establishmentId}/services`,
+    },
+    {
+        name: <FormattedMessage defaultMessage="Paramètres" />,
+        icon: <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />,
+        url: `/${establishmentId}/settings`,
+    },
+];
+
+const PROVIDER_NAVIGATION_ITEMS = [
+    {
+        name: <FormattedMessage defaultMessage="Overview" />,
+        icon: <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />,
+        url: '/',
+    },
+    {
+        name: <FormattedMessage defaultMessage="Équipe" />,
+        icon: <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />,
+        url: '/team?page=1',
+    },
+    {
+        name: <FormattedMessage defaultMessage="Gestion de RDV" />,
+        icon: <NavItemIcon icon={icon({ name: 'calendar-check', style: 'solid' })} />,
+        url: '/appointments?page=1',
+    },
+    {
+        name: <FormattedMessage defaultMessage="Établissements" />,
+        icon: <NavItemIcon icon={icon({ name: 'calendar-days', style: 'solid' })} />,
+        url: '/establishments',
+    },
+    {
+        name: <FormattedMessage defaultMessage="Prestations" />,
+        icon: <NavItemIcon icon={icon({ name: 'wand-magic-sparkles', style: 'solid' })} />,
+        url: '/services',
+    },
+    {
+        name: <FormattedMessage defaultMessage="Paramètres" />,
+        icon: <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />,
+        url: '/settings',
+    },
+];
+
+const AppMenu = () => {
+    const user = useUserQuery();
+    const { establishmentId } = useParams();
+    const navItems = useMemo(() => {
+        if (user.data?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId) {
+            return PROVIDER_NAVIGATION_ITEMS;
+        }
+
+        if (
+            (user.data?.roles.includes(USER_ROLES.BARBER) ||
+                user.data?.roles.includes(USER_ROLES.PROVIDER)) &&
+            establishmentId
+        ) {
+            return BARBER_NAVIGATION_ITEMS(establishmentId);
+        }
+
+        return [];
+    }, [user.data, establishmentId]);
+
+    if (user.isLoading || !navItems) return <AppMenuSkeleton />;
+
+    return (
+        <Nav>
+            <NavList>
+                {navItems.map((navItem) => (
+                    <NavItem key={navItem.name}>
+                        <NavLink to={navItem.url}>
+                            {/* navItem.icon */}
+                            {navItem.name}
+                        </NavLink>
+                    </NavItem>
+                ))}
+            </NavList>
+        </Nav>
+    );
+};
 
 export default AppMenu;

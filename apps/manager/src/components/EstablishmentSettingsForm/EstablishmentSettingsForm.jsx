@@ -12,7 +12,12 @@ const EstablishmentSettingsForm = ({ settings, onSubmit, isLoading }) => {
     const schema = useEstablishmentSettingsFormSchema();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
-        defaultValues: settings,
+        values: {
+            name: settings?.name,
+            address: settings?.address,
+            phone: settings?.phone,
+            email: settings?.email,
+        },
         resolver: yupResolver(schema),
     });
     const { isDirty } = formState;
