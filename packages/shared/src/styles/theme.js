@@ -106,6 +106,27 @@ export const Theme = createGlobalStyle`
         --neutral600: #6F6B73;
         --neutral700: #565259;
 
+        --gold50: #feffc1;
+        --gold100: #feffc1;
+        --gold200: #fffd86;
+        --gold300: #fff441;
+        --gold400: #ffe60d;
+        --gold500: #ffd700;
+
+        --silver50: #f7f7f7;
+        --silver100: #f0f0f0;
+        --silver200: #e3e3e3;
+        --silver300: #d1d1d1;
+        --silver400: #c0c0c0;
+        --silver500: #aaaaaa;
+
+        --ochre50: #fcf7ee;
+        --ochre100: #f5e8d0;
+        --ochre200: #e9d09e;
+        --ochre300: #deb46b;
+        --ochre400: #d69c49;
+        --ochre500: #cd7f32;
+
         /* Shadows */
         --shadow-xs: 0 0 0.125rem rgba(0, 0, 0, 0.1);
         --shadow-s: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
@@ -118,6 +139,9 @@ export const Theme = createGlobalStyle`
         --warning: var(--warning500);
         --alert: var(--alert500);
         --neutral: var(--neutral500);
+        --gold: var(--gold500);
+        --silver: var(--silver400);
+        --ochre: var(--ochre500);
         --white: #ffffff;
 		--black: #272727;
 		--typo: #141414;

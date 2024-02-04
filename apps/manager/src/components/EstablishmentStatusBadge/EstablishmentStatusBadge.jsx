@@ -13,14 +13,15 @@ const statusLabelLookup = defineMessages({
     [ESTABLISHMENT_STATUS.DRAFT]: { defaultMessage: 'Brouillon' },
 });
 
-const EstablishmentStatusBadge = ({ status }) => (
-    <Badge variant={statusVariantLookup[status]}>
+const EstablishmentStatusBadge = ({ status, className }) => (
+    <Badge variant={statusVariantLookup[status]} className={className}>
         <FormattedMessage {...statusLabelLookup[status]} />
     </Badge>
 );
 
 EstablishmentStatusBadge.propTypes = {
     status: PropTypes.oneOf(Object.values(ESTABLISHMENT_STATUS)).isRequired,
+    className: PropTypes.string,
 };
 
 export default EstablishmentStatusBadge;
