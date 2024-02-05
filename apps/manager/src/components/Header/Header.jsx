@@ -40,7 +40,7 @@ const Header = () => {
                 ) : (
                     <Organization to="/">
                         <RoundedImage src={placeholderIllustration} />
-                        <TextEllipsis numberOfLines={1}>
+                        <TextEllipsis fontWeight="--fw-semibold" numberOfLines={1}>
                             {user.data.provider.name ||
                                 user.data.barber.establishment.provider.name}
                         </TextEllipsis>
@@ -65,12 +65,20 @@ const Header = () => {
                                     }
                                     src={placeholderIllustration}
                                 />
-                                <TextEllipsis numberOfLines={1}>
+                                <TextEllipsis
+                                    fontWeight={
+                                        establishment.data?.name ? '--fw-semibold' : '--fw-normal'
+                                    }
+                                    numberOfLines={1}
+                                >
                                     {establishment.data?.name ||
                                         intl.formatMessage({
                                             defaultMessage: 'Sélectionner un établissement',
                                         })}
                                 </TextEllipsis>
+                                {establishment.data && (
+                                    <StatusBadge status={establishment.data?.status} />
+                                )}
                                 <EstablishmentDropdownIcon
                                     icon={icon({ name: 'chevron-up', style: 'solid' })}
                                 />
@@ -79,7 +87,6 @@ const Header = () => {
                                 onClose={() => setIsEstablishmentDropdownOpen(false)}
                             />
                         </DialogTrigger>
-                        {establishment.data && <StatusBadge status={establishment.data?.status} />}
                     </>
                 )}
             </LeftWrapper>
@@ -272,6 +279,10 @@ const LeftWrapper = styled.div`
     flex: 1;
     max-width: max-content;
     min-width: 0;
+
+    & > :not(:first-child) {
+        margin-top: -0.25rem;
+    }
 `;
 const StatusBadge = styled(EstablishmentStatusBadge)`
     display: none;

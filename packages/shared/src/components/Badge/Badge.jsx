@@ -18,7 +18,12 @@ const Badge = ({ children, variant, ...props }) => (
 );
 
 const StatusBadge = styled.div`
-	background-color: var(${({ $variant }) => variantColorLookup[$variant]}50);
+	background-color: var(
+		${({ $variant }) =>
+			$variant === UI_VARIANTS.NEUTRAL
+				? "--neutral100"
+				: `${variantColorLookup[$variant]}50`}
+	);
 	color: var(${({ $variant }) => variantColorLookup[$variant]}500);
 	border-radius: var(--r-s);
 	padding-inline: 0.5rem;

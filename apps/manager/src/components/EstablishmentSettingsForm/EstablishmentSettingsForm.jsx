@@ -6,17 +6,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import useEstablishmentSettingsFormSchema from './useEstablishmentSettingsFormSchema.hook';
 import styled from 'styled-components';
 import Button from 'shared/src/components/Button';
+import { ImageUploaderController } from 'shared/src/components/ImageUploader';
 
-const EstablishmentSettingsForm = ({ settings, onSubmit, isLoading }) => {
+const EstablishmentSettingsForm = ({ establishment, onSubmit, isLoading }) => {
     const intl = useIntl();
     const schema = useEstablishmentSettingsFormSchema();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
         values: {
-            name: settings?.name,
-            address: settings?.address,
-            phone: settings?.phone,
-            email: settings?.email,
+            name: establishment?.name,
+            address: establishment?.address,
+            phone: establishment?.phone,
+            email: establishment?.email,
+            image: establishment?.image,
         },
         resolver: yupResolver(schema),
     });
@@ -24,42 +26,49 @@ const EstablishmentSettingsForm = ({ settings, onSubmit, isLoading }) => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputTextController
-                name="name"
+            <ImageUploaderController
                 control={control}
-                label={<FormattedMessage defaultMessage="Nom" />}
-                placeholder={intl.formatMessage({
-                    defaultMessage: 'Le nom de votre établissement',
-                })}
-                isRequired
+                name="image"
+                label={<FormattedMessage defaultMessage="Image" />}
             />
-            <InputSearchPlaces
-                label={<FormattedMessage defaultMessage="Adresse" />}
-                control={control}
-                name="address"
-                defaultValue={settings?.address}
-            />
-            <InputTextController
-                name="email"
-                control={control}
-                label={<FormattedMessage defaultMessage="Email" />}
-                placeholder={intl.formatMessage({
-                    defaultMessage: "L'email de votre établissement",
-                })}
-                type="email"
-            />
-            <InputTextController
-                name="phone"
-                control={control}
-                label={<FormattedMessage defaultMessage="Téléphone" />}
-                placeholder={intl.formatMessage({
-                    defaultMessage: 'Le numéro de téléphone de votre établissement',
-                })}
-                type="phone"
-            />
-            <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                <FormattedMessage defaultMessage="Modifier" />
-            </SubmitButton>
+            <ResponsiveStack>
+                <InputTextController
+                    name="name"
+                    control={control}
+                    label={<FormattedMessage defaultMessage="Nom" />}
+                    placeholder={intl.formatMessage({
+                        defaultMessage: 'Le nom de votre établissement',
+                    })}
+                    isRequired
+                />
+                <InputSearchPlaces
+                    label={<FormattedMessage defaultMessage="Adresse" />}
+                    control={control}
+                    name="address"
+                    defaultValue={establishment?.address}
+                />
+                <InputTextController
+                    name="email"
+                    control={control}
+                    label={<FormattedMessage defaultMessage="Email" />}
+                    placeholder={intl.formatMessage({
+                        defaultMessage: "L'email de votre établissement",
+                    })}
+                    type="email"
+                />
+                <InputTextController
+                    name="phone"
+                    control={control}
+                    label={<FormattedMessage defaultMessage="Téléphone" />}
+                    placeholder={intl.formatMessage({
+                        defaultMessage: 'Le numéro de téléphone de votre établissement',
+                    })}
+                    type="phone"
+                />
+                <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
+                    <FormattedMessage defaultMessage="Modifier" />
+                </SubmitButton>
+            </ResponsiveStack>
         </Form>
     );
 };
@@ -71,13 +80,32 @@ const Form = styled.form`
     width: 100%;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        row-gap: 2rem;
+        flex-direction: row;
+        column-gap: 2rem;
+
+        & > :first-child {
+            flex-grow: 0;
+        }
+    }
+`;
+const ResponsiveStack = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        column-gap: 2rem;
+        flex-grow: 1;
     }
 `;
 const SubmitButton = styled(Button)`
     margin-top: 1rem;
     align-self: stretch;
     background-color: var(--black);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        align-self: center;
+    }
 `;
 
 export default EstablishmentSettingsForm;

@@ -10,16 +10,12 @@ const mutationFn = async (establishment) => {
 const useCreateEstablishmentMutation = () => {
     const queryClient = useQueryClient();
 
-    return useMutation(
-        {
-            mutationFn,
+    return useMutation({
+        mutationFn,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: establishmentKeys.list() });
         },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: establishmentKeys.list() });
-            },
-        },
-    );
+    });
 };
 
 export default useCreateEstablishmentMutation;

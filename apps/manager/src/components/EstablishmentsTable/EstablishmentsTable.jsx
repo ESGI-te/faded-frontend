@@ -1,27 +1,19 @@
-import IconButton from 'shared/src/components/IconButton';
 import { useState } from 'react';
-import {
-    Cell as AriaCell,
-    Table as AriaTable,
-    TableBody,
-    DialogTrigger,
-} from 'react-aria-components';
+import { Cell as AriaCell, Table as AriaTable, TableBody } from 'react-aria-components';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import DeleteBarberModal from '@components/DeleteBarberModal';
-// import useDeleteBarberMutation from '@queries/establishment/useDeleteBarberMutation.hook';
 import TableColumn from 'shared/src/components/TableColumn';
 import TableHeader from 'shared/src/components/TableHeader';
 import TableRow from 'shared/src/components/TableRow';
+import Link from 'shared/src/components/Link';
 
 const EstablishmentsTable = ({ establishments }) => {
     const intl = useIntl();
     const items = establishments.map((establishment) => ({
         id: establishment.id,
         name: establishment.name,
-        // firstName: establishment.firstName,
     }));
     const columns = [
         {
@@ -30,11 +22,6 @@ const EstablishmentsTable = ({ establishments }) => {
             allowsSorting: true,
             name: intl.formatMessage({ defaultMessage: 'Nom' }),
         },
-        // {
-        //     key: 'firstName',
-        //     allowsSorting: true,
-        //     name: intl.formatMessage({ defaultMessage: 'Prénom' }),
-        // },
         {
             key: 'actions',
             name: null,
@@ -44,20 +31,6 @@ const EstablishmentsTable = ({ establishments }) => {
         column: 'name',
         direction: 'ascending',
     });
-    // const deleteBarber = useDeleteBarberMutation();
-    const [isdeleteLoading, setIsDeleteLoading] = useState(false);
-
-    // const handleDelete = async (onCloseModal) => {
-    //     setIsDeleteLoading(true);
-    //     const promises = [];
-    //     selectedItems.forEach((id) => {
-    //         const promise = deleteBarber.mutateAsync(id);
-    //         promises.push(promise);
-    //     });
-    //     await Promise.all(promises);
-    //     setIsDeleteLoading(false);
-    //     onCloseModal();
-    // };
 
     return (
         <Table
@@ -80,10 +53,9 @@ const EstablishmentsTable = ({ establishments }) => {
                         <Cell>{establishment.name}</Cell>
                         {/* <Cell>{establishment.firstName}</Cell> */}
                         <ActionCell>
-                            <EditButton
-                                variant="ghost"
-                                icon={<Icon icon={icon({ name: 'pen', style: 'solid' })} />}
-                            />
+                            <EditButtonLink to={`/${establishment.id}/settings`}>
+                                <Icon icon={icon({ name: 'pen', style: 'solid' })} />
+                            </EditButtonLink>
                         </ActionCell>
                     </TableRow>
                 )}
@@ -114,22 +86,7 @@ const Icon = styled(FontAwesomeIcon)`
     height: 1rem;
     color: var(--neutral500);
 `;
-const TrashIcon = styled(Icon)`
-    width: 1rem;
-    height: 1rem;
-    color: var(--alert500);
-`;
-const TableIconButton = styled(IconButton)`
-    padding: 0;
-`;
-const DeleteButton = styled(TableIconButton)`
-    &[data-hovered] {
-        & > ${TrashIcon} {
-            color: var(--alert600);
-        }
-    }
-`;
-const EditButton = styled(TableIconButton)`
+const EditButtonLink = styled(Link)`
     &[data-hovered] {
         & > ${Icon} {
             color: var(--neutral700);
