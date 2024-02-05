@@ -5,7 +5,7 @@ import Stack from 'shared/src/components/Stack';
 import Text from 'shared/src/components/Text';
 import { FormattedMessage } from 'react-intl';
 
-const OverviewIndicators = ({ className }) => {
+const OverviewDailyIndicators = ({ className, indicators }) => {
     return (
         <Wrapper className={className}>
             <IndicatorCard>
@@ -14,12 +14,22 @@ const OverviewIndicators = ({ className }) => {
                 </TurnoverIconWrapper>
                 <Stack>
                     <Text fontWeight="--fw-bold" variant="bodyL">
-                        1000€
+                        {indicators?.turnover?.value || 0} €
                     </Text>
                     <Text color="--neutral500">
                         <FormattedMessage defaultMessage="Chiffre d'affaire" />
                     </Text>
                 </Stack>
+                <Percentage>
+                    <FormattedMessage
+                        defaultMessage="{value} par rapport à hier"
+                        values={{
+                            value: `${indicators?.turnover?.percentageChange < 0 ? '-' : '+'} ${
+                                indicators?.turnover?.percentageChange
+                            }%`,
+                        }}
+                    />
+                </Percentage>
             </IndicatorCard>
             <IndicatorCard>
                 <AppointmentsIconWrapper>
@@ -27,12 +37,22 @@ const OverviewIndicators = ({ className }) => {
                 </AppointmentsIconWrapper>
                 <Stack>
                     <Text fontWeight="--fw-bold" variant="bodyL">
-                        34
+                        {indicators?.appointments?.value}
                     </Text>
                     <Text color="--neutral500">
                         <FormattedMessage defaultMessage="Nombre de RDV" />
                     </Text>
                 </Stack>
+                <Percentage>
+                    <FormattedMessage
+                        defaultMessage="{value} par rapport à hier"
+                        values={{
+                            value: `${indicators?.appointments?.percentageChange < 0 ? '-' : '+'} ${
+                                indicators?.appointments?.percentageChange
+                            }%`,
+                        }}
+                    />
+                </Percentage>
             </IndicatorCard>
             <IndicatorCard>
                 <ServicesIconWrapper>
@@ -40,12 +60,22 @@ const OverviewIndicators = ({ className }) => {
                 </ServicesIconWrapper>
                 <Stack>
                     <Text fontWeight="--fw-bold" variant="bodyL">
-                        6
+                        {indicators?.services?.value}
                     </Text>
                     <Text color="--neutral500">
-                        <FormattedMessage defaultMessage="Nombre de prestations différentes" />
+                        <FormattedMessage defaultMessage="Prestations différentes" />
                     </Text>
                 </Stack>
+                <Percentage>
+                    <FormattedMessage
+                        defaultMessage="{value} par rapport à hier"
+                        values={{
+                            value: `${indicators?.services?.percentageChange < 0 ? '-' : '+'} ${
+                                indicators?.services?.percentageChange
+                            }%`,
+                        }}
+                    />
+                </Percentage>
             </IndicatorCard>
         </Wrapper>
     );
@@ -104,5 +134,11 @@ const IndicatorCard = styled.div`
     column-gap: 1rem;
     flex: 1;
 `;
+const Percentage = styled.p`
+    color: var(--info500);
+    font-size: var(--fs-body-s);
+    margin-left: auto;
+    align-self: flex-start;
+`;
 
-export default OverviewIndicators;
+export default OverviewDailyIndicators;
