@@ -7,16 +7,17 @@ import InputSearch from 'shared/src/components/InputSearch';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
-import CreateBarberModal from '@components/CreateBarberModal';
 import Button from 'shared/src/components/Button';
 import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from 'shared/src/components/TableSkeleton';
+import CreateEstablishmentModal from '@components/CreateEstablishmentModal';
 
 const Establishments = () => {
     let [searchParams, setSearchParams] = useSearchParams();
     const { data, isLoading } = useEstablishmentsQuery({
         page: searchParams.get('page') || 1,
-        name: searchParams.get('lastName'),
+        perPage: 12,
+        name: searchParams.get('name'),
     });
 
     const handleSearchByLastName = (name) => {
@@ -31,7 +32,7 @@ const Establishments = () => {
         <Stack gap="1rem">
             <InputSearchWrapper>
                 <InputSearchStyled
-                    name="lastName"
+                    name="name"
                     startIcon={
                         <SearchIcon icon={icon({ name: 'magnifying-glass', style: 'solid' })} />
                     }
@@ -44,7 +45,7 @@ const Establishments = () => {
                     >
                         Ajouter
                     </Button>
-                    <CreateBarberModal />
+                    <CreateEstablishmentModal />
                 </DialogTrigger>
             </InputSearchWrapper>
             {!isLoading ? (

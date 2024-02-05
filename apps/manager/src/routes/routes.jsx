@@ -18,8 +18,6 @@ import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
-import FullPageLayout from '../layouts/FullPageLayout';
-import EstablishmentNameFormPage from '@pages/EstablishmentNameFormPage';
 import EstablishmentSchedulesPage from '@pages/EstablishmentSchedulesPage';
 import EstablishmentServicesPage from '@pages/EstablishmentServicesPage';
 import ServicesPage from '@pages/ServicesPage';
@@ -146,14 +144,6 @@ const routes = [
                     element: <EstablishmentServicesPage />,
                 },
             ],
-        },
-        {
-            path: 'new',
-            element: (
-                <FullPageLayout>
-                    <EstablishmentNameFormPage />
-                </FullPageLayout>
-            ),
         },
     ]),
     {
