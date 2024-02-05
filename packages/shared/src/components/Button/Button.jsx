@@ -23,15 +23,9 @@ const Button = ({
 			$backgroundColor={backgroundColor}
 			{...props}
 		>
-			{isLoading ? (
-				<Spinner />
-			) : (
-				<>
-					{startIcon}
-					{children && <ButtonText as="span">{children}</ButtonText>}
-					{endIcon}
-				</>
-			)}
+			{isLoading ? <Spinner /> : startIcon}
+			{children && <ButtonText as="span">{children}</ButtonText>}
+			{endIcon}
 		</ButtonStyled>
 	);
 };

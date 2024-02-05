@@ -8,7 +8,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import useSettingsFormSchema from './useSettingsFormSchema.hook';
 import InputSearchPlaces from 'shared/src/components/InputSearchPlaces';
 import { ImageUploaderController } from 'shared/src/components/ImageUploader';
-import Stack from 'shared/src/components/Stack';
 
 const SettingsForm = ({ provider, onSubmit, isLoading }) => {
     const schema = useSettingsFormSchema();

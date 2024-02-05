@@ -10,12 +10,9 @@ const queryFn = async ({
 	return data;
 };
 
-const useEstablishmentsQuery = (
-	{ page = 1, perPage = 20, ...q } = {},
-	config
-) => {
+const useEstablishmentsQuery = ({ ...q } = {}, config) => {
 	return useQuery({
-		queryKey: establishmentKeys.list({ ...q, page, perPage }),
+		queryKey: establishmentKeys.list({ ...q }),
 		queryFn,
 		...config,
 	});

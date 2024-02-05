@@ -85,6 +85,10 @@ const SubmitButton = styled(Button)`
     margin-top: 1rem;
     align-self: stretch;
     background-color: var(--black);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        align-self: center;
+    }
 `;
 const DayWrapper = styled.div`
     display: flex;

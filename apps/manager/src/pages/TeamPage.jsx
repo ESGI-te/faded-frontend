@@ -19,13 +19,16 @@ const ProviderTeamPage = () => (
 );
 
 const Page = styled.section`
-    align-self: stretch;
+    display: flex;
+    align-items: start;
+    justify-content: center;
     background-color: var(--background);
 `;
 const PageInnerWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
+    width: 100%;
     background-color: var(--background);
     padding: var(--container-padding-mobile);
     max-width: var(--container-width);

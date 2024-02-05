@@ -2,39 +2,54 @@ import EstablishmentSettingsForm from '@components/EstablishmentSettingsForm';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
 import { useParams } from 'react-router-dom';
 import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
+import useUpdateEstablishmentImageMutation from '@queries/establishment/useUpdateEstablishmentImageMutation.hook';
 
 const EstablishmentSettings = () => {
     const { establishmentId } = useParams();
-    const { data: establishment, isLoading } = useEstablishmentQuery(establishmentId);
+    const establishment = useEstablishmentQuery(establishmentId);
     const updateEstablishment = useUpdateEstablishmentMutation();
-    const settings = {
-        name: establishment?.name,
-        address: establishment?.address,
-        email: establishment?.email,
-        phone: establishment?.phone,
-    };
+    const updateEstablishmentImage = useUpdateEstablishmentImageMutation();
 
-    const handleEstablishmentSettings = (data) => {
+    const onSubmit = ({ image, ...data }) => {
+        if (image === null && establishment.data?.image !== null) {
+            updateEstablishmentImage.mutate(
+                { establishmentId: establishment.data?.id, image: { image: null } },
+                {
+                    onSuccess: () => {
+                        // TODO: Add success toast
+                    },
+                },
+            );
+        }
+
+        if (image.length > 0) {
+            updateEstablishmentImage.mutate(
+                { establishmentId: establishment.data?.id, image: { image: image[0] } },
+                {
+                    onSuccess: () => {
+                        // TODO: Add success toast
+                    },
+                },
+            );
+        }
+
         updateEstablishment.mutate(
-            {
-                establishmentId,
-                establishment: data,
-            },
+            { establishmentId: establishment.data?.id, establishment: data },
             {
                 onSuccess: () => {
-                    // TODO: show success toast
+                    // TODO: Add success toast
                 },
             },
         );
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    if (establishment.isLoading) return <div>Loading...</div>; // TODO: Add loading state
 
     return (
         <EstablishmentSettingsForm
-            onSubmit={handleEstablishmentSettings}
-            isLoading={updateEstablishment.isLoading}
-            settings={settings}
+            onSubmit={onSubmit}
+            isLoading={updateEstablishment.isLoading || updateEstablishmentImage.isLoading}
+            establishment={establishment?.data}
         />
     );
 };
