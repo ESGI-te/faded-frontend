@@ -24,7 +24,7 @@ import placeholderIllustration from 'shared/src/assets/images/placeholder-img.pn
 const SelectEstablishment = ({ onClose }) => {
     const intl = useIntl();
     const { data: user } = useUserQuery();
-    const { data: establishments } = useEstablishmentsQuery();
+    const { data: establishments } = useEstablishmentsQuery({ pagination: false });
     const { establishmentId } = useParams();
     const isBarber = user && user.roles.includes(USER_ROLES.BARBER);
     const [searchQuery, setSearchQuery] = useState('');
