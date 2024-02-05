@@ -3,22 +3,25 @@ import EstablishmentServicesForm from '@components/EstablishmentServicesForm';
 
 const EstablishmentServicesPage = () => (
     <Page>
-        <PageInnerWrapper>
+        <PageInner>
             <EstablishmentServicesForm />
-        </PageInnerWrapper>
+        </PageInner>
     </Page>
 );
 
 const Page = styled.section`
-    align-self: stretch;
+    display: flex;
+    align-items: start;
+    justify-content: center;
     background-color: var(--background);
 `;
-const PageInnerWrapper = styled.div`
+const PageInner = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-    padding: var(--container-padding-mobile);
+    width: 100%;
     max-width: var(--container-width);
+    padding: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);

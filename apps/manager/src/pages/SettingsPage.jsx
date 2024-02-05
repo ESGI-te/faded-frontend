@@ -5,28 +5,30 @@ import { FormattedMessage } from 'react-intl';
 
 const SettingsPage = () => (
     <Page>
-        <PageInnerWrapper>
+        <PageInner>
             <Text variant="headingM" fontWeight="--fw-bold">
                 <FormattedMessage defaultMessage="Paramètres de l'organisation" />
             </Text>
             <SettingsContainer>
                 <Settings />
             </SettingsContainer>
-        </PageInnerWrapper>
+        </PageInner>
     </Page>
 );
 
 const Page = styled.section`
-    align-self: stretch;
+    display: flex;
+    align-items: start;
+    justify-content: center;
     background-color: var(--background);
 `;
-const PageInnerWrapper = styled.div`
+const PageInner = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-    background-color: var(--background);
+    width: 100%;
+    max-width: 940px;
     padding: var(--container-padding-mobile);
-    max-width: var(--container-width);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);
@@ -36,7 +38,6 @@ const SettingsContainer = styled.div`
     background-color: var(--white);
     border-radius: var(--r-l);
     padding: var(--container-padding-mobile);
-    max-width: 940px;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);

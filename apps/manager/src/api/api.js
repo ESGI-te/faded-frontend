@@ -27,6 +27,12 @@ export const updateProviderImage = (providerId, image) =>
         data: image,
     });
 
+export const updateEstablishmentImage = (establishmentId, image) =>
+    callApi(`/establishments/${establishmentId}/image`, {
+        method: 'PATCH',
+        data: image,
+    });
+
 /* Statustics */
 export const getAppointmentRate = (query) =>
     callApi('/statistics/appointments/rate', { method: 'GET', query });

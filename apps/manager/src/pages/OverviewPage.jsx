@@ -73,10 +73,6 @@ const Page = styled.section`
     align-items: start;
     justify-content: center;
     background-color: var(--background);
-
-    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding: var(--container-padding);
-    }
 `;
 const PageInner = styled.div`
     display: flex;
@@ -85,6 +81,10 @@ const PageInner = styled.div`
     width: 100%;
     max-width: var(--container-width);
     padding: var(--container-padding-mobile);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding: var(--container-padding);
+    }
 `;
 const Container = styled.div`
     background-color: var(--white);

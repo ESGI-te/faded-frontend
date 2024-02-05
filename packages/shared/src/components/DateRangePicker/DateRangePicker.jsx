@@ -248,6 +248,7 @@ const InputDate = styled(DateInput)`
 	align-items: center;
 	column-gap: 0.25rem;
 	cursor: text;
+	font-size: var(--fs-body-s);
 `;
 const TriggerPopOverButton = styled(AriaButton)`
 	padding: 0.625rem;

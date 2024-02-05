@@ -43,11 +43,12 @@ const NavItemIcon = styled(FontAwesomeIcon)`
     width: 1rem;
     height: 1rem;
     color: var(--neutral500);
+    margin-right: 0.5rem;
 `;
 const NavLink = styled(Link)`
-    /* display: flex; */
-    /* row-gap: 0.125rem; */
-    /* align-items: center; */
+    display: flex;
+    row-gap: 0.125rem;
+    align-items: center;
     /* width: 100%; */
     padding: 1rem 0.75rem;
     border-radius: var(--r-s);
@@ -64,9 +65,9 @@ const NavLink = styled(Link)`
         color: var(--black);
         font-weight: var(--fw-semibold);
 
-        /* & > ${NavItemIcon} {
+        & > ${NavItemIcon} {
             color: inherit;
-        } */
+        }
 
         &::after {
             content: '';
@@ -120,7 +121,7 @@ const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
     },
     {
         name: <FormattedMessage defaultMessage="Horaires" />,
-        icon: <NavItemIcon icon={icon({ name: 'calendar-days', style: 'solid' })} />,
+        icon: <NavItemIcon icon={icon({ name: 'clock', style: 'solid' })} />,
         url: `/${establishmentId}/schedules`,
     },
     {
@@ -195,7 +196,7 @@ const AppMenu = () => {
                 {navItems.map((navItem) => (
                     <NavItem key={navItem.name}>
                         <NavLink to={navItem.url}>
-                            {/* navItem.icon */}
+                            {navItem.icon}
                             {navItem.name}
                         </NavLink>
                     </NavItem>

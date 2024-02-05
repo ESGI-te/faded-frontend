@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProviderImage } from '../../api';
+import { updateProviderImage } from '@api/api';
 import providerKeys from './providerKeys';
 
 const mutationFn = async ({ providerId, image }) => {
