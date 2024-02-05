@@ -33,6 +33,28 @@ export const updateEstablishmentImage = (establishmentId, image) =>
         data: image,
     });
 
-/* Statustics */
+/* Statistics */
 export const getAppointmentRate = (query) =>
     callApi('/statistics/appointments/rate', { method: 'GET', query });
+export const getDailyIndicators = (establishmentId) =>
+    callApi('/statistics/daily', {
+        method: 'GET',
+        query: {
+            establishmentId,
+        },
+    });
+export const getGlobalIndicators = (establishmentId) =>
+    callApi('/statistics/global', {
+        method: 'GET',
+        query: {
+            establishmentId,
+        },
+    });
+export const getTopServices = ({ establishmentId, limit }) =>
+    callApi('/statistics/services/top', {
+        method: 'GET',
+        query: {
+            establishmentId,
+            limit,
+        },
+    });

@@ -1,67 +1,74 @@
 import AppointmentsRate from '@components/AppointmentsRate';
-import DailyIndicators from '@components/DailyIndicators';
-import GlobalIndicators from '@components/GlobalIndicators';
 import Text from 'shared/src/components/Text';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import OverviewTopServicesTable from '@components/OverviewTopServicesTable';
+import useDailyIndicatorsQuery from '@queries/stats/useDailyIndicatorsQuery.hook';
+import useGlobalIndicatorsQuery from '@queries/stats/useGlobalIndicatorsQuery.hook copy';
+import OverviewGlobalIndicators from '@components/OverviewGlobalIndicators';
+import OverviewDailyIndicators from '@components/OverviewDailyIndicators';
+import useTopServicesQuery from '@queries/stats/useTopServicesQuery.hook';
+import useAppointmentsRateQuery from '@queries/stats/useAppointmentsRateQuery.hook';
+import dayjs from 'dayjs';
 
-const ProviderOverviewPage = (props) => {
-    const items = [
-        {
-            id: 'fb5bdb39-1ca3-4412-aefc-c8bd1df7ffb6',
-            name: 'Brushing Express',
-            number: 5,
-            turnover: '75',
-        },
-        {
-            id: 'c8302270-7de5-4e20-9632-419e8bc5dde5',
-            name: 'Massage Relaxant',
-            number: 3,
-            turnover: '150',
-        },
-        {
-            id: 'c8302270-7de5-4e20-9632-419e8bc5dde7',
-            name: 'Soin du visage',
-            number: 2,
-            turnover: '100',
-        },
-        {
-            id: 'c8302270-7de5-4e20-9632-419e8bc5dks8',
-            name: 'Coupe homme',
-            number: 1,
-            turnover: '20',
-        },
-    ];
+const OverviewPage = () => {
+    const [dates, setDates] = useState({
+        start: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
+        end: dayjs().format('YYYY-MM-DD'),
+    });
+    const globalIndicators = useGlobalIndicatorsQuery();
+    const dailyIndicators = useDailyIndicatorsQuery();
+    const topServices = useTopServicesQuery();
+    const appointments = useAppointmentsRateQuery({
+        ...dates,
+    });
+    const sortedServicesWithPosition = useMemo(() => {
+        return topServices.data
+            ?.map((item) => ({
+                ...item,
+                turnover: Number(item.turnover),
+                ratio: Number(item.turnover) / item.number,
+            }))
+            .sort((a, b) => b.ratio - a.ratio)
+            .map((item, index) => ({
+                ...item,
+                position: index + 1,
+            }));
+    }, [topServices.data]);
 
-    const sortedItemsWithPosition = useMemo(() => {
-        const sortedItems = items
-            .sort((a, b) => a.number / parseFloat(a.turnover) - b.number / parseFloat(b.turnover))
-            .reverse();
-        return sortedItems.map((item, index) => ({ ...item, position: index + 1 }));
-    }, [items]);
+    if (
+        globalIndicators.isLoading ||
+        dailyIndicators.isLoading ||
+        topServices.isLoading ||
+        appointments.isLoading
+    )
+        return <div>Loading...</div>; // Add loading state
 
     return (
         <Page>
             <PageInner>
-                <DailyIndicators />
+                <OverviewDailyIndicators indicators={dailyIndicators.data} />
                 <ResponsiveWrapper>
                     <AppointmentsRateContainer>
-                        <AppointmentsRate />
+                        <AppointmentsRate
+                            appointments={appointments.data}
+                            dates={dates}
+                            onChangeDates={setDates}
+                        />
                     </AppointmentsRateContainer>
                     <GlobalIndicatorsContainer>
                         <Text variant="headingS" fontWeight="--fw-semibold">
                             <FormattedMessage defaultMessage="Indicateurs globaux" />
                         </Text>
-                        <GlobalIndicators />
+                        <OverviewGlobalIndicators indicators={globalIndicators.data} />
                     </GlobalIndicatorsContainer>
                 </ResponsiveWrapper>
                 <OverviewTopServicesContainer>
                     <Text variant="headingS" fontWeight="--fw-semibold">
                         <FormattedMessage defaultMessage="Prestations les plus populaires" />
                     </Text>
-                    <OverviewTopServicesTable items={sortedItemsWithPosition} />
+                    <OverviewTopServicesTable items={sortedServicesWithPosition} />
                 </OverviewTopServicesContainer>
             </PageInner>
         </Page>
@@ -121,6 +128,6 @@ const OverviewTopServicesContainer = styled(Container)`
     row-gap: 1rem;
 `;
 
-ProviderOverviewPage.propTypes = {};
+OverviewPage.propTypes = {};
 
-export default ProviderOverviewPage;
+export default OverviewPage;
