@@ -12,9 +12,9 @@ export const callApi = async (url, options) => {
 			if (value === undefined || value === null) return;
 			queryParams.append(key, value);
 		});
-		const pageParam = queryParams.get("page");
-		const pagination = queryParams.get("pagination");
-		pagination ?? queryParams.append("pagination", !!pageParam);
+		// const pageParam = queryParams.get("page");
+		// const pagination = queryParams.get("pagination");
+		// pagination ?? queryParams.append("pagination", !!pageParam);
 		const queryString = queryParams.toString();
 		URL = `${URL}?${queryString}`;
 	}
