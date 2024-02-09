@@ -19,9 +19,7 @@ const ProviderTeamPage = () => (
 );
 
 const Page = styled.section`
-    display: flex;
-    align-items: start;
-    justify-content: center;
+    align-self: stretch;
     background-color: var(--background);
 `;
 const PageInnerWrapper = styled.div`
