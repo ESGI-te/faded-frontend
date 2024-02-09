@@ -7,7 +7,10 @@ import AuthenticationLayout from '../layouts/AuthenticationLayout';
 import NoRouteFoundPage from '@pages/status/404Page';
 import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
-import { USER_ROLES } from 'shared/src/utils/constants';
+import OverviewPage from '@pages/OverviewPage';
+import ProviderRequestPage from '@pages/ProviderRequestPage';
+import CategoriesPage from '@pages/CategoriesPage';
+import SettingsPage from '@pages/SettingsPage';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -50,7 +53,19 @@ const routes = [
             children: [
                 {
                     path: '/',
-                    element: <HomePage />,
+                    element: <OverviewPage />,
+                },
+                {
+                    path: '/admin/provider-request',
+                    element: <ProviderRequestPage />,
+                },
+                {
+                    path: '/admin/categories',
+                    element: <CategoriesPage />,
+                },
+                {
+                    path: '/admin/settings',
+                    element: <SettingsPage />,
                 },
             ],
             roles: [USER_ROLES.ADMIN],
