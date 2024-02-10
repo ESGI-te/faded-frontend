@@ -36,7 +36,7 @@ const ResetPasswordForm = ({ onSubmit, isLoading }) => {
                 type="password"
             />
             <SubmitButton isDisabled={!isDirty} isLoading={isLoading} type="submit">
-                <FormattedMessage defaultMessage="S'inscrire" />
+                <FormattedMessage defaultMessage="Réinitialiser" />
             </SubmitButton>
         </Form>
     );

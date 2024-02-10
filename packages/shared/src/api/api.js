@@ -17,6 +17,7 @@ export const updateUserPassword = (userId, data) =>
 export const getResetPasswordTokens = (token) =>
 	callApi(`/reset_password_tokens?token=${token}`);
 
+export const deleteEstablishment = (establishmentId) => callApi(`/establishments/${establishmentId}`, { method: "DELETE" });
 export const getEstablishments = ({ page, perPage, ...q }) =>
 	callApi("/establishments", {
 		query: { ...q, page, perPage },

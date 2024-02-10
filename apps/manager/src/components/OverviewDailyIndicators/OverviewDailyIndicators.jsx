@@ -12,70 +12,76 @@ const OverviewDailyIndicators = ({ className, indicators }) => {
                 <TurnoverIconWrapper>
                     <Icon icon={icon({ name: 'dollar-sign', style: 'solid' })} />
                 </TurnoverIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.turnover?.value || 0} €
-                    </Text>
+                <CardContent>
+                    <CardHeader>
+                        <Text fontWeight="--fw-bold" variant="bodyL">
+                            {indicators?.turnover?.value || 0} €
+                        </Text>
+                        <Percentage>
+                            <FormattedMessage
+                                defaultMessage="{value} par rapport à hier"
+                                values={{
+                                    value: `${
+                                        indicators?.turnover?.percentageChange < 0 ? '-' : '+'
+                                    } ${indicators?.turnover?.percentageChange}%`,
+                                }}
+                            />
+                        </Percentage>
+                    </CardHeader>
                     <Text color="--neutral500">
                         <FormattedMessage defaultMessage="Chiffre d'affaire" />
                     </Text>
-                </Stack>
-                <Percentage>
-                    <FormattedMessage
-                        defaultMessage="{value} par rapport à hier"
-                        values={{
-                            value: `${indicators?.turnover?.percentageChange < 0 ? '-' : '+'} ${
-                                indicators?.turnover?.percentageChange
-                            }%`,
-                        }}
-                    />
-                </Percentage>
+                </CardContent>
             </IndicatorCard>
             <IndicatorCard>
                 <AppointmentsIconWrapper>
                     <Icon icon={icon({ name: 'calendar-check', style: 'solid' })} />
                 </AppointmentsIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.appointments?.value}
-                    </Text>
+                <CardContent>
+                    <CardHeader>
+                        <Text fontWeight="--fw-bold" variant="bodyL">
+                            {indicators?.appointments?.value}
+                        </Text>
+                        <Percentage>
+                            <FormattedMessage
+                                defaultMessage="{value} par rapport à hier"
+                                values={{
+                                    value: `${
+                                        indicators?.appointments?.percentageChange < 0 ? '-' : '+'
+                                    } ${indicators?.appointments?.percentageChange}%`,
+                                }}
+                            />
+                        </Percentage>
+                    </CardHeader>
                     <Text color="--neutral500">
-                        <FormattedMessage defaultMessage="Nombre de RDV" />
+                        <FormattedMessage defaultMessage="Rendez-vous" />
                     </Text>
-                </Stack>
-                <Percentage>
-                    <FormattedMessage
-                        defaultMessage="{value} par rapport à hier"
-                        values={{
-                            value: `${indicators?.appointments?.percentageChange < 0 ? '-' : '+'} ${
-                                indicators?.appointments?.percentageChange
-                            }%`,
-                        }}
-                    />
-                </Percentage>
+                </CardContent>
             </IndicatorCard>
             <IndicatorCard>
                 <ServicesIconWrapper>
                     <Icon icon={icon({ name: 'wand-magic-sparkles', style: 'solid' })} />
                 </ServicesIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.services?.value}
-                    </Text>
+                <CardContent>
+                    <CardHeader>
+                        <Text fontWeight="--fw-bold" variant="bodyL">
+                            {indicators?.services?.value}
+                        </Text>
+                        <Percentage>
+                            <FormattedMessage
+                                defaultMessage="{value} par rapport à hier"
+                                values={{
+                                    value: `${
+                                        indicators?.services?.percentageChange < 0 ? '-' : '+'
+                                    } ${indicators?.services?.percentageChange}%`,
+                                }}
+                            />
+                        </Percentage>
+                    </CardHeader>
                     <Text color="--neutral500">
                         <FormattedMessage defaultMessage="Prestations différentes" />
                     </Text>
-                </Stack>
-                <Percentage>
-                    <FormattedMessage
-                        defaultMessage="{value} par rapport à hier"
-                        values={{
-                            value: `${indicators?.services?.percentageChange < 0 ? '-' : '+'} ${
-                                indicators?.services?.percentageChange
-                            }%`,
-                        }}
-                    />
-                </Percentage>
+                </CardContent>
             </IndicatorCard>
         </Wrapper>
     );
@@ -139,6 +145,27 @@ const Percentage = styled.p`
     font-size: var(--fs-body-s);
     margin-left: auto;
     align-self: flex-start;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+const CardHeader = styled.div`
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    justify-content: space-between;
+    column-gap: 1rem;
+
+    & > :first-child {
+        flex-shrink: 0;
+    }
+`;
+const CardContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
 `;
 
 export default OverviewDailyIndicators;
