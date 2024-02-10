@@ -16,13 +16,12 @@ import EstablishmentSettingsPage from '@pages/EstablishmentSettingsPage';
 import EstablishmentAppointmentsPage from '@pages/EstablishmentAppointmentsPage';
 import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
-import ProviderRequestPage from '@pages/ProviderRequestPage';
-import ProviderRequestSuccessPage from '@pages/ProviderRequestSuccessPage';
 import EstablishmentSchedulesPage from '@pages/EstablishmentSchedulesPage';
 import EstablishmentServicesPage from '@pages/EstablishmentServicesPage';
 import ServicesPage from '@pages/ServicesPage';
 import ProfilePage from '@pages/ProfilePage';
 import SettingsPage from '@pages/SettingsPage';
+import RegisterSuccessPage from '@pages/RegisterSuccessPage';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -49,8 +48,18 @@ const routes = [
             },
             {
                 path: '/register',
-                name: 'register',
-                element: <RegisterPage />,
+                children: [
+                    {
+                        path: '',
+                        name: 'register',
+                        element: <RegisterPage />,
+                    },
+                    {
+                        path: 'success',
+                        name: 'register-success',
+                        element: <RegisterSuccessPage />,
+                    },
+                ],
             },
             {
                 path: '/password-forgotten',
@@ -61,20 +70,6 @@ const routes = [
                 path: 'reset-password',
                 name: 'reset-password',
                 element: <ResetPasswordPage />,
-            },
-            {
-                path: 'request',
-                children: [
-                    {
-                        path: '',
-                        name: 'request',
-                        element: <ProviderRequestPage />,
-                    },
-                    {
-                        path: 'success',
-                        element: <ProviderRequestSuccessPage />,
-                    },
-                ],
             },
         ],
     },

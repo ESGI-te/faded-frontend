@@ -1,52 +1,79 @@
-import ResetPassword from '@components/ResetPassword';
-import styled from 'styled-components';
 import Text from 'shared/src/components/Text';
+import Stack from 'shared/src/components/Stack';
+import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+import ResetPassword from '@components/ResetPassword';
 
 const ResetPasswordPage = () => {
     return (
         <Page>
             <PageInnerWrapper>
-                <Title>Ajouter un mot de passe : </Title>
-                <Text variant="bodyL">
-                    Pour garantir la sécurité de votre compte, veuillez définir un nouveau mot de
-                    passe personnel.
-                </Text>
-                <ResetPassword />
+                <ResetPasswordWrapper>
+                    <ResetPasswordInner>
+                        <Stack gap="0.25rem">
+                            <Text variant="headingXL" fontWeight="--fw-bold">
+                                <FormattedMessage defaultMessage="Définissez votre nouveau mot de passe." />
+                            </Text>
+                            <Text>
+                                <FormattedMessage defaultMessage="Vous êtes à un pas de retrouver l'accès à votre espace prestataire. Veuillez créer un nouveau mot de passe pour votre compte." />
+                            </Text>
+                        </Stack>
+                        <ResetPassword />
+                    </ResetPasswordInner>
+                </ResetPasswordWrapper>
+                <Illustration />
             </PageInnerWrapper>
         </Page>
     );
 };
 
 const Page = styled.section`
-    min-height: 100%;
     width: 100%;
+    height: 100%;
     display: flex;
-    background-color: var(--neutral50);
     justify-content: center;
+
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        justify-content: left;
+        flex-direction: row;
     }
 `;
-
 const PageInnerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    background-color: var(--neutral50);
+    column-gap: 1rem;
     padding: var(--container-padding-mobile);
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        padding: 0;
+    }
+`;
+const ResetPasswordInner = styled.div`
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: 2.5rem;
+    width: 100%;
+    max-width: 500px;
+`;
+const ResetPasswordWrapper = styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const Illustration = styled.div`
+    display: none;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        row-gap: 2rem;
-        padding: var(--container-padding);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        height: 100%;
+        background-image: url('images/reset-password.webp');
+        background-size: cover;
     }
-`;
-
-const Title = styled(Text)`
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-heading-l);
-    line-height: var(--fs-heading-l);
-    text-align: left;
 `;
 
 export default ResetPasswordPage;
