@@ -102,9 +102,12 @@ const GlobalIndicatorsContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    max-width: 25rem;
     flex-grow: 2;
     flex-shrink: 0;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        max-width: 25rem;
+    }
 `;
 const ResponsiveWrapper = styled.div`
     display: flex;
