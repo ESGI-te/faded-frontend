@@ -10,20 +10,10 @@ const CreateBarber = ({ onCloseModal }) => {
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
     const providerId = isProvider && user.provider.id;
 
-    const handleCreateBarber = (formData) => {
+    const handleCreateBarber = (barber) => {
         if (!isProvider || !providerId) return;
-        // Create new user with associated barber
-        const data = {
-            ...formData,
-            plainPassword: crypto.randomUUID(), // tmp password
-            barber: {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                provider: providerId,
-            },
-            roles: [USER_ROLES.USER, USER_ROLES.BARBER],
-        };
-        createBarber.mutate(data, {
+
+        createBarber.mutate(barber, {
             onSuccess: () => {
                 onCloseModal();
             },

@@ -1,4 +1,4 @@
-import PasswordSetForm from '@components/ResetPasswordForm';
+import ResetPasswordForm from '@components/ResetPasswordForm';
 import useResetPasswordTokensQuery from 'shared/src/queries/resetPasswordToken/useResetPasswordTokensQuery.hook';
 import useUpdateUserPasswordMutation from 'shared/src/queries/user/useUpdateUserPasswordMutation.hook';
 
@@ -14,8 +14,8 @@ const ResetPassword = () => {
 
     const handleResetPassword = async ({ passwordConfirmation, ...data }) => {
         if (!token) return;
-        const test = await resetPasswordTokens.refetch({ throwOnError: true });
-        console.log(test);
+        await resetPasswordTokens.refetch({ throwOnError: true });
+
         if (resetPasswordTokens.isError || !resetPasswordTokens.data) return;
 
         updateUserPassword.mutate(
@@ -23,16 +23,16 @@ const ResetPassword = () => {
                 userId: resetPasswordTokens.data?.data?.[0]?.user.id,
                 user: data,
             },
-            // {
-            //     onSuccess: () => {
-            //         navigate('/login');
-            //     },
-            // }
+            {
+                onSuccess: () => {
+                    navigate('/login');
+                },
+            },
         );
     };
 
     return (
-        <PasswordSetForm
+        <ResetPasswordForm
             onSubmit={handleResetPassword}
             isLoading={resetPasswordTokens.isLoading || updateUserPassword.isLoading}
         />

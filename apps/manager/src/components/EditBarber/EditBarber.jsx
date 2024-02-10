@@ -24,9 +24,8 @@ const EditBarber = ({ onCloseModal, barber }) => {
     const handleEditBarber = async (data) => {
         if (!isProvider) return;
         // Edit user with associated barber
-        const { email, ...barberData } = data;
         const userPromise = updateUser.mutateAsync({ userId: barber.user.id, user: data });
-        const barberPromise = updateBarber.mutateAsync({ barberId: barber.id, barber: barberData });
+        const barberPromise = updateBarber.mutateAsync({ barberId: barber.id, barber: data });
         await Promise.all([userPromise, barberPromise]);
         onCloseModal();
     };
