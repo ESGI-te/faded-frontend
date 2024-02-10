@@ -6,7 +6,7 @@ import Button from 'shared/src/components/Button';
 import { Separator } from 'react-aria-components';
 import { FormattedMessage } from 'react-intl';
 
-const ProviderRequestSuccessPage = () => {
+const RegisterSuccessPage = () => {
     return (
         <Page>
             <PageInnerWrapper>
@@ -549,4 +549,4 @@ const Title = styled(Text)`
     line-height: var(--fs-heading-l);
     text-align: center;
 `;
-export default ProviderRequestSuccessPage;
+export default RegisterSuccessPage;
