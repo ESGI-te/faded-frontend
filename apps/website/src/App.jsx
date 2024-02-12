@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import IntlProvider from '@contexts/IntlProvider';
 import AuthProvider from '@contexts/AuthProvider';
 import routes from './routes';
+import { useEffect } from 'react'; 
 
 const router = createBrowserRouter(routes);
 
@@ -16,8 +17,22 @@ export const queryClient = new QueryClient({
         },
     },
 });
+const loadGoogleMapsScript = () => {
+    const googleMapsScriptUrl = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    if (!document.querySelector(`script[src="${googleMapsScriptUrl}"]`)) {
+        const script = document.createElement("script");
+        script.src = googleMapsScriptUrl;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+    }
+};
+
 
 function App() {
+    useEffect(() => {
+        loadGoogleMapsScript();
+    }, []);
     return (
         <QueryClientProvider client={queryClient}>
             <IntlProvider>
