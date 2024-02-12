@@ -22,6 +22,7 @@ const AppointmentTimeSlots = ({ date, isDisabled, isUnavailable, ...props }) => 
 
     const { locale } = useLocale();
     const dayPlanning = Object.entries(planning)[getDayOfWeek(date, locale)]?.[1];
+
     const {
         timeSlots,
         unavailableTimeSlots,
