@@ -5,52 +5,49 @@ import Stack from 'shared/src/components/Stack';
 import Text from 'shared/src/components/Text';
 import { FormattedMessage } from 'react-intl';
 
-const OverviewGlobalIndicators = ({ className, indicators }) => {
-    console.log(indicators);
-    return (
-        <Wrapper className={className}>
-            <TurnoverCard>
-                <TurnoverIconWrapper>
-                    <Icon icon={icon({ name: 'dollar-sign', style: 'solid' })} />
-                </TurnoverIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.turnovers || 0} €
-                    </Text>
-                    <Text color="--neutral500">
-                        <FormattedMessage defaultMessage="Chiffre d'affaire" />
-                    </Text>
-                </Stack>
-            </TurnoverCard>
-            <AppointmentsCard>
-                <AppointmentsIconWrapper>
-                    <Icon icon={icon({ name: 'calendar-check', style: 'solid' })} />
-                </AppointmentsIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.appointments}
-                    </Text>
-                    <Text color="--neutral500">
-                        <FormattedMessage defaultMessage="Nombre de RDV" />
-                    </Text>
-                </Stack>
-            </AppointmentsCard>
-            <FeedbackCard>
-                <ServicesIconWrapper>
-                    <Icon icon={icon({ name: 'star-half-stroke', style: 'solid' })} />
-                </ServicesIconWrapper>
-                <Stack>
-                    <Text fontWeight="--fw-bold" variant="bodyL">
-                        {indicators?.averageFeedback}
-                    </Text>
-                    <Text color="--neutral500">
-                        <FormattedMessage defaultMessage="Moyenne des feedbacks" />
-                    </Text>
-                </Stack>
-            </FeedbackCard>
-        </Wrapper>
-    );
-};
+const OverviewGlobalIndicators = ({ className, indicators }) => (
+    <Wrapper className={className}>
+        <TurnoverCard>
+            <TurnoverIconWrapper>
+                <Icon icon={icon({ name: 'dollar-sign', style: 'solid' })} />
+            </TurnoverIconWrapper>
+            <Stack>
+                <Text fontWeight="--fw-bold" variant="bodyL">
+                    {indicators?.turnovers || 0} €
+                </Text>
+                <Text color="--neutral500">
+                    <FormattedMessage defaultMessage="Chiffre d'affaire" />
+                </Text>
+            </Stack>
+        </TurnoverCard>
+        <AppointmentsCard>
+            <AppointmentsIconWrapper>
+                <Icon icon={icon({ name: 'calendar-check', style: 'solid' })} />
+            </AppointmentsIconWrapper>
+            <Stack>
+                <Text fontWeight="--fw-bold" variant="bodyL">
+                    {indicators?.appointments}
+                </Text>
+                <Text color="--neutral500">
+                    <FormattedMessage defaultMessage="Nombre de RDV" />
+                </Text>
+            </Stack>
+        </AppointmentsCard>
+        <FeedbackCard>
+            <ServicesIconWrapper>
+                <Icon icon={icon({ name: 'star-half-stroke', style: 'solid' })} />
+            </ServicesIconWrapper>
+            <Stack>
+                <Text fontWeight="--fw-bold" variant="bodyL">
+                    {indicators?.averageFeedback}
+                </Text>
+                <Text color="--neutral500">
+                    <FormattedMessage defaultMessage="Moyenne des feedbacks" />
+                </Text>
+            </Stack>
+        </FeedbackCard>
+    </Wrapper>
+);
 
 const Wrapper = styled.div`
     display: flex;

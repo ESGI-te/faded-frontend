@@ -39,7 +39,7 @@ const Header = () => {
                     <OrganizationSkeleton />
                 ) : (
                     <Organization to="/">
-                        <RoundedImage src={placeholderIllustration} />
+                        <RoundedImage src={user.data.provider.image || placeholderIllustration} />
                         <TextEllipsis fontWeight="--fw-semibold" numberOfLines={1}>
                             {user.data.provider.name ||
                                 user.data.barber.establishment.provider.name}
@@ -63,7 +63,7 @@ const Header = () => {
                                     $borderColor={
                                         establishmentStatuscolorLookup?.[establishment.data?.status]
                                     }
-                                    src={placeholderIllustration}
+                                    src={establishment.data?.cover || placeholderIllustration}
                                 />
                                 <TextEllipsis
                                     fontWeight={
@@ -97,13 +97,9 @@ const Header = () => {
                 ) : (
                     <DialogTrigger>
                         <ProfileButton>
-                            {user.data?.provider?.image ? (
-                                <ProfileImage src={user.data?.provider?.image} />
-                            ) : (
-                                <ProfileImagePlaceholder>
-                                    {user?.data?.firstName?.[0]}
-                                </ProfileImagePlaceholder>
-                            )}
+                            <ProfileImagePlaceholder>
+                                {user?.data?.firstName?.[0]}
+                            </ProfileImagePlaceholder>
                         </ProfileButton>
                         <ProfileDropdown />
                     </DialogTrigger>

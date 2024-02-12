@@ -10,31 +10,15 @@ const EstablishmentSettings = () => {
     const updateEstablishment = useUpdateEstablishmentMutation();
     const updateEstablishmentImage = useUpdateEstablishmentImageMutation();
 
-    const onSubmit = ({ image, ...data }) => {
-        if (image === null && establishment.data?.image !== null) {
-            updateEstablishmentImage.mutate(
-                { establishmentId: establishment.data?.id, image: { image: null } },
-                {
-                    onSuccess: () => {
-                        // TODO: Add success toast
-                    },
-                },
-            );
-        }
-
-        if (image.length > 0) {
-            updateEstablishmentImage.mutate(
-                { establishmentId: establishment.data?.id, image: { image: image[0] } },
-                {
-                    onSuccess: () => {
-                        // TODO: Add success toast
-                    },
-                },
-            );
-        }
-
+    const onSubmit = ({ cover, ...data }) => {
         updateEstablishment.mutate(
-            { establishmentId: establishment.data?.id, establishment: data },
+            {
+                establishmentId: establishment.data?.id,
+                establishment: {
+                    ...data,
+                    cover: cover?.[0] || null,
+                },
+            },
             {
                 onSuccess: () => {
                     // TODO: Add success toast

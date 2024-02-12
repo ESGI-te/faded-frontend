@@ -7,14 +7,18 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { useAuth } from '@contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileDropdown = () => {
     const { data: user } = useUserQuery();
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const menuHandler = (key) => {
+        console.log(key);
         switch (key) {
             case 'profile':
+                navigate('/profile');
                 break;
             case 'settings':
                 break;
@@ -44,7 +48,7 @@ const ProfileDropdown = () => {
             </ProfileInfo>
             <Divider />
             <Menu onAction={menuHandler}>
-                <MenuItem href="/profile" id="profile">
+                <MenuItem id="profile">
                     <MenuItemIcon icon={icon({ name: 'user', style: 'solid' })} />
                     <FormattedMessage defaultMessage="Profil" />
                 </MenuItem>
