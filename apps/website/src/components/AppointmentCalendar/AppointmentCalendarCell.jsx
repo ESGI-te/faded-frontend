@@ -11,6 +11,8 @@ const AppointmentCalendarCell = ({ state, date }) => {
         ref,
     );
 
+    if (isUnavailable) return null;
+
     return (
         <Cell {...cellProps} isUnavailable={isUnavailable}>
             <AppointmentTimeSlots
