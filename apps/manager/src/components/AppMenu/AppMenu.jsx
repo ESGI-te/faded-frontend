@@ -3,11 +3,15 @@ import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'shared/src/components/Link';
-import { USER_ROLES } from 'shared/src/utils/constants';
+import { ESTABLISHMENT_STATUS, USER_ROLES } from 'shared/src/utils/constants';
 import { useMemo } from 'react';
 import AppMenuSkeleton from './AppMenuSkeleton';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
+import { shimmering } from 'shared/src/styles/animations';
+import PublishEstablishmentButton from '@components/PublishEstablishmentButton';
+import MoveToDraftEstablishmentButton from '@components/MoveToDraftEstablishmentButton';
 
 const Nav = styled.nav`
     width: 100%;
@@ -102,6 +106,12 @@ const NavLink = styled(Link)`
         }
     }
 `;
+const ButtonSkeleton = styled.div`
+    height: 31px;
+    width: 100px;
+    border-radius: var(--r-s);
+    ${shimmering}
+`;
 
 const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
     {
@@ -172,6 +182,7 @@ const PROVIDER_NAVIGATION_ITEMS = [
 const AppMenu = () => {
     const user = useUserQuery();
     const { establishmentId } = useParams();
+    const { data: establishment, isLoading } = useEstablishmentQuery(establishmentId);
     const navItems = useMemo(() => {
         if (user.data?.roles.includes(USER_ROLES.PROVIDER) && !establishmentId) {
             return PROVIDER_NAVIGATION_ITEMS;
@@ -187,6 +198,7 @@ const AppMenu = () => {
 
         return [];
     }, [user.data, establishmentId]);
+    const isDraft = establishment?.status === ESTABLISHMENT_STATUS.DRAFT;
 
     if (user.isLoading || !navItems) return <AppMenuSkeleton />;
 
@@ -202,6 +214,10 @@ const AppMenu = () => {
                     </NavItem>
                 ))}
             </NavList>
+            {establishmentId && isLoading && <ButtonSkeleton />}
+            {establishmentId &&
+                !isLoading &&
+                (isDraft ? <PublishEstablishmentButton /> : <MoveToDraftEstablishmentButton />)}
         </Nav>
     );
 };

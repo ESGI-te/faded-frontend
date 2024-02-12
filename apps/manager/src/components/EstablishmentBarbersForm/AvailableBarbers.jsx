@@ -15,7 +15,9 @@ import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hoo
 const AvailableBarbers = () => {
     const { establishmentId } = useParams();
     const intl = useIntl();
-    const { data: barbers, isLoading } = useBarbersQuery();
+    const { data: barbers, isLoading } = useBarbersQuery({
+        pagination: false,
+    });
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery);
     const updateBarber = useUpdateBarberMutation();
