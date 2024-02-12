@@ -18,7 +18,9 @@ const SelectedBarbers = () => {
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
     const { establishmentId } = useParams();
     const intl = useIntl();
-    const { data: barbers, isLoading } = useBarbersQuery();
+    const { data: barbers, isLoading } = useBarbersQuery({
+        pagination: false,
+    });
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery);
     const updateBarber = useUpdateBarberMutation();

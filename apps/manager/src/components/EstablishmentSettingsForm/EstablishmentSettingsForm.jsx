@@ -18,7 +18,7 @@ const EstablishmentSettingsForm = ({ establishment, onSubmit, isLoading }) => {
             address: establishment?.address,
             phone: establishment?.phone,
             email: establishment?.email,
-            image: establishment?.image,
+            cover: establishment?.cover,
         },
         resolver: yupResolver(schema),
     });
@@ -28,7 +28,7 @@ const EstablishmentSettingsForm = ({ establishment, onSubmit, isLoading }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
             <ImageUploaderController
                 control={control}
-                name="image"
+                name="cover"
                 label={<FormattedMessage defaultMessage="Image" />}
             />
             <ResponsiveStack>
