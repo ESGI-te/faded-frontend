@@ -7,6 +7,7 @@ import AuthenticationLayout from '../layouts/AuthenticationLayout';
 import NoRouteFoundPage from '@pages/status/404Page';
 import PasswordForgottenPage from '@pages/PasswordForgottenPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
+import { USER_ROLES } from 'shared/src/utils/constants';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
@@ -52,6 +53,7 @@ const routes = [
                     element: <HomePage />,
                 },
             ],
+            roles: [USER_ROLES.ADMIN],
         },
     ]),
     {
