@@ -9,14 +9,14 @@ import { FormattedMessage } from 'react-intl';
 import Link from 'shared/src/components/Link';
 
 const LoginForm = ({ onSubmit, isLoading }) => {
-    const { control, handleSubmit, formState } = useForm({
+    const { control, handleSubmit, formState, setError } = useForm({
         mode: 'onBlur',
         resolver: yupResolver(loginFormSchema),
     });
     const { isDirty } = formState;
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit((data) => onSubmit(data, setError))}>
             <InputTextController
                 control={control}
                 name="email"
