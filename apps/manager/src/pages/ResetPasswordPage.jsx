@@ -21,7 +21,7 @@ const ResetPasswordPage = () => {
                         <ResetPassword />
                     </ResetPasswordInner>
                 </ResetPasswordWrapper>
-                <Illustration />
+                <IllustrationWrapper>{/* <Illustration /> */}</IllustrationWrapper>
             </PageInnerWrapper>
         </Page>
     );
@@ -46,7 +46,7 @@ const PageInnerWrapper = styled.div`
     padding: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding: 0;
+        padding: var(--container-padding);
     }
 `;
 const ResetPasswordInner = styled.div`
@@ -62,7 +62,7 @@ const ResetPasswordWrapper = styled.div`
     justify-content: center;
     align-items: center;
 `;
-const Illustration = styled.div`
+const IllustrationWrapper = styled.div`
     display: none;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
@@ -71,8 +71,8 @@ const Illustration = styled.div`
         justify-content: center;
         flex: 1;
         height: 100%;
-        background-image: url('images/reset-password.webp');
-        background-size: cover;
+        background-color: var(--primary200);
+        border-radius: var(--r-l);
     }
 `;
 
