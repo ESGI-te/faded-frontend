@@ -29,7 +29,10 @@ const Header = () => {
                     </ProfileLink>
                 ) : (
                     <Cluster align="center" gap="1rem">
-                        <ProviderLink to={import.meta.env.VITE_MANAGER_URL + '/request'}>
+                        <ProviderLink
+                            to={import.meta.env.VITE_MANAGER_URL + '/register'}
+                            target="_blank"
+                        >
                             <FormattedMessage defaultMessage="Je deviens un prestataire" />
                         </ProviderLink>
                         <LoginLink to="/login">

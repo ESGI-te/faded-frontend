@@ -17,8 +17,7 @@ const AppointmentCalendar = ({ onChange, ...props }) => {
 
     const state = useCalendarState({
         ...props,
-        minValue: now,
-        visibleDuration: { days: 7 },
+        visibleDuration: { weeks: 1 },
         isDateUnavailable: (date) => date.compare(now) < 0,
         locale,
         createCalendar,

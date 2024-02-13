@@ -3,26 +3,24 @@ import Button from 'shared/src/components/Button';
 import Stack from 'shared/src/components/Stack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
 import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablishmentQuery.hook';
 import { ESTABLISHMENT_STATUS } from 'shared/src/utils/constants';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import useUpdateEstablishmentStatusMutation from '@queries/establishment/useUpdateEstablishmentStatusMutation.hook';
 
 const MoveToDraftEstablishment = ({ onClose }) => {
     const { establishmentId } = useParams();
     const { data: establishment } = useEstablishmentQuery(establishmentId);
-    const updateEstablishment = useUpdateEstablishmentMutation();
+    const updateEstablishmentStatus = useUpdateEstablishmentStatusMutation();
 
     const handlePublish = () => {
         if (establishment?.status !== ESTABLISHMENT_STATUS.ACTIVE) return;
 
-        updateEstablishment.mutate(
+        updateEstablishmentStatus.mutate(
             {
                 establishmentId,
-                establishment: {
-                    status: ESTABLISHMENT_STATUS.DRAFT,
-                },
+                status: ESTABLISHMENT_STATUS.DRAFT,
             },
             {
                 onSuccess: () => {
@@ -37,7 +35,7 @@ const MoveToDraftEstablishment = ({ onClose }) => {
             <Button
                 startIcon={<FontAwesomeIcon icon={icon({ name: 'reply', style: 'solid' })} />}
                 onPress={handlePublish}
-                isLoading={updateEstablishment.isLoading}
+                isLoading={updateEstablishmentStatus.isLoading}
             >
                 <FormattedMessage defaultMessage="Déplacer vers brouillons" />
             </Button>
