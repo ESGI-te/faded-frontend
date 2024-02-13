@@ -35,9 +35,12 @@ export const callApi = async (url, options) => {
 	const response = await fetch(URL, fetchOptions);
 
 	if (!response.ok) {
-		if (!isRefreshing && response.status === 401) {
-			return refreshToken();
+		const refreshToken = localStorage.getItem("refreshToken");
+
+		if (!isRefreshing && response.status === 401 && refreshToken) {
+			return refreshToken(refreshToken);
 		}
+
 		throw new Error("Network request failed");
 	}
 
@@ -62,9 +65,7 @@ const transformResponse = (response) => {
 	return camelcaseKeys(response, { deep: true });
 };
 
-const refreshToken = async () => {
-	const refreshToken = localStorage.getItem("refreshToken");
-
+const refreshToken = async (refreshToken) => {
 	if (!refreshToken) {
 		return;
 	}
