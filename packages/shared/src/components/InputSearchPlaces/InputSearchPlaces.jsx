@@ -2,9 +2,22 @@ import usePlacesAutocomplete from "use-places-autocomplete";
 import PropTypes from "prop-types";
 import Text from "../Text";
 import { InputSearchController } from "../InputSearch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const loadGoogleMapsScript = (cb) => {
+	const googleMapsScriptUrl = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&libraries=places&callback=searchPlaces`;
+	if (!document.querySelector(`script[src="${googleMapsScriptUrl}"]`)) {
+		const script = document.createElement("script");
+		script.src = googleMapsScriptUrl;
+		script.async = true;
+		script.defer = true;
+		document.body.appendChild(script);
+		script.onload = cb
+	} else {cb()}
+};
 
 const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
+	const [scriptLoaded, setScriptLoaded] = useState(false);
 	const {
 		ready,
 		suggestions: { status, data },
@@ -18,6 +31,9 @@ const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
 		},
 		debounce: 300,
 	});
+	useEffect(() => {
+		loadGoogleMapsScript(() => setScriptLoaded(true));
+	}, []);
 
 	useEffect(() => {
 		if (!defaultValue) return;
@@ -64,7 +80,7 @@ const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
 			onChange={handleChange}
 			isLoading={status !== "OK"}
 			results={data}
-			isDisabled={!ready}
+			isDisabled={!ready && scriptLoaded}
 			renderItems={renderSuggestions}
 			onSelect={handleSelect}
 			onClickOutside={clearSuggestions}
