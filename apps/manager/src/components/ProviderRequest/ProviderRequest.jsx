@@ -7,11 +7,10 @@ const ProviderRequest = () => {
 
     const createProviderRequest = useCreateProviderRequestMutation();
 
-    const handleCreateProviderRequest = (formData) => {
-        const { data } = formData;
+    const handleCreateProviderRequest = (data) => {
         createProviderRequest.mutate(data, {
             onSuccess: () => {
-                navigate('/provider-request/success', { replace: true });
+                navigate('/login');
             },
         });
     };
