@@ -18,7 +18,7 @@ export const queryClient = new QueryClient({
     },
 });
 const loadGoogleMapsScript = () => {
-    const googleMapsScriptUrl = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    const googleMapsScriptUrl = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&libraries=places&callback=searchPlaces`;
     if (!document.querySelector(`script[src="${googleMapsScriptUrl}"]`)) {
         const script = document.createElement("script");
         script.src = googleMapsScriptUrl;
