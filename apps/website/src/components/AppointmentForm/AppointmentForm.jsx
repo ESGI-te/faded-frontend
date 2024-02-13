@@ -59,7 +59,7 @@ const AppointmentForm = ({ service, services, barbers, onSubmit, isLoading }) =>
     const handleResetValue = (value) => {
         setValue(value, null, { shouldValidate: true, shouldDirty: true });
     };
-
+    console.log(isAuthenticated);
     return (
         <FormProvider {...form}>
             <Form onSubmit={handleSubmit(onSubmit)}>

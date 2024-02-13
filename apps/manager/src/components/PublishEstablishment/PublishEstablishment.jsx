@@ -9,25 +9,23 @@ import useEstablishmentPublishQuestSteps from './useEstablishmentPublishQuestSte
 import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
 import { ESTABLISHMENT_STATUS } from 'shared/src/utils/constants';
+import useUpdateEstablishmentStatusMutation from '@queries/establishment/useUpdateEstablishmentStatusMutation.hook';
 
 const PublishEstablishment = ({ onClose }) => {
     const { establishmentId } = useParams();
     const { data: establishment } = useEstablishmentQuery(establishmentId);
     const steps = useEstablishmentPublishQuestSteps(establishment);
     const isDisabled = steps.some((step) => !step.check);
-    const updateEstablishment = useUpdateEstablishmentMutation();
+    const updateEstablishmentStatus = useUpdateEstablishmentStatusMutation();
 
     const handlePublish = () => {
         if (isDisabled || establishment?.status !== ESTABLISHMENT_STATUS.DRAFT) return;
 
-        updateEstablishment.mutate(
+        updateEstablishmentStatus.mutate(
             {
                 establishmentId,
-                establishment: {
-                    status: ESTABLISHMENT_STATUS.ACTIVE,
-                },
+                status: ESTABLISHMENT_STATUS.ACTIVE,
             },
             {
                 onSuccess: () => {
@@ -45,7 +43,7 @@ const PublishEstablishment = ({ onClose }) => {
                     startIcon={<FontAwesomeIcon icon={icon({ name: 'rocket', style: 'solid' })} />}
                     isDisabled={isDisabled}
                     onPress={handlePublish}
-                    isLoading={updateEstablishment.isLoading}
+                    isLoading={updateEstablishmentStatus.isLoading}
                 >
                     <FormattedMessage defaultMessage="Publier" />
                 </Button>

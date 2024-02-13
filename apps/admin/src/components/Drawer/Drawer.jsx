@@ -29,81 +29,38 @@ const Drawer = ({ isOpen, onToggleDrawer }) => {
                 />
             </DrawerHeader>
             <Nav>
-                <NavListWrapper>
-                    <NavTitle>Mon établissement</NavTitle>
-                    <NavList>
-                        <NavItem>
-                            <NavLink to={`/establishment/overview`}>
-                                <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />
-                                Overview
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to={`/establishment/team?page=1`}>
-                                <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
-                                Équipe
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to={`/establishment/appointments?page=1`}>
-                                <NavItemIcon
-                                    icon={icon({ name: 'calendar-check', style: 'solid' })}
-                                />
-                                Gestion de RDV
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to={`/establishment/planning`}>
-                                <NavItemIcon
-                                    icon={icon({ name: 'calendar-days', style: 'solid' })}
-                                />
-                                Planning
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to={`/establishment/settings`}>
-                                <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
-                                Paramètres
-                            </NavLink>
-                        </NavItem>
-                    </NavList>
-                </NavListWrapper>
-                <Divider />
-                {isProvider && (
-                    <NavListWrapper>
-                        <NavTitle>Général</NavTitle>
-                        <NavList>
-                            <NavItem>
-                                <NavLink to="overview">
-                                    <NavItemIcon
-                                        icon={icon({ name: 'chart-line', style: 'solid' })}
-                                    />
-                                    Overview
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink to="team?page=1">
-                                    <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
-                                    Mon équipe
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink to="establishments">
-                                    <NavItemIcon icon={icon({ name: 'shop', style: 'solid' })} />
-                                    Établissements
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink to="appointments?page=1">
-                                    <NavItemIcon
-                                        icon={icon({ name: 'calendar-check', style: 'solid' })}
-                                    />
-                                    Gestion de RDV
-                                </NavLink>
-                            </NavItem>
-                        </NavList>
-                    </NavListWrapper>
-                )}
+                <NavList>
+                    <NavItem>
+                        <NavLink to={`/establishment/overview`}>
+                            <NavItemIcon icon={icon({ name: 'chart-line', style: 'solid' })} />
+                            Overview
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to={`/establishment/team?page=1`}>
+                            <NavItemIcon icon={icon({ name: 'users', style: 'solid' })} />
+                            Équipe
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to={`/establishment/appointments?page=1`}>
+                            <NavItemIcon icon={icon({ name: 'calendar-check', style: 'solid' })} />
+                            Gestion de RDV
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to={`/establishment/planning`}>
+                            <NavItemIcon icon={icon({ name: 'calendar-days', style: 'solid' })} />
+                            Planning
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink to={`/establishment/settings`}>
+                            <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
+                            Paramètres
+                        </NavLink>
+                    </NavItem>
+                </NavList>
             </Nav>
             <LogoutButton
                 onPress={logout}
@@ -126,7 +83,7 @@ const Aside = styled.aside`
     transform: translateX(-100%);
     transition: transform 0.25s ease-in-out;
     padding-inline: var(--container-padding-mobile);
-    /* padding-block: var(--container-padding-mobile); */
+    padding-block: var(--container-padding-mobile);
     display: flex;
     flex-direction: column;
     align-items: center;

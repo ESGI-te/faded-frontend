@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     const onAuthenticate = async ({ accessToken, refreshToken }) => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
-        await queryClient.fetchQuery({ queryKey: userKeys.detail, queryFn: getUser });
+        await queryClient.fetchQuery({ queryKey: userKeys.detail(), queryFn: getUser });
         setIsAuthenticated(true);
     };
 
