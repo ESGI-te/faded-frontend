@@ -2,8 +2,6 @@ import Login from '@components/Login';
 import Text from 'shared/src/components/Text';
 import Stack from 'shared/src/components/Stack';
 import styled from 'styled-components';
-import BlobIllustration from '@public/images/illustration-login.svg?react';
-import Link from 'shared/src/components/Link';
 import { FormattedMessage } from 'react-intl';
 
 const LoginPage = () => {
@@ -11,20 +9,19 @@ const LoginPage = () => {
         <Page>
             <PageInnerWrapper>
                 <LoginWrapper>
-                    <Stack gap="0.25rem">
-                        <Text variant="headingXL" fontWeight="--fw-bold">
-                            <FormattedMessage defaultMessage="Ravi de vous revoir." />
-                        </Text>
-                        <Text>Sunt id dolor eu officia ex amet voluptate esse velit.</Text>
-                    </Stack>
-                    <Login />
-                    <Link to="/register">
-                        <FormattedMessage defaultMessage="Pas encore inscrit ? Rejoignez nous !" />
-                    </Link>
+                    <LoginInner>
+                        <Stack gap="0.25rem">
+                            <Text variant="headingXL" fontWeight="--fw-bold">
+                                <FormattedMessage defaultMessage="Espace administrateur." />
+                            </Text>
+                            <Text>
+                                <FormattedMessage defaultMessage="Accès sécurisé à votre tableau de bord" />
+                            </Text>
+                        </Stack>
+                        <Login />
+                    </LoginInner>
                 </LoginWrapper>
-                <IllustrationWrapper>
-                    <Illustration />
-                </IllustrationWrapper>
+                <Illustration />
             </PageInnerWrapper>
         </Page>
     );
@@ -32,17 +29,12 @@ const LoginPage = () => {
 
 const Page = styled.section`
     width: 100%;
+    height: 100%;
     display: flex;
-    align-self: stretch;
     justify-content: center;
-    background-image: url('/images/blob-login.svg');
-    background-repeat: no-repeat;
-    background-position: top 20% left 50%;
-    background-size: 18rem;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         flex-direction: row;
-        background: none;
     }
 `;
 const PageInnerWrapper = styled.div`
@@ -50,29 +42,27 @@ const PageInnerWrapper = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    column-gap: 4rem;
-    max-width: var(--container-width);
+    column-gap: 1rem;
     padding: var(--container-padding-mobile);
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
-        padding: var(--container-padding);
-    }
-
-    ${({ theme }) => theme.mediaQueries.desktopLargeAndUp} {
-        column-gap: 6rem;
+        padding: 0;
     }
 `;
-const LoginWrapper = styled.div`
+const LoginInner = styled.div`
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: 2.5rem;
     width: 100%;
     max-width: 500px;
 `;
-const Illustration = styled(BlobIllustration)`
-    width: 40rem;
+const LoginWrapper = styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
-const IllustrationWrapper = styled.div`
+const Illustration = styled.div`
     display: none;
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
@@ -80,6 +70,9 @@ const IllustrationWrapper = styled.div`
         align-items: center;
         justify-content: center;
         flex: 1;
+        height: 100%;
+        background-image: url('images/login.webp');
+        background-size: cover;
     }
 `;
 

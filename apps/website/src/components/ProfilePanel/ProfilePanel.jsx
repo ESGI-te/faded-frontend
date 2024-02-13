@@ -20,12 +20,6 @@ const ProfilePanel = () => {
                         <FormattedMessage defaultMessage="Mes RDV" />
                     </Link>
                 </NavItem>
-                <NavItem>
-                    <Link to="settings">
-                        <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
-                        <FormattedMessage defaultMessage="Paramètres" />
-                    </Link>
-                </NavItem>
             </NavList>
         </Container>
     );
