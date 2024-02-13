@@ -12,7 +12,7 @@ const InputSearchPlaces = ({ onChange, defaultValue, ...props }) => {
 		clearSuggestions,
 		value,
 	} = usePlacesAutocomplete({
-		callbackName: "YOUR_CALLBACK_NAME",
+		callbackName: "searchPlaces",
 		requestOptions: {
 			/* Define search scope here */
 		},
