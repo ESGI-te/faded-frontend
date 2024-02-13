@@ -12,6 +12,13 @@ export const createEstablishment = (establishment) =>
     callApi('/establishments', { method: 'POST', data: establishment });
 export const updateEstablishment = ({ establishmentId, establishment }) =>
     callApi(`/establishments/${establishmentId}`, { method: 'PATCH', data: establishment });
+export const updateEstablishmentStatus = ({ establishmentId, status }) =>
+    callApi(`/establishments/${establishmentId}/status`, {
+        method: 'PATCH',
+        data: {
+            status,
+        },
+    });
 
 export const createService = (service) => callApi('/services', { method: 'POST', data: service });
 export const updateService = (serviceId, service) =>

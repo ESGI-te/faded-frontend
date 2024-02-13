@@ -9,6 +9,7 @@ const useCreateEstablishmentFormSchema = () => {
         name: yup
             .string()
             .min(2, intl.formatMessage(FORM_VALIDATION_MESSAGE.minLength, { min: 2 }))
+            .max(120, intl.formatMessage(FORM_VALIDATION_MESSAGE.maxLength, { max: 120 }))
             .required(intl.formatMessage(FORM_VALIDATION_MESSAGE.required)),
     });
 };
