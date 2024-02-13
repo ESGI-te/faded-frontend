@@ -17,11 +17,13 @@ const Login = () => {
     const onSubmit = (data, setError) => {
         login.mutate(data, {
             onSuccess: async ({ token, refreshToken, roles }) => {
-                if (
-                    !roles.includes(USER_ROLES.PROVIDER) ||
-                    !roles.includes(USER_ROLES.BARBER) ||
-                    !roles.includes(USER_ROLES.ADMIN)
-                ) {
+                const hasRequiredRole = [
+                    USER_ROLES.PROVIDER,
+                    USER_ROLES.BARBER,
+                    USER_ROLES.ADMIN,
+                ].some((role) => roles.includes(role));
+
+                if (!hasRequiredRole) {
                     setError('email', {
                         type: '400',
                         message: intl.formatMessage({
