@@ -2,15 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getServiceCategories } from "../../api";
 import serviceCategoryKeys from "./serviceCategoryKeys";
 
-const queryFn = async () => {
-	const data = await getServiceCategories();
-
+const queryFn = async ({
+	queryKey: [{ page, perPage, entity, scope, ...q }],
+}) => {
+	const data = await getServiceCategories({ page, perPage, ...q });
 	return data;
 };
 
-const useServiceCategoriesQuery = () => {
+const useServiceCategoriesQuery = ({ ...q } = {}) => {
 	return useQuery({
-		queryKey: serviceCategoryKeys.all(),
+		queryKey: serviceCategoryKeys.list({ ...q }),
 		queryFn,
 	});
 };

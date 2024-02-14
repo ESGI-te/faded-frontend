@@ -1,11 +1,17 @@
+import ServiceCategory from '@components/ServiceCategory';
 import React from 'react';
+import styled from 'styled-components';
 
 function CategoriesPage() {
   return (
-    <div>
-      <h1>Categories</h1>
-    </div>
+    <Wrapper>
+      <ServiceCategory />
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  padding: 2rem;
+`;
 
 export default CategoriesPage;
