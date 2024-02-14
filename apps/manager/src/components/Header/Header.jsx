@@ -33,7 +33,7 @@ const Header = () => {
     return (
         <Wrapper>
             <LeftWrapper>
-                <Logo>logo</Logo>
+                <Logo>B.</Logo>
                 <Divider>/</Divider>
                 {user.isLoading || user.isError ? (
                     <OrganizationSkeleton />
@@ -223,6 +223,8 @@ const Divider = styled.div`
 `;
 const Logo = styled.div`
     display: none;
+    font-size: var(--fs-heading-m);
+    font-weight: var(--fw-bold);
 
     & + ${Divider} {
         display: none;

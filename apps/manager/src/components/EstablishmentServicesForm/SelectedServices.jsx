@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 import useUpdateServiceMutation from '@queries/service/useUpdateServiceMutation.hook';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
-import ServicesSkeleton from './ServicesSkeleton';
+import { shimmering } from 'shared/src/styles/animations';
 
 const SelectedServices = () => {
     const { data: user } = useUserQuery();
@@ -53,6 +53,7 @@ const SelectedServices = () => {
     };
 
     const renderEmptyState = () => {
+        if (isLoading) return <Loader />;
         if (debouncedSearchQuery.length > 0) {
             return (
                 <EmptyStateText fontWeight="semibold">
@@ -74,8 +75,6 @@ const SelectedServices = () => {
             </EmptyStateWrapper>
         );
     };
-
-    if (isLoading) return <ServicesSkeleton />;
 
     return (
         <SelectedServicesWrapper>
@@ -185,5 +184,11 @@ const EmptyStateWrapper = styled(Text)`
 const EmptyStateText = styled(Text)`
     padding: 1rem;
 `;
-
+const Loader = styled.div`
+    border-radius: var(--r-m);
+    background-color: var(--neutral50);
+    height: 100%;
+    width: 100%;
+    ${shimmering}
+`;
 export default SelectedServices;

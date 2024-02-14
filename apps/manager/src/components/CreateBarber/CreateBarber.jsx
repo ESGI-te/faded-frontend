@@ -3,18 +3,26 @@ import useCreateBarberMutation from '@queries/barber/useCreateBarberMutation.hoo
 import { USER_ROLES } from 'shared/src/utils/constants';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
+import { toast } from 'react-toastify';
 
 const CreateBarber = ({ onCloseModal }) => {
     const { data: user } = useUserQuery();
     const createBarber = useCreateBarberMutation();
     const isProvider = user?.roles?.includes(USER_ROLES.PROVIDER);
     const providerId = isProvider && user.provider.id;
+    const intl = useIntl();
 
     const handleCreateBarber = (barber) => {
         if (!isProvider || !providerId) return;
 
         createBarber.mutate(barber, {
             onSuccess: () => {
+                toast.success(
+                    intl.formatMessage({
+                        defaultMessage: 'Votre coiffeur a été créé avec succès',
+                    }),
+                );
                 onCloseModal();
             },
         });

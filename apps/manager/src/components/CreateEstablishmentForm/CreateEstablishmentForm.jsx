@@ -10,6 +10,7 @@ import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import useCreateEstablishmentMutation from '@queries/establishment/useCreateEstablishmentMutation.hook';
+import { toast } from 'react-toastify';
 
 const CreateEstablishmentForm = ({ onCloseModal }) => {
     const schema = useCreateEstablishmentFormSchema();
@@ -31,6 +32,11 @@ const CreateEstablishmentForm = ({ onCloseModal }) => {
         if (!isProvider) return;
         createEstablishment.mutate(establishment, {
             onSuccess: (establishment) => {
+                toast.success(
+                    intl.formatMessage({
+                        defaultMessage: 'Votre établissement été créé avec succès',
+                    }),
+                );
                 navigate(`/${establishment.id}`);
             },
         });

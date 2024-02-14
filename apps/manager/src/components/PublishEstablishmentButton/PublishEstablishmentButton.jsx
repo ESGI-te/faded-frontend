@@ -24,6 +24,11 @@ const PublishButton = styled(Button)`
     background-color: var(--primary100);
     color: var(--primary);
     font-size: var(--fs-body-m);
+    display: none;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        display: flex;
+    }
 `;
 const PublishIcon = styled(FontAwesomeIcon)`
     width: 0.75rem;
