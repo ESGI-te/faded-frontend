@@ -52,12 +52,6 @@ const Drawer = ({ isOpen, onToggleDrawer }) => {
                                 Catégories
                             </NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink to={`/admin/settings`}>
-                                <NavItemIcon icon={icon({ name: 'gear', style: 'solid' })} />
-                                Paramètres
-                            </NavLink>
-                        </NavItem>
                     </NavList>
                 </NavListWrapper>
                 <Divider />
