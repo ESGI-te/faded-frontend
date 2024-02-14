@@ -57,7 +57,9 @@ export const updateAppointment = ({ appointmentId, appointment }, query) =>
 		query,
 	});
 
-export const getServiceCategories = () => callApi("/service_categories");
+export const getServiceCategories = (query) => callApi("/service_categories",{
+	query
+});
 
 export const deleteService = (serviceId) =>
 	callApi(`/services/${serviceId}`, { method: "DELETE" });
