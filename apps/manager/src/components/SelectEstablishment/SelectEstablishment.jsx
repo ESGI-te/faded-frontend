@@ -20,11 +20,12 @@ import EstablishmentStatusBadge from '@components/EstablishmentStatusBadge';
 import Button from 'shared/src/components/Button';
 import CreateEstablishmentModal from '@components/CreateEstablishmentModal';
 import placeholderIllustration from 'shared/src/assets/images/placeholder-img.png';
+import { shimmering } from 'shared/src/styles/animations';
 
 const SelectEstablishment = ({ onClose }) => {
     const intl = useIntl();
     const { data: user } = useUserQuery();
-    const { data: establishments } = useEstablishmentsQuery({ pagination: false });
+    const { data: establishments, isLoading } = useEstablishmentsQuery({ pagination: false });
     const { establishmentId } = useParams();
     const isBarber = user && user.roles.includes(USER_ROLES.BARBER);
     const [searchQuery, setSearchQuery] = useState('');
@@ -64,22 +65,28 @@ const SelectEstablishment = ({ onClose }) => {
         onClose();
     };
 
-    const renderEmptyState = () => (
-        <EmptyStateText>
-            {debouncedSearchQuery.length < 1 && items.length <= 1 && establishments?.length > 0 ? (
-                <FormattedMessage
-                    defaultMessage="{nbEstablishments, plural, 
+    const renderEmptyState = () => {
+        if (isLoading) return <Loader />;
+
+        return (
+            <EmptyStateText>
+                {debouncedSearchQuery.length < 1 &&
+                items.length <= 1 &&
+                establishments?.length > 0 ? (
+                    <FormattedMessage
+                        defaultMessage="{nbEstablishments, plural, 
                     =0 {Aucun établissement}
                     =1 {Un établissement}
                     other {# établissements}
                 }"
-                    values={{ nbEstablishments: establishments?.length }}
-                />
-            ) : (
-                <FormattedMessage defaultMessage="Aucun résultat" />
-            )}
-        </EmptyStateText>
-    );
+                        values={{ nbEstablishments: establishments?.length }}
+                    />
+                ) : (
+                    <FormattedMessage defaultMessage="Aucun résultat" />
+                )}
+            </EmptyStateText>
+        );
+    };
 
     return (
         <SelectEstablishmentWrapper>
@@ -250,6 +257,13 @@ const CreateIcon = styled(FontAwesomeIcon)`
     width: 1rem;
     height: 1rem;
     color: var(--primary);
+`;
+const Loader = styled.div`
+    border-radius: var(--r-s);
+    background-color: var(--neutral50);
+    height: 2rem;
+    width: 100%;
+    ${shimmering}
 `;
 
 export default SelectEstablishment;

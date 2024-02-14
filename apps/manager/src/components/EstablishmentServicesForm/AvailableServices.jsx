@@ -14,6 +14,7 @@ import useUpdateServiceMutation from '@queries/service/useUpdateServiceMutation.
 import ServicesSkeleton from './ServicesSkeleton';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
+import { shimmering } from 'shared/src/styles/animations';
 
 const AvailableServices = () => {
     const { establishmentId } = useParams();
@@ -57,6 +58,7 @@ const AvailableServices = () => {
     };
 
     const renderEmptyState = () => {
+        if (isLoading || user.isLoading) return <Loader />;
         if (debouncedSearchQuery.length > 0) {
             return (
                 <EmptyStateText fontWeight="semibold">
@@ -83,8 +85,6 @@ const AvailableServices = () => {
             </EmptyStateWrapper>
         );
     };
-
-    if (isLoading || user.isLoading) return <ServicesSkeleton />;
 
     if (!isProvider) return null;
 
@@ -200,5 +200,11 @@ const ServicesLink = styled(Link)`
     font-weight: var(--fw-semibold);
     cursor: pointer;
 `;
-
+const Loader = styled.div`
+    border-radius: var(--r-m);
+    background-color: var(--neutral50);
+    height: 100%;
+    width: 100%;
+    ${shimmering}
+`;
 export default AvailableServices;
