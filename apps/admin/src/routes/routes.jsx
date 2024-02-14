@@ -11,6 +11,7 @@ import OverviewPage from '@pages/OverviewPage';
 import ProviderRequestPage from '@pages/ProviderRequestPage';
 import CategoriesPage from '@pages/CategoriesPage';
 import SettingsPage from '@pages/SettingsPage';
+import { USER_ROLES } from 'shared/src/utils/constants';
 
 const applyProtectedRoutes = (routes) =>
     routes.map((route) => {
