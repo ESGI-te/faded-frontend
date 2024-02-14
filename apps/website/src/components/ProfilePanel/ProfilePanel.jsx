@@ -9,16 +9,16 @@ const ProfilePanel = () => {
         <Container>
             <NavList>
                 <NavItem>
-                    <Link to="">
+                    <NavItemLink to="">
                         <NavItemIcon icon={icon({ name: 'circle-user', style: 'solid' })} />
                         <FormattedMessage defaultMessage="Mes informations" />
-                    </Link>
+                    </NavItemLink>
                 </NavItem>
                 <NavItem>
-                    <Link to="appointments">
+                    <NavItemLink to="appointments">
                         <NavItemIcon icon={icon({ name: 'calendar', style: 'regular' })} />
                         <FormattedMessage defaultMessage="Mes RDV" />
-                    </Link>
+                    </NavItemLink>
                 </NavItem>
             </NavList>
         </Container>
@@ -81,6 +81,11 @@ const NavItemIcon = styled(FontAwesomeIcon)`
 
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         display: initial;
+    }
+`;
+const NavItemLink = styled(Link)`
+    &[data-current] {
+        font-weight: var(--fw-bold);
     }
 `;
 export default ProfilePanel;

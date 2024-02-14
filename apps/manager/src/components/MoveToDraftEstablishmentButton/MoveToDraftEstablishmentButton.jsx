@@ -25,6 +25,11 @@ const MoveToDraftButton = styled(Button)`
     /* border: 1px solid var(--neutral200); */
     color: var(--neutral500);
     font-size: var(--fs-body-m);
+    display: none;
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        display: flex;
+    }
 `;
 const MoveToDraftIcon = styled(FontAwesomeIcon)`
     width: 0.75rem;

@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hook';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
+import { shimmering } from 'shared/src/styles/animations';
 
 const SelectedBarbers = () => {
     const { data: user } = useUserQuery();
@@ -53,6 +54,8 @@ const SelectedBarbers = () => {
     };
 
     const renderEmptyState = () => {
+        if (isLoading) return <Loader />;
+
         if (debouncedSearchQuery.length > 0) {
             return (
                 <EmptyStateText fontWeight="semibold">
@@ -60,6 +63,7 @@ const SelectedBarbers = () => {
                 </EmptyStateText>
             );
         }
+
         return (
             <EmptyStateWrapper>
                 <Text fontWeight="semibold">
@@ -183,5 +187,11 @@ const EmptyStateWrapper = styled(Text)`
 const EmptyStateText = styled(Text)`
     padding: 1rem;
 `;
-
+const Loader = styled.div`
+    border-radius: var(--r-m);
+    background-color: var(--neutral50);
+    height: 100%;
+    width: 100%;
+    ${shimmering}
+`;
 export default SelectedBarbers;

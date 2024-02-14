@@ -43,7 +43,13 @@ const EstablishmentSchedulesForm = ({ planning, onSubmit, isLoading }) => {
                                     defaultSelected={getDayPlanning(day)?.isOpen}
                                     name={`planning.${day}.isOpen`}
                                 />
-                                <Text>{getDayPlanning(day).isOpen ? 'open' : 'closed'}</Text>
+                                <Text>
+                                    {getDayPlanning(day).isOpen ? (
+                                        <FormattedMessage defaultMessage="ouvert" />
+                                    ) : (
+                                        <FormattedMessage defaultMessage="fermé" />
+                                    )}
+                                </Text>
                             </Cluster>
                         </Cluster>
                         {getDayPlanning(day)?.isOpen && (

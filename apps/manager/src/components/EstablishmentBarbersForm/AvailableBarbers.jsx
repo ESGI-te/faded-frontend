@@ -11,6 +11,8 @@ import useBarbersQuery from 'shared/src/queries/barber/useBarbersQuery.hook';
 import IconButton from 'shared/src/components/IconButton';
 import { useParams } from 'react-router-dom';
 import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hook';
+import { toast } from 'react-toastify';
+import { shimmering } from 'shared/src/styles/animations';
 
 const AvailableBarbers = () => {
     const { establishmentId } = useParams();
@@ -40,15 +42,26 @@ const AvailableBarbers = () => {
     }, [barbers, debouncedSearchQuery]);
 
     const handleAddBarber = (barberId) => {
-        updateBarber.mutate({
-            barberId,
-            barber: {
-                establishment: establishmentId,
+        updateBarber.mutate(
+            {
+                barberId,
+                barber: {
+                    establishment: establishmentId,
+                },
             },
-        });
+            {
+                onError: (error) => {
+                    toast.error(
+                        intl.formatMessage({ defaultMessage: "Une errreur s'est produite" }),
+                    );
+                },
+            },
+        );
     };
 
     const renderEmptyState = () => {
+        if (isLoading) return <Loader />;
+
         if (debouncedSearchQuery.length > 0) {
             return (
                 <EmptyStateText fontWeight="semibold">
@@ -56,6 +69,7 @@ const AvailableBarbers = () => {
                 </EmptyStateText>
             );
         }
+
         return (
             <EmptyStateWrapper>
                 <Text fontWeight="semibold">
@@ -187,6 +201,13 @@ const BarbersLink = styled(Link)`
     color: var(--primary500);
     font-weight: var(--fw-semibold);
     cursor: pointer;
+`;
+const Loader = styled.div`
+    border-radius: var(--r-m);
+    background-color: var(--neutral50);
+    height: 100%;
+    width: 100%;
+    ${shimmering}
 `;
 
 export default AvailableBarbers;
