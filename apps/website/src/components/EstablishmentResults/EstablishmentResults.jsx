@@ -9,7 +9,7 @@ import EstablishmentResultsSkeleton from './EstablishmentResultsSkeleton';
 const EstablishmentResults = ({ establishments, isLoading, isMapVisible, pagination }) => {
     if (isLoading) return <EstablishmentResultsSkeleton />;
 
-    if (establishments.length === 0) return <div>Aucun résultat</div>;
+    if (establishments?.length === 0) return <div>Aucun résultat</div>;
 
     return (
         <Wrapper>

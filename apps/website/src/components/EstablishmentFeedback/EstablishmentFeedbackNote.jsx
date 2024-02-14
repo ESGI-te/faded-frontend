@@ -10,7 +10,7 @@ const EstablishmentFeedbackNote = ({ note, noteCount }) => {
         <FeedbackNoteWrapper>
             <Note>
                 <Text as="span" color="--white" fontWeight="--fw-bold" variant="bodyL">
-                    {note.toFixed(1)}
+                    {note ? note.toFixed(1) : 0}
                 </Text>
                 <StarIcon icon={icon({ name: 'star', style: 'solid' })} />
             </Note>

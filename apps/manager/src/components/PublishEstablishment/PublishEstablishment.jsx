@@ -11,10 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { ESTABLISHMENT_STATUS } from 'shared/src/utils/constants';
 import useUpdateEstablishmentStatusMutation from '@queries/establishment/useUpdateEstablishmentStatusMutation.hook';
+import Text from 'shared/src/components/Text';
+import Spinner from 'shared/src/components/Spinner';
 
 const PublishEstablishment = ({ onClose }) => {
     const { establishmentId } = useParams();
-    const { data: establishment } = useEstablishmentQuery(establishmentId);
+    const { data: establishment, isFetching } = useEstablishmentQuery(establishmentId, {
+        staleTime: 0,
+    });
     const steps = useEstablishmentPublishQuestSteps(establishment);
     const isDisabled = steps.some((step) => !step.check);
     const updateEstablishmentStatus = useUpdateEstablishmentStatusMutation();
@@ -37,11 +41,19 @@ const PublishEstablishment = ({ onClose }) => {
 
     return (
         <Stack gap="2.5rem">
-            <PublishEstablishmentQuest onClose={onClose} steps={steps} />
+            {isFetching ? (
+                <Spinner color="--primary" />
+            ) : isDisabled ? (
+                <PublishEstablishmentQuest onClose={onClose} steps={steps} />
+            ) : (
+                <Text align="center" color="--neutral500">
+                    <FormattedMessage defaultMessage="Votre établissement sera en ligne et prêt à accueillir des clients !" />
+                </Text>
+            )}
             <ActionWrapper>
                 <Button
                     startIcon={<FontAwesomeIcon icon={icon({ name: 'rocket', style: 'solid' })} />}
-                    isDisabled={isDisabled}
+                    isDisabled={isFetching || isDisabled}
                     onPress={handlePublish}
                     isLoading={updateEstablishmentStatus.isLoading}
                 >

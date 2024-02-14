@@ -9,7 +9,7 @@ const useProfileFormSchema = () => {
     return yup.object({
         firstName: yup.string().required(intl.formatMessage(FORM_VALIDATION_MESSAGE.required)),
         lastName: yup.string().required(intl.formatMessage(FORM_VALIDATION_MESSAGE.required)),
-        loale: yup
+        locale: yup
             .string()
             .oneOf(Object.values(LOCALES))
             .required(intl.formatMessage(FORM_VALIDATION_MESSAGE.required)),

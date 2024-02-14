@@ -16,7 +16,7 @@ const EstablishmentSettings = () => {
                 establishmentId: establishment.data?.id,
                 establishment: {
                     ...data,
-                    cover: cover?.[0] || null,
+                    cover: cover || null,
                 },
             },
             {

@@ -13,7 +13,7 @@ const useDeleteBarberMutation = () => {
         mutationFn,
         onSuccess: (data) =>
             queryClient.invalidateQueries({
-                queryKey: barberKeys.list(),
+                queryKey: barberKeys.allLists(),
             }),
     });
 };

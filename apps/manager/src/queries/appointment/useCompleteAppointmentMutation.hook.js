@@ -13,7 +13,7 @@ const useCompleteAppointmentMutation = () => {
         mutationFn,
         onSuccess: (data) =>
             queryClient.invalidateQueries({
-                queryKey: appointmentKeys.list(),
+                queryKey: appointmentKeys.allLists(),
             }),
     });
 };

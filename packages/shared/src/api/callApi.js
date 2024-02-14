@@ -35,10 +35,10 @@ export const callApi = async (url, options) => {
 	const response = await fetch(URL, fetchOptions);
 
 	if (!response.ok) {
-		const refreshToken = localStorage.getItem("refreshToken");
+		const refreshTokenValue = localStorage.getItem("refreshToken");
 
-		if (!isRefreshing && response.status === 401 && refreshToken) {
-			return refreshToken(refreshToken);
+		if (!isRefreshing && response.status === 401 && refreshTokenValue) {
+			return refreshToken(refreshTokenValue);
 		}
 
 		throw new Error("Network request failed");

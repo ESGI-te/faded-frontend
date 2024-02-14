@@ -20,7 +20,9 @@ const AvailableServices = () => {
     const intl = useIntl();
     const user = useUserQuery();
     const isProvider = user.data?.roles?.includes(USER_ROLES.PROVIDER);
-    const { data: services, isLoading } = useServicesQuery();
+    const { data: services, isLoading } = useServicesQuery({
+        pagination: false,
+    });
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery);
     const updateService = useUpdateServiceMutation();

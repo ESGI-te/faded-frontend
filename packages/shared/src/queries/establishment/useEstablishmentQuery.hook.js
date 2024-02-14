@@ -8,11 +8,12 @@ const queryFn = async ({ queryKey: [{ establishmentId }] }) => {
 	return data;
 };
 
-const useEstablishmentQuery = (establishmentId) => {
+const useEstablishmentQuery = (establishmentId, config = {}) => {
 	return useQuery({
 		queryKey: establishmentKeys.detailById(establishmentId),
 		queryFn,
 		enabled: !!establishmentId,
+		...config,
 	});
 };
 
