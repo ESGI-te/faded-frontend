@@ -3,12 +3,15 @@ import useEstablishmentQuery from 'shared/src/queries/establishment/useEstablish
 import { useParams } from 'react-router-dom';
 import useUpdateEstablishmentMutation from '@queries/establishment/useUpdateEstablishmentMutation.hook';
 import useUpdateEstablishmentImageMutation from '@queries/establishment/useUpdateEstablishmentImageMutation.hook';
+import { useIntl } from 'react-intl';
+import { toast } from 'react-toastify';
 
 const EstablishmentSettings = () => {
     const { establishmentId } = useParams();
     const establishment = useEstablishmentQuery(establishmentId);
     const updateEstablishment = useUpdateEstablishmentMutation();
     const updateEstablishmentImage = useUpdateEstablishmentImageMutation();
+    const intl = useIntl();
 
     const onSubmit = ({ cover, ...data }) => {
         updateEstablishment.mutate(
@@ -21,7 +24,11 @@ const EstablishmentSettings = () => {
             },
             {
                 onSuccess: () => {
-                    // TODO: Add success toast
+                    toast.success(
+                        intl.formatMessage({
+                            defaultMessage: 'Vos informations ont bien été mises à jour',
+                        }),
+                    );
                 },
             },
         );

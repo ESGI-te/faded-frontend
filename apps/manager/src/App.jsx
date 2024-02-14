@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import IntlProvider from '@contexts/IntlProvider';
 import AuthProvider from '@contexts/AuthProvider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import routes from './routes';
 
 const router = createBrowserRouter(routes);
@@ -23,6 +25,7 @@ function App() {
             <IntlProvider>
                 <ThemeProvider theme={mediaQueries}>
                     <Theme />
+                    <ToastContainer />
                     <AuthProvider>
                         <RouterProvider router={router} />
                     </AuthProvider>

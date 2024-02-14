@@ -18,7 +18,7 @@ const Header = () => {
             <Text as={Link} to="/" variant="bodyL" fontWeight="--fw-bold">
                 BARBERS
             </Text>
-            <Cluster gap="2rem" align="center">
+            <Cluster gap="1rem" align="center">
                 <SelectLanguage />
                 {isAuthenticated ? (
                     <ProfileLink to="/profile">

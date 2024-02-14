@@ -12,7 +12,7 @@ const useUpdateBarberMutation = () => {
     return useMutation({
         mutationFn,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: barberKeys.list() });
+            queryClient.invalidateQueries({ queryKey: barberKeys.allLists() });
         },
     });
 };

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hook';
 import useUpdateUserMutation from 'shared/src/queries/user/useUpdateUserMutation.hook';
 import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { toast } from 'react-toastify';
 
 const EditBarber = ({ onCloseModal, barber }) => {
     const { data: user } = useUserQuery();
@@ -19,7 +21,9 @@ const EditBarber = ({ onCloseModal, barber }) => {
         firstName: barber.firstName,
         lastName: barber.lastName,
         email: barber.user.email,
+        planning: barber.planning,
     };
+    const intl = useIntl();
 
     const handleEditBarber = async (data) => {
         if (!isProvider) return;
@@ -27,6 +31,9 @@ const EditBarber = ({ onCloseModal, barber }) => {
         const userPromise = updateUser.mutateAsync({ userId: barber.user.id, user: data });
         const barberPromise = updateBarber.mutateAsync({ barberId: barber.id, barber: data });
         await Promise.all([userPromise, barberPromise]);
+        toast.success(
+            intl.formatMessage({ defaultMessage: 'Vos informations ont bien été mises à jour' }),
+        );
         onCloseModal();
     };
 

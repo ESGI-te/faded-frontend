@@ -107,10 +107,15 @@ const NavLink = styled(Link)`
     }
 `;
 const ButtonSkeleton = styled.div`
+    display: none;
     height: 31px;
     width: 100px;
     border-radius: var(--r-s);
     ${shimmering}
+
+    ${({ theme }) => theme.mediaQueries.desktopAndUp} {
+        display: block;
+    }
 `;
 
 const BARBER_NAVIGATION_ITEMS = (establishmentId) => [
