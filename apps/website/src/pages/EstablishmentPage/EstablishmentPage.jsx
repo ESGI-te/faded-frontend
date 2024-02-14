@@ -55,7 +55,7 @@ const EstablishmentPage = () => {
                         </Subtitle>
                         <Subtitle>
                             <SubtitleIcon icon={icon({ name: 'star', style: 'regular' })} />
-                            <span>{establishment.note.toFixed(1)}</span>
+                            <span>{establishment.note ? establishment.note.toFixed(1) : 0}</span>
                             <span>({establishment.noteCount} avis)</span>
                         </Subtitle>
                     </TitleWrapper>
