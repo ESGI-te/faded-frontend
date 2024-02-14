@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Text from 'shared/src/components/Text';
-import { dayjs } from '@utils/dayjs';
 import { useLocale } from 'react-aria';
 import { LOCALES } from '@contexts/IntlProvider';
 import { FormattedMessage } from 'react-intl';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 const daysLookup = {
     monday: 'lundi',
@@ -29,9 +32,10 @@ const EstablishmentPlanning = ({ planning }) => {
                         {!hours.isOpen ? (
                             <FormattedMessage defaultMessage="Fermé" />
                         ) : (
-                            `${dayjs(hours.open).format('HH:mm')} - ${dayjs(hours.close).format(
+                            `${dayjs(hours.open, 'HH:mm').format('HH:mm')} - ${dayjs(
+                                hours.close,
                                 'HH:mm',
-                            )}`
+                            ).format('HH:mm')}`
                         )}
                     </Text>
                 </Day>

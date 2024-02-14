@@ -5,10 +5,11 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'shared/src/components/Button';
 import { Link } from 'react-router-dom';
+import placeholderIllustration from 'shared/src/assets/images/placeholder-img.png';
 
 const EstablishmentCard = ({ establishment }) => (
     <Card>
-        <ImgWrapper />
+        <Img src={establishment?.cover || placeholderIllustration} />
         <InfoWrapper>
             <Text variant="headingS">{establishment.name} </Text>
             <InfoText>
@@ -44,11 +45,12 @@ const Card = styled.li`
         flex-direction: row;
     }
 `;
-const ImgWrapper = styled.div`
+const Img = styled.img`
     width: 100%;
     height: 208px;
     background-color: var(--neutral100);
     border-radius: var(--r-s);
+    object-fit: cover;
 
     ${({ theme }) => theme.mediaQueries.desktopLargeAndUp} {
         max-width: 300px;
@@ -88,14 +90,7 @@ const AppointmentButton = styled(Button)`
 `;
 
 EstablishmentCard.propTypes = {
-    establishment: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        note: PropTypes.number.isRequired,
-        address: PropTypes.string.isRequired,
-        noteCount: PropTypes.number.isRequired,
-        distance: PropTypes.number.isRequired,
-    }),
+    establishment: PropTypes.object,
 };
 
 export default EstablishmentCard;
