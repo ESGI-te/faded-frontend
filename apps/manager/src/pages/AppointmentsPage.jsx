@@ -1,16 +1,17 @@
 import Text from 'shared/src/components/Text';
 import styled from 'styled-components';
 import Appointments from '@components/Appointments';
+import { FormattedMessage } from 'react-intl';
 
 const ProviderAppointmentsPage = () => (
     <Page>
         <PageInner>
             <TitleWrapper>
                 <Text variant="headingM" fontWeight="--fw-bold">
-                    Gérer mes RDV
+                    <FormattedMessage defaultMessage="Gérer mes rendez-vous" />
                 </Text>
                 <Text variant="bodyL" color="--neutral500">
-                    Ajoutez, modifiez ou supprimez des membres de votre équipe
+                    <FormattedMessage defaultMessage="Retrouvez ici l'ensemble de vos rendez-vous" />
                 </Text>
             </TitleWrapper>
             <Appointments />

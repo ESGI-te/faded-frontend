@@ -42,8 +42,8 @@ const ProviderRequestForm = ({ onSubmit, isLoading }) => {
             <InputTextController
                 control={control}
                 name="personalEmail"
-                placeholder={intl.formatMessage({ defaultMessage: 'Email personel' })}
-                label={<FormattedMessage defaultMessage="Email personel" />}
+                placeholder={intl.formatMessage({ defaultMessage: 'Email personnel' })}
+                label={<FormattedMessage defaultMessage="Email personnel" />}
                 type="email"
             />
             <ResponsiveWrapper>

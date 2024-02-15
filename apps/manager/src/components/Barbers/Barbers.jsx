@@ -14,6 +14,7 @@ import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from 'shared/src/components/TableSkeleton';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
+import { FormattedMessage } from 'react-intl';
 
 const Barbers = () => {
     const { establishmentId } = useParams();
@@ -51,7 +52,7 @@ const Barbers = () => {
                             startIcon={<AddIcon icon={icon({ name: 'plus', style: 'solid' })} />}
                             backgroundColor="--black"
                         >
-                            Ajouter
+                            <FormattedMessage defaultMessage="Ajouter" />
                         </Button>
                         <CreateBarberModal />
                     </DialogTrigger>

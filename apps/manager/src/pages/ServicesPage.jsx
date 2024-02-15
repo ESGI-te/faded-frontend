@@ -1,16 +1,17 @@
 import Text from 'shared/src/components/Text';
 import styled from 'styled-components';
 import Services from '@components/Services';
+import { FormattedMessage } from 'react-intl';
 
 const ServicesPage = () => (
     <Page>
         <PageInner>
             <TitleWrapper>
                 <Text variant="headingM" fontWeight="--fw-bold">
-                    Gérer les services de mon organisation
+                    <FormattedMessage defaultMessage="Gérer mes prestations" />
                 </Text>
                 <Text variant="bodyL" color="--neutral500">
-                    Ajoutez, modifiez ou supprimez des services de votre organisation
+                    <FormattedMessage defaultMessage="Ajoutez, modifiez ou supprimez des services de votre organisation" />
                 </Text>
             </TitleWrapper>
             <Services />

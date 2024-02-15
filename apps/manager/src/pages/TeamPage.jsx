@@ -1,16 +1,17 @@
 import Text from 'shared/src/components/Text';
 import styled from 'styled-components';
 import Barbers from '@components/Barbers';
+import { FormattedMessage } from 'react-intl';
 
 const ProviderTeamPage = () => (
     <Page>
         <PageInnerWrapper>
             <TitleWrapper>
                 <Text variant="headingM" fontWeight="--fw-bold">
-                    Gérer mon équipe
+                    <FormattedMessage defaultMessage="Gérer mon équipe" />
                 </Text>
                 <Text variant="bodyL" color="--neutral500">
-                    Ajoutez, modifiez ou supprimez des membres de votre équipe
+                    <FormattedMessage defaultMessage="Ajoutez, modifiez ou supprimez des membres de votre équipe" />
                 </Text>
             </TitleWrapper>
             <Barbers />

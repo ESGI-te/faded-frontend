@@ -11,6 +11,7 @@ import Button from 'shared/src/components/Button';
 import { DialogTrigger } from 'react-aria-components';
 import TableSkeleton from 'shared/src/components/TableSkeleton';
 import CreateEstablishmentModal from '@components/CreateEstablishmentModal';
+import { FormattedMessage } from 'react-intl';
 
 const Establishments = () => {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -43,7 +44,7 @@ const Establishments = () => {
                         startIcon={<AddIcon icon={icon({ name: 'plus', style: 'solid' })} />}
                         backgroundColor="--black"
                     >
-                        Ajouter
+                        <FormattedMessage defaultMessage="Ajouter" />
                     </Button>
                     <CreateEstablishmentModal />
                 </DialogTrigger>
