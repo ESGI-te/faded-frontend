@@ -12,7 +12,7 @@ const useUpdateProviderRequestMutation = () => {
     return useMutation({
         mutationFn,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: providerRequestKeys.list() });
+            queryClient.invalidateQueries({ queryKey: providerRequestKeys.allLists() });
         },
     });
 };
