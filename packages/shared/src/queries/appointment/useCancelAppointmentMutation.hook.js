@@ -17,7 +17,7 @@ const useCancelAppointmentMutation = () => {
 		mutationFn,
 		onSuccess: (data, { appointmentId }) =>
 			queryClient.invalidateQueries({
-				queryKey: appointmentKeys.detailById(appointmentId),
+				queryKey: appointmentKeys.allLists(),
 			}),
 	});
 };
