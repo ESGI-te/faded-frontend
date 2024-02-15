@@ -11,7 +11,6 @@ import useServicesQuery from 'shared/src/queries/service/useServicesQuery.hook';
 import IconButton from 'shared/src/components/IconButton';
 import { useParams } from 'react-router-dom';
 import useUpdateServiceMutation from '@queries/service/useUpdateServiceMutation.hook';
-import ServicesSkeleton from './ServicesSkeleton';
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import { shimmering } from 'shared/src/styles/animations';
@@ -78,7 +77,7 @@ const AvailableServices = () => {
                     <FormattedMessage
                         defaultMessage="🌟 Ajoutez une bnouvelle prestation et enrichissez votre catalogue ! <link>Cliquez ici pour commencer.</link>"
                         values={{
-                            link: (chunks) => <ServicesLink>{chunks}</ServicesLink>,
+                            link: (chunks) => <ServicesLink to="/services">{chunks}</ServicesLink>,
                         }}
                     />
                 </Text>

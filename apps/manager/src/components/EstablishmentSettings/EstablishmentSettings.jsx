@@ -14,12 +14,13 @@ const EstablishmentSettings = () => {
     const intl = useIntl();
 
     const onSubmit = ({ cover, ...data }) => {
+        const image = Array.isArray(cover) ? cover[0] : cover;
         updateEstablishment.mutate(
             {
                 establishmentId: establishment.data?.id,
                 establishment: {
                     ...data,
-                    cover: cover || null,
+                    cover: image || null,
                 },
             },
             {
