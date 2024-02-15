@@ -26,11 +26,11 @@ const ProviderRequestsTableMenu = ({ request }) => {
         updateProviderRequest.mutate(
             {
                 providerRequestId: request.id,
-                status: PROVIDER_REQUEST_STATUS.APPROVED,
+                providerRequest: { status: PROVIDER_REQUEST_STATUS.APPROVED },
             },
             {
                 onSuccess: () => {
-                    setIsRejectModalOpen(false);
+                    setIsApproveModalOpen(false);
                 },
             },
         );
@@ -40,7 +40,7 @@ const ProviderRequestsTableMenu = ({ request }) => {
         updateProviderRequest.mutate(
             {
                 providerRequestId: request.id,
-                status: PROVIDER_REQUEST_STATUS.REJECTED,
+                providerRequest: { status: PROVIDER_REQUEST_STATUS.REJECTED },
             },
             {
                 onSuccess: () => {

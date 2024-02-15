@@ -2,8 +2,8 @@ import { callApi } from 'shared/src/api';
 
 export const updateProviderRequest = (providerRequestId, providerRequest) =>
     callApi(`/provider_requests/${providerRequestId}`, {
-        method: 'PUT',
-        body: providerRequest,
+        method: 'PATCH',
+        data: providerRequest,
     });
 
 export const deleteProviderRequest = (providerRequestId) =>
