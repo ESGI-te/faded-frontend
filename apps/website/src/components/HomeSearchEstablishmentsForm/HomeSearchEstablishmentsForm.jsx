@@ -1,18 +1,18 @@
 import { useForm } from 'react-hook-form';
-import { HomeSearchEstablishmentsFormSchema } from './HomeSearchEstablishmentsForm.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import Button from 'shared/src/components/Button';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import InputSearchPlaces from 'shared/src/components/InputSearchPlaces';
 import InputSearchServiceOrProvider from '@components/InputSearchServiceOrProvider';
+import { useHomeSearchEstablishmentsFormSchema } from './useHomeSearchEstablishmentsForm.hook';
 
 const HomeSearchEstablishmentsForm = ({ onSubmit }) => {
-    const intl = useIntl();
+    const schema = useHomeSearchEstablishmentsFormSchema();
     const { control, handleSubmit, formState } = useForm({
         mode: 'onBlur',
-        resolver: yupResolver(HomeSearchEstablishmentsFormSchema),
+        resolver: yupResolver(schema),
         defaultValues: {
             serviceCategories: '',
             address: '',
