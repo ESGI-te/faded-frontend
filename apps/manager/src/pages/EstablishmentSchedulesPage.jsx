@@ -1,9 +1,19 @@
 import styled from 'styled-components';
 import EstablishmentSchedules from '@components/EstablishmentSchedules';
+import Text from 'shared/src/components/Text';
+import { FormattedMessage } from 'react-intl';
 
 const EstablishmentSchedulesPage = () => (
     <Page>
         <PageInner>
+            <TitleWrapper>
+                <Text variant="headingM" fontWeight="--fw-bold">
+                    <FormattedMessage defaultMessage="Horaires" />
+                </Text>
+                <Text variant="bodyL" color="--neutral500">
+                    <FormattedMessage defaultMessage="Vos horaires d'ouverture et de fermeture" />
+                </Text>
+            </TitleWrapper>
             <SchedulesContainer>
                 <EstablishmentSchedules />
             </SchedulesContainer>
@@ -37,6 +47,11 @@ const SchedulesContainer = styled.div`
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);
     }
+`;
+const TitleWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
 `;
 
 export default EstablishmentSchedulesPage;

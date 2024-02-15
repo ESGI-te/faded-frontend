@@ -15,6 +15,7 @@ import AddServiceModal from './AddServiceModal';
 import useCreateServiceMutation from '@queries/service/useCreateServiceMutation.hook';
 import { useMemo, useState } from 'react';
 import useDebounce from 'shared/src/hooks/useDebounce.hook';
+import { FormattedMessage } from 'react-intl';
 
 const Services = () => {
     const { data: services, isLoading } = useServicesQuery({ pagination: false });
@@ -66,7 +67,7 @@ const Services = () => {
                             backgroundColor="--black"
                             onPress={() => setIsAddModalOpen(true)}
                         >
-                            Ajouter
+                            <FormattedMessage defaultMessage="Ajouter" />
                         </Button>
                     )}
                 </InputSearchWrapper>

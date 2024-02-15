@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ModalCloseButton from 'shared/src/components/ModalCloseButton';
 import CreateServiceCategory from '@components/CreateServiceCategory';
 import Stack from 'shared/src/components/Stack';
+import { FormattedMessage } from 'react-intl';
 
 const CreateServiceCategoryModal = () => {
     return (
@@ -40,7 +41,7 @@ CreateServiceCategoryModal.propTypes = {
 
 CreateServiceCategoryModal.defaultProps = {
     isOpen: false,
-    onOpenChange: () => { },
+    onOpenChange: () => {},
 };
 
 export default CreateServiceCategoryModal;
