@@ -1,9 +1,19 @@
 import styled from 'styled-components';
 import EstablishmentServicesForm from '@components/EstablishmentServicesForm';
+import Text from 'shared/src/components/Text';
+import { FormattedMessage } from 'react-intl';
 
 const EstablishmentServicesPage = () => (
     <Page>
         <PageInner>
+            <TitleWrapper>
+                <Text variant="headingM" fontWeight="--fw-bold">
+                    <FormattedMessage defaultMessage="Gérer mes prestations" />
+                </Text>
+                <Text variant="bodyL" color="--neutral500">
+                    <FormattedMessage defaultMessage="Vos prestations proposées dans votre établissement" />
+                </Text>
+            </TitleWrapper>
             <EstablishmentServicesForm />
         </PageInner>
     </Page>
@@ -26,6 +36,11 @@ const PageInner = styled.div`
     ${({ theme }) => theme.mediaQueries.desktopAndUp} {
         padding: var(--container-padding);
     }
+`;
+const TitleWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
 `;
 
 export default EstablishmentServicesPage;

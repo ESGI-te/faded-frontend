@@ -208,9 +208,7 @@ const InputGroup = styled.div`
     align-items: center;
     column-gap: 0.5rem;
 `;
-const Divider = styled.span`
-    text-transform: uppercase;
-`;
+const Divider = styled.span``;
 
 BarberForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
