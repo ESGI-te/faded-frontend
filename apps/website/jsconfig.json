@@ -19,7 +19,7 @@
   "include": [
     "src/**/*.js",
     "src/**/*.jsx"
-  ],
+, "src/utils/helpers.test..cjs"  ],
   "exclude": [
     "node_modules"
   ]
