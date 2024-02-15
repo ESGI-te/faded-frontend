@@ -8,7 +8,7 @@ const UsersTraffic = ({ users, dates, onChangeDates }) => {
     const series = useMemo(() => {
         return [
             {
-                name: 'Appointments count',
+                name: 'New user',
                 data: users?.map((user) => user.value),
             },
         ];
