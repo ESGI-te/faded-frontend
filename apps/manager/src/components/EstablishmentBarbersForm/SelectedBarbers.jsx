@@ -1,6 +1,12 @@
 import { useMemo, useState } from 'react';
 import Text from 'shared/src/components/Text';
-import { Input as AriaInput, ListBox, ListBoxItem, SearchField } from 'react-aria-components';
+import {
+    Input as AriaInput,
+    DialogTrigger,
+    ListBox,
+    ListBoxItem,
+    SearchField,
+} from 'react-aria-components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
@@ -13,6 +19,8 @@ import useUpdateBarberMutation from '@queries/barber/useUpdateBarberMutation.hoo
 import useUserQuery from 'shared/src/queries/user/useUserQuery.hook';
 import { USER_ROLES } from 'shared/src/utils/constants';
 import { shimmering } from 'shared/src/styles/animations';
+import Cluster from 'shared/src/components/Cluster';
+import EditBarberModal from '@components/EditBarberModal';
 
 const SelectedBarbers = () => {
     const { data: user } = useUserQuery();
@@ -93,11 +101,24 @@ const SelectedBarbers = () => {
                     <ListItem id={item.id}>
                         <ListItemName slot="label">{item.name}</ListItemName>
                         {isProvider && (
-                            <AddButton
-                                isLoading={updateBarber.isLoading}
-                                onPress={() => handleRemoveBarber(item.id)}
-                                icon={<AddIcon icon={icon({ name: 'minus', style: 'solid' })} />}
-                            />
+                            <Cluster gap="0.5rem" align="center">
+                                <DialogTrigger>
+                                    <EditButton
+                                        variant="ghost"
+                                        icon={<Icon icon={icon({ name: 'pen', style: 'solid' })} />}
+                                    />
+                                    <EditBarberModal
+                                        barber={barbers.find((b) => b.id === item.id)}
+                                    />
+                                </DialogTrigger>
+                                <AddButton
+                                    isLoading={updateBarber.isLoading}
+                                    onPress={() => handleRemoveBarber(item.id)}
+                                    icon={
+                                        <AddIcon icon={icon({ name: 'minus', style: 'solid' })} />
+                                    }
+                                />
+                            </Cluster>
                         )}
                     </ListItem>
                 )}
@@ -193,5 +214,18 @@ const Loader = styled.div`
     height: 100%;
     width: 100%;
     ${shimmering}
+`;
+const Icon = styled(FontAwesomeIcon)`
+    width: 1rem;
+    height: 1rem;
+    color: var(--neutral500);
+`;
+const EditButton = styled(IconButton)`
+    border-radius: var(--r-full);
+    padding: 0.5rem;
+
+    &[data-hovered] {
+        background-color: var(--neutral50);
+    }
 `;
 export default SelectedBarbers;
