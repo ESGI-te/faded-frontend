@@ -90,7 +90,7 @@ const AvailableBarbers = () => {
                     <FormattedMessage
                         defaultMessage="🌟 Ajoutez un coiffeur : C'est simple et rapide ! <link>Cliquez ici pour commencer.</link>"
                         values={{
-                            link: (chunks) => <BarbersLink>{chunks}</BarbersLink>,
+                            link: (chunks) => <BarbersLink to="/team?page=1">{chunks}</BarbersLink>,
                         }}
                     />
                 </Text>
