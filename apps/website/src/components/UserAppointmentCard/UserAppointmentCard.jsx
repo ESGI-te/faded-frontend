@@ -12,6 +12,7 @@ import { APPOINTMENT_STATUS } from 'shared/src/utils/constants';
 import Link from 'shared/src/components/Link';
 import useGoogleCalendarEventLink from '@hooks/useGoogleCalendarEventLink.hook';
 import AppointmentStatusBadge from '@components/AppointmentStatusBadge';
+import placeholderIllustration from 'shared/src/assets/images/placeholder-img.png';
 
 const UserAppointmentCard = ({ appointment }) => {
     const cancelAppointment = useCancelAppointmentMutation();
@@ -31,9 +32,7 @@ const UserAppointmentCard = ({ appointment }) => {
                 <AppointmentStatusBadge status={appointment.status} />
             </Cluster>
             <Cluster gap="1rem" align="center">
-                <ImageWrapper>
-                    {/* TODO: Use actual image here and remove background color */}
-                </ImageWrapper>
+                <Image src={appointment.establishment.cover || placeholderIllustration} />
                 <Link to={`/establishments/${appointment.establishment.id}`}>
                     {appointment.establishment.name}
                 </Link>
@@ -91,11 +90,12 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
 `;
-const ImageWrapper = styled.div`
+const Image = styled.img`
     background-color: var(--neutral50);
     border-radius: var(--r-s);
     height: 4rem;
     width: 4rem;
+    object-fit: cover;
 `;
 const Icon = styled(FontAwesomeIcon)`
     width: 1rem;
