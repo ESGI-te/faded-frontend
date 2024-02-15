@@ -60,6 +60,8 @@ const Overlay = styled(ModalOverlay)`
 `;
 const ModalStyled = styled(motion(AriaModal))`
 	max-width: ${(p) => sizeMatch[p.$size]};
+	max-height: calc(100% - 2rem);
+	overflow-y: auto;
 	background: var(--white);
 	border-radius: var(--r-l);
 	width: 100%;

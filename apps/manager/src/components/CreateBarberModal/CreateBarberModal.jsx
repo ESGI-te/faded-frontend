@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ModalCloseButton from 'shared/src/components/ModalCloseButton';
 import CreateBarber from '@components/CreateBarber';
 import Stack from 'shared/src/components/Stack';
+import { FormattedMessage } from 'react-intl';
 
 const CreateBarberModal = () => {
     return (
@@ -14,10 +15,10 @@ const CreateBarberModal = () => {
                     <ModalHeader>
                         <Stack gap="0.25rem">
                             <Text variant="headingM" fontWeight="--fw-bold">
-                                Ajouter un membre
+                                <FormattedMessage defaultMessage="Ajouter un membre" />
                             </Text>
                             <Text color="--neutral500">
-                                Celui-ci recevra un mail à l'adresse indiquée et pourra s'identifier
+                                <FormattedMessage defaultMessage="Celui-ci recevra un mail à l'adresse indiquée et pourra s'identifier" />
                             </Text>
                         </Stack>
                         <ModalCloseButton onPress={close} />
